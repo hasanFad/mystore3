@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    android:id="@+id/firstLayout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id ="@+id/secondLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+
+    <TextView
+        android:id="@+id/mailTV_signInUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mail"
+        android:textSize="30sp"
+        android:layout_alignParentRight="true" />
+
+    <EditText
+        android:id="@+id/mailET_signInUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="9"
+        android:hint="@string/mail"
+        android:inputType="textEmailAddress"
+        android:layout_alignBaseline="@id/mailTV_signInUser"
+        android:background="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:id="@+id/passwordTV_signInUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yourPass"
+        android:textSize="30sp"
+        android:layout_below="@id/mailTV_signInUser"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/passwordET_signInUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="9"
+        android:layout_alignBaseline="@id/passwordTV_signInUser"
+        android:hint="@string/yourPass"
+        android:inputType="textPassword"
+        android:background="@color/colorPrimaryDark"/>
+
+    <Button
+        android:id="@+id/signInButton_signInUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter"
+        android:layout_below="@id/passwordTV_signInUser"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/colorPrimaryDark">
+
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgetPassTxt"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/forgetPassButton_signInUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pressHere"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginTop="25dp"
+            android:background="@color/colorPrimaryDark"
+            android:textColor="@color/red" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/blue">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgetMailTxt"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/forgetMailButton_signInUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:text="@string/pressHere"
+            android:textSize="16sp"
+            android:background="@color/blue"
+            android:textColor="@color/red"/>
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

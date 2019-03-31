@@ -1,0 +1,42 @@
+package com.store.hasanfadool.mystore.utils;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.store.hasanfadool.mystore.R;
+
+public class Loader extends AlertDialog {
+
+
+    public Loader(Context context){
+        this(context, null);
+    }
+
+
+    public Loader(Context context,  String msg) {
+        super(context);
+
+
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.loader_layout, null, false);
+
+        TextView msgTV = layout.findViewById(R.id.messageTextViewLoader);
+
+                // if have the msgTV null or not
+        if (msgTV != null) {
+            msgTV.setVisibility(View.GONE);
+        }else {
+            msgTV.setVisibility(View.GONE);
+        }
+
+              // set the layout to alertDialog
+        this.setView(layout);
+              // don't can click outside the dialog to close it
+        this.setCancelable(false);
+
+    }
+
+
+}

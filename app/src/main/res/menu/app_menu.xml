@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- go to user area-->
+    <item
+        android:id="@+id/userMenu"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:title="@string/userLogin" />
+
+    <!-- go to user shopping card area -->
+    <item
+        android:id="@+id/shoppingCard"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/shopping_cart"
+        android:title="@string/shoppingCard"
+        app:showAsAction="ifRoom" />
+
+    <!-- go to search area-->
+    <item
+        android:id="@+id/searching"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:title="@string/search"
+        android:icon="@drawable/search"
+        app:showAsAction="always"/>
+
+
+</menu>

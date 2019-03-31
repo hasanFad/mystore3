@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">my store</string>
+    <string name="userLogin">כניסת משתמש</string>
+    <string name="productName">שם המוצר</string>
+    <string name="productPrice">מחיר המוצר</string>
+    <string name="addToShoppingCard">הוסף לסל קניות</string>
+    <string name="discount">הנחה</string>
+    <string name="listErrorMsg">שגיאה בהבאת הנתונים</string>
+    <string name="shoppingCard">סל הקניות</string>
+    <string name="search">חיפוש מוצר</string>
+    <string name="message">הודעה</string>
+    <string name="goToLeft"><![CDATA[<]]></string>
+    <string name="goToRight"><![CDATA[>]]></string>
+    <string name="pleaseWait">נא המתן...</string>
+    <string name="productColor">צבע</string>
+    <string name="companyName">שם חברה</string>
+    <string name="gender">מין</string>
+    <string name="cheap">הנחה</string>
+    <string name="image">תמונה</string>
+    <string name="pay">קנה</string>
+    <string name="finalPrice">מחיר סופי</string>
+    <string name="range">מידות</string>
+    <string name="firstName">שם שלך</string>
+    <string name="lastName">שם משפחה</string>
+    <string name="mail">מיל שלך</string>
+    <string name="phone">נייד שלך</string>
+    <string name="city">עיר</string>
+    <string name="street">שד\'</string>
+    <string name="homeNumber">מס\' דירה</string>
+    <string name="postilCode">מיקוד</string>
+    <string name="poPost">ת.ד</string>
+    <string name="registerMe">רשום אותי</string>
+    <string name="yourPass">סיסמה שלך</string>
+    <string name="invaledUser">משתמש קיים</string>
+    <string name="enter">כניסה</string>
+    <string name="forgetPassTxt">אם הינך לא זוכר סיסמה שלך נא לחץ.י כאן</string>
+    <string name="pressHere">לחץ.י כאן</string>
+    <string name="forgetMailTxt">אם שכחתה את המיל שלך נא</string>
+    <string name="goT">go To Pay Page</string>
+
+</resources>

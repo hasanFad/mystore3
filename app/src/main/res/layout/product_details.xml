@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+ <!--  productName
+       productColor
+       companyName
+       gender
+       productPrice
+       productCheap
+       productPicture   -->
+
+    <TextView
+        android:id="@+id/productNameTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/productName"
+        android:textSize="25sp"
+        android:layout_margin="5dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"/>
+
+   <CheckBox
+       android:id="@+id/favoriteProductCB_productDetails"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBaseline="@id/productNameTV_productDetails"
+       android:text="@string/addToShoppingCard"
+       android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/productColorTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/productColor"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/productNameTV_productDetails"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/companyNameTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/companyName"
+        android:textSize="25sp"
+        android:layout_margin="5dp"
+        android:layout_below="@id/productColorTV_productDetails"
+        android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/genderTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/companyNameTV_productDetails"
+        android:layout_margin="5dp"
+        android:text="@string/gender"
+        android:textSize="25sp"/>
+
+    <TextView
+        android:id="@+id/productPriceTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/productPrice"
+        android:textSize="25sp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/genderTV_productDetails"
+        android:layout_margin="5dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/productCheapTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cheap"
+        android:layout_alignBaseline="@id/productPriceTV_productDetails"
+        android:layout_margin="5dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="25sp"/>
+
+   <TextView
+       android:id="@+id/productFinalPriceTV_productDetails"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignBaseline="@id/productPriceTV_productDetails"
+       android:layout_margin="5dp"
+       android:text="@string/finalPrice"
+       android:textStyle="bold"
+       android:textColor="@color/colorPrimary"
+       android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/rangeTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/range"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_alignBaseline="@id/genderTV_productDetails"/>
+
+    <Spinner
+        android:id="@+id/rangeSpinner_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/genderTV_productDetails"
+        android:layout_marginStart="-6dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/productFinalPriceTV_productDetails">
+
+    </Spinner>
+
+    <ImageView
+        android:id="@+id/productIV_productDetails"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/image"
+        android:layout_below="@id/productPriceTV_productDetails"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"/>
+
+
+
+    <Button
+        android:id="@+id/goToBayPageButton_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pay"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+
+
+</RelativeLayout>

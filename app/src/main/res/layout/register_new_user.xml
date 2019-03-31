@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- userFName userLName userEmail  userPhone  userCity userStreet
+    userhomeNumber userPostelCode  userPOpost userPassword -->
+
+    <TextView
+        android:id="@+id/userFNameTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/firstName" />
+
+    <EditText
+        android:id="@+id/userFNameET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userFNameTV_registerNewUser"
+        android:hint="@string/firstName"/>
+
+    <TextView
+        android:id="@+id/userLNameTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/lastName"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/userFNameTV_registerNewUser"/>
+
+    <EditText
+        android:id="@+id/userLNameET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:hint="@string/lastName"
+        android:layout_alignBaseline="@id/userLNameTV_registerNewUser"/>
+
+    <TextView
+        android:id="@+id/userEmailTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mail"
+        android:layout_below="@id/userLNameTV_registerNewUser"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/userEmailET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:hint="@string/mail"
+        android:layout_alignBaseline="@id/userEmailTV_registerNewUser"
+        android:inputType="textEmailAddress"/>
+
+    <TextView
+        android:id="@+id/userPhoneTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/phone"
+        android:layout_below="@id/userEmailTV_registerNewUser"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"/>
+
+    <EditText
+        android:id="@+id/userPhoneET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userPhoneTV_registerNewUser"
+        android:hint="@string/phone"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/userCityTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/city"
+        android:layout_below="@id/userPhoneTV_registerNewUser"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/userCityET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userCityTV_registerNewUser"
+        android:hint="@string/city"/>
+
+    <TextView
+        android:id="@+id/userStreetTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/street"
+        android:layout_margin="10dp"
+        android:layout_below="@id/userCityTV_registerNewUser"
+        android:layout_alignParentRight="true"/>
+
+    <EditText
+        android:id="@+id/userStreetET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userStreetTV_registerNewUser"
+        android:hint="@string/street"/>
+
+    <TextView
+        android:id="@+id/userHomeNumberTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/homeNumber"
+       android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/userStreetTV_registerNewUser"/>
+
+    <EditText
+        android:id="@+id/userHomeNumberET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userHomeNumberTV_registerNewUser"
+        android:hint="@string/homeNumber"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/userPostelCodeTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/postilCode"
+        android:layout_below="@id/userHomeNumberTV_registerNewUser"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/userPostelCodeET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userPostelCodeTV_registerNewUser"
+        android:hint="@string/postilCode"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/userPOpostTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/poPost"
+        android:layout_below="@id/userPostelCodeTV_registerNewUser"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"/>
+
+    <EditText
+        android:id="@+id/userPOpostET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userPOpostTV_registerNewUser"
+        android:hint="@string/poPost"
+        android:inputType="number"/>
+
+    <TextView
+        android:id="@+id/userPasswordTV_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yourPass"
+        android:layout_below="@id/userPOpostTV_registerNewUser"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"/>
+
+    <EditText
+        android:id="@+id/userPasswordET_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/yourPass"
+        android:ems="7"
+        android:layout_alignBaseline="@id/userPasswordTV_registerNewUser"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/sendUserDataButton__registerNewUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userPasswordTV_registerNewUser"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/registerMe" />
+
+
+</RelativeLayout>

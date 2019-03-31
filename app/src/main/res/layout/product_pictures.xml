@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+
+    <ImageView
+        android:id="@+id/bigPicture_productPictures"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:src="@mipmap/ic_launcher_round"/>
+
+
+    <ImageView
+        android:id="@+id/smallPic1_productPictures"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/bigPicture_productPictures"/>
+
+    <ImageView
+        android:id="@+id/smallPic2_productPictures"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@mipmap/ic_launcher_round"
+        android:baseline="@id/smallPic1_productPictures"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/bigPicture_productPictures"/>
+
+
+    <ImageView
+        android:id="@+id/smallPic3_productPictures"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/bigPicture_productPictures"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <Button
+        android:id="@+id/leftButton_productPictures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/smallPic3_productPictures"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/goToLeft"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/rightButton_productPictures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/smallPic3_productPictures"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="60dp"
+        android:text="@string/goToRight"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
