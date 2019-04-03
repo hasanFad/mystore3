@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.DetailsFragment;
@@ -23,7 +25,9 @@ public class ProductAdapter extends BaseAdapter {
     Context context;
     List<Product> productList;
 
-
+    private TextView proNameTV, proPriceTV, cheapTV, shippingTV;
+    private ImageView proImg;
+    private CheckBox favorite;
     public ProductAdapter(Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
@@ -53,27 +57,23 @@ public class ProductAdapter extends BaseAdapter {
         // inflating the cell layout from the xml file
         @SuppressLint("ViewHolder") View celPLayout = LayoutInflater.from(context).inflate(R.layout.product_item, parent, false);
         // get the xml views
-        TextView proNameTV = celPLayout.findViewById(R.id.productNameTV_productItem);
-        TextView proPriceTV = celPLayout.findViewById(R.id.productPriceTV_productItem);
-        ImageView proImg = celPLayout.findViewById(R.id.productImageView_productItem);
+         proNameTV = celPLayout.findViewById(R.id.productNameTV_productItem);
+         proPriceTV = celPLayout.findViewById(R.id.productPriceTV_productItem);
+         cheapTV = celPLayout.findViewById(R.id.productCheapTV_productItem);
+         shippingTV = celPLayout.findViewById(R.id.shippingTV_productItem);
+         favorite = celPLayout.findViewById(R.id.favoriteProductCB_productItem);
+         proImg = celPLayout.findViewById(R.id.productImageView_productItem);
 
         // update the text and the img in the current pro
         proNameTV.setText(currentProduct.getProName());
         proPriceTV.setText(currentProduct.getProPrice() + " ₪");
 
+        cheapTV.setText(currentProduct.getCheap() +" %");
+        shippingTV.setText(currentProduct.getShipping() + " ₪");
+
+        proImg.setImageBitmap(currentProduct.getProPic());
 
 
-        proImg.setImageResource(Integer.parseInt(currentProduct.getProPic()));
-
-        celPLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // after click om the item...
-
-                Intent toDetailsIntent = new Intent(context, DetailsFragment.class);
-                toDetailsIntent.putExtra("","");
-            }
-        });
 
 
         return celPLayout;

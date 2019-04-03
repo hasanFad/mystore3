@@ -1,7 +1,7 @@
 package com.store.hasanfadool.mystore.fragments.user;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,15 +15,8 @@ import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.CheckUser;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectUserPasswordAsync;
-import com.store.hasanfadool.mystore.network.GetDomin;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.PropertyInfo;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,6 +24,8 @@ import java.io.InputStreamReader;
 
 public class SignInUser extends Fragment {
 
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     // ET mail , pass
     //btn sendData, forgetPass, forgetMail
@@ -73,11 +68,30 @@ public class SignInUser extends Fragment {
                 }else if (pass.getText().length() < 6){
                     Toast.makeText(context, "הסיסמה שלך לא יכולה להיות פחות מ-6 אותיות", Toast.LENGTH_SHORT).show();
                 }else {
-                  new checkUser().doInBackground();
+                  // it's O.K
+
+                        // the sharedPreferences..
+                    preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+                    editor = preferences.edit();
+
+                    editor.putString("userMail", mail.getText().toString());
+                    editor.putString("userPass", pass.getText().toString());
+
+                        // save the values
+                    editor.apply();
+
+                    Bundle sendMail = new Bundle();
+                    sendMail.putString("UserMAil", mail.getText().toString());
+
+                    Bundle sendPass = new Bundle();
+                    sendPass.putString("userPAss", pass.getText().toString());
+
+                    CheckUser checkUser = new CheckUser();
+                    checkUser.execute();
+
                 }
 
 
-                
             }
         });
 
@@ -128,51 +142,6 @@ public class SignInUser extends Fragment {
             e.printStackTrace();
         }
         return st;
-    }
-
-    GetDomin getDomin = new GetDomin();
-    private String myIp = getDomin.myIpPort();
-
-    private static final String NAMESPACE = "http://it.pro.com/"; // http://vip_register/
-    private  final String url = myIp + "/insertProductDataWS/InsertWS?WSDL"; // http://localhost:8080/MyWorkerApp/RegisterVIP?WSDL
-    private static final String METHOD_NAME = "insertProductsWS"; // RegisterVIP
-    private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME; // http://vip_register/RegisterVIP
-
-    public class checkUser extends AsyncTask<Void,Void,String>{
-
-        @Override
-        protected String doInBackground(Void... voids) {
-
-            try {
-                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-
-                //1
-                PropertyInfo proMail = new PropertyInfo();
-                proMail.setName("mail");
-                proMail.setValue(mail.getText().toString());
-                proMail.setType(PropertyInfo.STRING_CLASS);
-                request.addProperty(proMail);
-
-                //2
-                PropertyInfo proPass = new PropertyInfo();
-                proPass.setName("proPass");
-                proPass.setValue(pass.getText().toString());
-                proPass.setType(PropertyInfo.STRING_CLASS);
-                request.addProperty(proPass);
-
-                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-                envelope.setOutputSoapObject(request);
-
-                HttpTransportSE ht = new HttpTransportSE(url);
-                ht.call(SOAP_ACTION, envelope);
-                SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-
-                return response.toString();
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-            return "error";
-        }
     }
 
 }

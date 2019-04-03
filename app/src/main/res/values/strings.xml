@@ -7,7 +7,6 @@
     <string name="discount">הנחה</string>
     <string name="listErrorMsg">שגיאה בהבאת הנתונים</string>
     <string name="shoppingCard">סל הקניות</string>
-    <string name="search">חיפוש מוצר</string>
     <string name="message">הודעה</string>
     <string name="goToLeft"><![CDATA[<]]></string>
     <string name="goToRight"><![CDATA[>]]></string>
@@ -37,5 +36,11 @@
     <string name="pressHere">לחץ.י כאן</string>
     <string name="forgetMailTxt">אם שכחתה את המיל שלך נא</string>
     <string name="goT">go To Pay Page</string>
+    <string name="shipping">משלוח</string>
+    <string name="orderNum">הזמנה מספר :</string>
+    <string name="noNum">אין מספר!</string>
+    <string name="continueToProducts">המשך למוצרים</string>
+    <string name="myOrders">הזמנות שלי</string>
+    <string name="searchProduct">חיפוש מוצר</string>
 
 </resources>

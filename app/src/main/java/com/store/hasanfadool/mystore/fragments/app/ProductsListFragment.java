@@ -11,7 +11,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
@@ -63,6 +65,18 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
          selectProductsAsync.execute();
 
+         listViewProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+             @Override
+             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                 Toast.makeText(context, productList.get(position).getProName(), Toast.LENGTH_SHORT).show();
+
+                    // on product click
+                 String value = productList.get(position).getProName();
+
+                 DetailsFragment detailsFragment = new DetailsFragment();
+                 initFragment(detailsFragment);
+             }
+         });
 
 
     }
@@ -88,27 +102,31 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
 
 
-                Product proTest = new Product(object.getString("productName"), object.getInt("productPrice"));
 
-//                Product productMainList = new Product(object.getString("productName"),
-//                        object.getDouble("productCheap"),
-//                        object.getInt("productPrice"),object.getString("productImage"));
-//
-//                Product productDetails = new Product(object.getString("productName"),
-//                        object.getString("productColor"),
-//                        object.getString("companyName"),
-//                        object.getString("gender"),
-//                        object.getInt("productPrice"),
-//                        object.getDouble("productCheap"),
-//                        object.getString("productPicture")
-//                );
+                Product productMainList = new Product(object.getString("productName"),
+                        object.getDouble("productCheap"),
+                        object.getInt("productPrice"),object.getString("productImage"));
+
+                Product productInfo = new Product(object.getString("productName"),
+                        object.getString("productColor"),
+                        object.getString("companyName"),
+                        object.getString("gender"),
+                        object.getInt("productPrice"),
+                        object.getDouble("productCheap"),
+                        object.getString("productPicture")
+                );
+
+                Product proName = new Product(object.getString("productName"));
 
 
                             // send the product details in the Bundle
-           //     Bundle sendProductDetailsBundle = new Bundle();
-         //       sendProductDetailsBundle.putString("productDetails", String.valueOf(productDetails));
+                Bundle sendProductDetailsBundle = new Bundle();
+                sendProductDetailsBundle.putStringArrayList("productDetails", productInfo);
 
-             productList.add(proTest);
+                Bundle myProductName = new Bundle();
+                myProductName.putStringArrayList("productName", proName); // save at static
+
+             productList.add(productMainList);
             }
             adapter.notifyDataSetChanged();
 
@@ -123,16 +141,12 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
 
 
-    // it initializing the fragment
     private void initFragment(Fragment fragment){
-        Log.d(TAG, "initFragment: ");
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack("fragment");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fragmentTransaction.commit();
-
     }
-
 
 }

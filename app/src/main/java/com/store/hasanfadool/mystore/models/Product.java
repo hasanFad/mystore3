@@ -1,9 +1,16 @@
 package com.store.hasanfadool.mystore.models;
 
-public class Product {
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
+import java.util.ArrayList;
+import java.util.stream.Stream;
+
+public class Product extends ArrayList<String> {
 
     private String proName, proColor, compName, gender, proPic;
-    private int proPrice;
+    private int proPrice, shipping;
     private double cheap;
 
 
@@ -36,13 +43,29 @@ public class Product {
         this.proPrice = productPrice;
     }
 
-
-
-
-    public String getProPic() {
-        return proPic;
+    public Product(String proName){
+        this.proName = proName;
     }
 
+
+
+
+    public Bitmap getProPic() {
+        byte[] by1 = Base64.decode(proPic, Base64.DEFAULT);
+        Bitmap bitmap;
+        bitmap = BitmapFactory.decodeByteArray(by1,0,by1.length);
+
+        return bitmap;
+    }
+
+
+    public int getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(int shipping) {
+        this.shipping = shipping;
+    }
 
     public String getProName() {
         return proName;
@@ -133,11 +156,9 @@ public class Product {
         if (gender != product.gender){
             return false;
         }
-        if (proPic != product.proPic){
-            return false;
-        }
 
         return proName != null ? proName.equals(product.proName) : product.proName == null;
 
     }
+
 }

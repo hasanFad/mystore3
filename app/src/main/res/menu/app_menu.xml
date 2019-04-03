@@ -4,14 +4,14 @@
 
     <!-- go to user area-->
     <item
-        android:id="@+id/userMenu"
+        android:id="@+id/userLogin_appMenu"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:title="@string/userLogin" />
 
     <!-- go to user shopping card area -->
     <item
-        android:id="@+id/shoppingCard"
+        android:id="@+id/shoppingCard_appMenu"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:icon="@drawable/shopping_cart"
@@ -20,12 +20,19 @@
 
     <!-- go to search area-->
     <item
-        android:id="@+id/searching"
+        android:id="@+id/searching_appMenu"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:title="@string/search"
+        android:title="@string/searchProduct"
         android:icon="@drawable/search"
         app:showAsAction="always"/>
+
+    <!-- go to user order  -->
+    <item
+        android:id="@+id/userOrder_appMenu"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:title="@string/myOrders"/>
 
 
 </menu>

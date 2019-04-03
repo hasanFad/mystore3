@@ -24,6 +24,11 @@ public class User {
         this.mailAgree = mailAgree;
     }
 
+    public User(String userMail, String userPass){
+        this.userMail = userMail;
+        this.userPass = userPass;
+    }
+
 
     public String getUserCity() {
         return userCity;

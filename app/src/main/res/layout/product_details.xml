@@ -124,17 +124,29 @@
 
     </Spinner>
 
+    <TextView
+        android:id="@+id/shippingTV_productDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shipping"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        android:layout_below="@id/productCheapTV_productDetails"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"/>
+
     <ImageView
         android:id="@+id/productIV_productDetails"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:clickable="true"
-        android:focusable="true"
-        android:contentDescription="@string/image"
         android:layout_below="@id/productPriceTV_productDetails"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="10dp"/>
+        android:layout_alignStart="@+id/rangeSpinner_productDetails"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:contentDescription="@string/image"
+        android:focusable="true"
+        android:src="@drawable/ic_launcher_foreground" />
 
 
 
