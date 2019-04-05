@@ -3,6 +3,7 @@ package com.store.hasanfadool.mystore.fragments.app;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -53,11 +54,16 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
         selectProductPicturesAsync.delegate = this;
         selectProductPicturesAsync.execute();
 
+
+
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // set the right picture to the big picture
                 Toast.makeText(context, "the right Button", Toast.LENGTH_SHORT).show();
+
+
+
 
             }
         });

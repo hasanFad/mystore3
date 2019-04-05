@@ -71,6 +71,7 @@ public class ProductAdapter extends BaseAdapter {
         cheapTV.setText(currentProduct.getCheap() +" %");
         shippingTV.setText(currentProduct.getShipping() + " ₪");
 
+        // the decode of the picture to base 64 at the Product class
         proImg.setImageBitmap(currentProduct.getProPic());
 
 
