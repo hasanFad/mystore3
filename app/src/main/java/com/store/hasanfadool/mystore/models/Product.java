@@ -4,14 +4,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-public class Product extends ArrayList<String> {
+public class Product implements Serializable {
 
     private String proName, proColor, compName, gender, proPic;
     private int proPrice, shipping;
     private double cheap;
+    private boolean favoriteProduct;
 
 
                 // for testing
@@ -23,10 +25,10 @@ public class Product extends ArrayList<String> {
             // for details
     public Product(String productName, String productColor,
                    String companyName, String gender, int productPrice,
-                  double productCheap, String productPicture) {
+                  double productCheap, int shipping ,String productPicture) {
         this.compName = companyName;
         this.gender = gender;
-
+        this.shipping = shipping;
         this.proColor = productColor;
         this.proName = productName;
         this.proPic = productPicture;
@@ -35,29 +37,24 @@ public class Product extends ArrayList<String> {
     }
 
             // for main product list
-    public Product(String productName, double productCheap, int productPrice,
-                   String productImage){
+    public Product(String productName, int productPrice, double productCheap,
+                   int shipping, String productImage){
         this.cheap = productCheap;
         this.proName = productName;
         this.proPic = productImage;
         this.proPrice = productPrice;
-    }
-
-    public Product(String proName){
-        this.proName = proName;
+        this.shipping = shipping;
     }
 
 
+    public String getProPic() {
+    return proPic;
 
-
-    public Bitmap getProPic() {
-        byte[] by1 = Base64.decode(proPic, Base64.DEFAULT);
-        Bitmap bitmap;
-        bitmap = BitmapFactory.decodeByteArray(by1,0,by1.length);
-
-        return bitmap;
     }
 
+    public boolean isFavoriteProduct() {
+        return favoriteProduct;
+    }
 
     public int getShipping() {
         return shipping;
@@ -160,5 +157,7 @@ public class Product extends ArrayList<String> {
         return proName != null ? proName.equals(product.proName) : product.proName == null;
 
     }
+
+
 
 }

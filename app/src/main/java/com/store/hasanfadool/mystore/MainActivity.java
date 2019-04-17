@@ -57,19 +57,19 @@ public class MainActivity extends AppCompatActivity {
             return true;
 
             case R.id.shoppingCard_appMenu:
-                Toast.makeText(context, "shoppingCard_appMenu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "shoppingCard_appMenu", Toast.LENGTH_SHORT).show();
                 ShoppingCard shoppingCardFragment = new ShoppingCard();
                 initFragment(shoppingCardFragment);
                 return true;
 
             case R.id.searching_appMenu:
-                Toast.makeText(context, "searching_appMenu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "searching_appMenu", Toast.LENGTH_SHORT).show();
                 ProductSearch productSearch = new ProductSearch();
                 initFragment(productSearch);
                 return true;
 
             case R.id.userOrder_appMenu:
-                Toast.makeText(context, "userOrder_appMenu", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "userOrder_appMenu", Toast.LENGTH_SHORT).show();
 
                 return true;
 

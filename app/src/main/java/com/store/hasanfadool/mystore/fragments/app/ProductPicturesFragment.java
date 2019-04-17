@@ -42,6 +42,8 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+
         bigPicture = view.findViewWithTag(R.id.bigPicture_productPictures);
         picture1 = view.findViewWithTag(R.id.smallPic1_productPictures);
         picture2 = view.findViewWithTag(R.id.smallPic2_productPictures);
@@ -93,25 +95,31 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
             JSONArray ary = new JSONArray(result);
             for (int i = 0; i <ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
-                String  st1,st2,st3;
+                String  st0,st1,st2,st3;
+
+                Bundle bundleGetProPic = getArguments();
 
                     // set the result WS to string
+                st0 = bundleGetProPic.getString("myStringImage");
                 st1 = object.getString("productPicture1");
                 st2 = object.getString("productPicture2");
                 st3 = object.getString("productPicture3");
 
                     // convert and decode the strings to Base64
-                byte[] by1,by2,by3;
+                byte[] by0,by1,by2,by3;
+                by0 = Base64.decode(st0, Base64.DEFAULT);
                 by1 = Base64.decode(st1, Base64.DEFAULT);
                 by2 = Base64.decode(st2, Base64.DEFAULT);
                 by3 = Base64.decode(st3, Base64.DEFAULT);
 
-                Bitmap b1,b2,b3;
+                Bitmap b0,b1,b2,b3;
                     // set the Base64 to Bitmap
+                b0 = BitmapFactory.decodeByteArray(by0,0,by0.length);
                 b1 = BitmapFactory.decodeByteArray(by1,0, by1.length);
                 b2 = BitmapFactory.decodeByteArray(by2,0, by2.length);
                 b3 = BitmapFactory.decodeByteArray(by3,0, by3.length);
 
+                bigPicture.setImageBitmap(b0);
                 picture1.setImageBitmap(b1);
                 picture2.setImageBitmap(b2);
                 picture3.setImageBitmap(b3);

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 
 public class ProductsListFragment extends Fragment implements AsyncResponse {
@@ -36,6 +38,10 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
     ProductAdapter adapter;
     Context context;
     ListView listViewProduct;
+
+
+    Product productInfo;
+
 
 
     @SuppressLint("InflateParams")
@@ -55,28 +61,20 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
         context = getActivity();
 
         listViewProduct = view.findViewById(R.id.productsList);
+
         productList = new ArrayList<>();
         adapter = new ProductAdapter(context, productList);
         listViewProduct.setAdapter(adapter);
 
+
+
         SelectProductsAsync selectProductsAsync = new SelectProductsAsync();
+
+        selectProductsAsync.execute();
 
         selectProductsAsync.delegate = this; // the listener
 
-         selectProductsAsync.execute();
 
-         listViewProduct.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             @Override
-             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                 Toast.makeText(context, productList.get(position).getProName(), Toast.LENGTH_SHORT).show();
-
-                    // on product click
-                 String value = productList.get(position).getProName();
-
-                 DetailsFragment detailsFragment = new DetailsFragment();
-                 initFragment(detailsFragment);
-             }
-         });
 
 
     }
@@ -90,43 +88,29 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
     public ArrayList<Product> readProductsJson(String result){
 
-
         try {
             JSONArray ary = new JSONArray(result);
 
             productList.clear();
 
-            productList = new ArrayList<>();
             for (int i = 0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
 
 
+//    Product   (String productName, int productPrice, double productCheap, int shipping, String productImage)
+                Product mainListPro = new Product(object.getString("productName"),
+                        object.getInt("productPrice"),object.getDouble("cheap"),
+                        object.getInt("shipping"), object.getString("productPicture"));
 
+// Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
 
-                Product productMainList = new Product(object.getString("productName"),
-                        object.getDouble("productCheap"),
-                        object.getInt("productPrice"),object.getString("productImage"));
-
-                Product productInfo = new Product(object.getString("productName"),
+                 productInfo = new Product(object.getString("productName"),
                         object.getString("productColor"),
-                        object.getString("companyName"),
-                        object.getString("gender"),
+                        object.getString("companyName"),object.getString("gender"),
                         object.getInt("productPrice"),
-                        object.getDouble("productCheap"),
-                        object.getString("productPicture")
-                );
+                        object.getDouble("cheap"),object.getInt("shipping"),object.getString("productPicture"));
 
-                Product proName = new Product(object.getString("productName"));
-
-
-                            // send the product details in the Bundle
-                Bundle sendProductDetailsBundle = new Bundle();
-                sendProductDetailsBundle.putStringArrayList("productDetails", productInfo);
-
-                Bundle myProductName = new Bundle();
-                myProductName.putStringArrayList("productName", proName); // save at static
-
-             productList.add(productMainList);
+             productList.add(mainListPro);
             }
             adapter.notifyDataSetChanged();
 
@@ -141,12 +125,14 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
 
 
-    private void initFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.addToBackStack("fragment");
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.commit();
-    }
+
+//    public void initFragment(Fragment fragment){
+//        FragmentTransaction fragmentTransaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.container, fragment);
+//        fragmentTransaction.addToBackStack("fragment");
+//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+//        fragmentTransaction.commit();
+//
+//    }
 
 }

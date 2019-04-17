@@ -3,29 +3,28 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="false">
 
 
     <ImageView
         android:id="@+id/productImageView_productItem"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:focusableInTouchMode="true"
         android:src="@mipmap/ic_launcher_round"
-        tools:ignore="ContentDescription,RtlHardcoded" />
+        tools:ignore="ContentDescription,RtlHardcoded"/>
 
 
     <TextView
         android:id="@+id/productNameTV_productItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
@@ -34,7 +33,9 @@
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:ignore="RelativeOverlap,RtlHardcoded" />
+        tools:ignore="RelativeOverlap,RtlHardcoded"
+        android:focusable="false"
+        android:clickable="false"/>
 
     <TextView
         android:id="@+id/productPriceTV_productItem"
@@ -48,7 +49,9 @@
         android:textColor="@color/red"
         android:textSize="20sp"
         android:textStyle="bold"
-        tools:ignore="RtlHardcoded" />
+        tools:ignore="RtlHardcoded"
+        android:focusable="false"
+        android:clickable="false"/>
 
     <TextView
         android:id="@+id/productCheapTV_productItem"
@@ -60,32 +63,33 @@
         android:layout_marginRight="5dp"
         android:text="@string/cheap"
         android:textColor="@color/colorPrimary"
-        android:textSize="25sp" />
-
-    <CheckBox
-        android:id="@+id/favoriteProductCB_productItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/productCheapTV_productItem"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:text="@string/addToShoppingCard"
-        android:textStyle="bold" />
+        android:textSize="25sp"
+        android:focusable="false"
+        android:clickable="false"/>
 
     <TextView
         android:id="@+id/shippingTV_productItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@id/productCheapTV_productItem"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="61dp"
-        android:layout_marginEnd="73dp"
-        android:layout_marginRight="135dp"
-        android:layout_toStartOf="@+id/productCheapTV_productItem"
-        android:layout_toEndOf="@+id/productImageView_productItem"
+        android:layout_below="@id/productCheapTV_productItem"
         android:text="@string/shipping"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:layout_marginRight="5dp"
+        android:textStyle="bold"
+        android:focusable="false"
+        android:clickable="false"/>
+
+    <CheckBox
+        android:id="@+id/favoriteProductCB_productItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/shippingTV_productItem"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/addToShoppingCard"
+        android:textStyle="bold"
+        android:focusable="false"/>
 
 
 

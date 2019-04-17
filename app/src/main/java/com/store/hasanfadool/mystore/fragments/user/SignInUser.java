@@ -70,15 +70,8 @@ public class SignInUser extends Fragment {
                 }else {
                   // it's O.K
 
-                        // the sharedPreferences..
-                    preferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-                    editor = preferences.edit();
-
-                    editor.putString("userMail", mail.getText().toString());
-                    editor.putString("userPass", pass.getText().toString());
 
                         // save the values
-                    editor.apply();
 
                     Bundle sendMail = new Bundle();
                     sendMail.putString("UserMAil", mail.getText().toString());

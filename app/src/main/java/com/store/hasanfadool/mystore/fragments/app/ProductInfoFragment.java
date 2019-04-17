@@ -24,7 +24,7 @@ import com.store.hasanfadool.mystore.R;
 
 import java.util.ArrayList;
 
-public class DetailsFragment extends Fragment {
+public class ProductInfoFragment extends Fragment {
 
     Context context;
 
@@ -33,8 +33,8 @@ public class DetailsFragment extends Fragment {
     Spinner rangeSpinner;
     Button goToBayPage;
     String[] ranges = {};
-    String stPic;
-    ArrayList<String> arrayList;
+
+
 
     @Nullable
     @Override
@@ -58,48 +58,6 @@ public class DetailsFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 context ,android.R.layout.simple_spinner_item, ranges);
         rangeSpinner.setAdapter(adapter);
-
-        Bundle getProductInfo = getArguments();
-        arrayList.clear();
-        arrayList =  getProductInfo.getStringArrayList("productDetails");
-        arrayList = new ArrayList<>();
-
-        for (int i = 0; i < arrayList.size(); i++){
-            productName.setText(arrayList.get(0));
-            productColor.setText(arrayList.get(1));
-            companyName.setText(arrayList.get(2));
-            gender.setText(arrayList.get(3));
-            productPrice.setText(arrayList.get(4));
-            productCheap.setText(arrayList.get(5));
-            stPic = arrayList.get(6);
-                // decode the picture
-            byte[] byt = Base64.decode(stPic, Base64.DEFAULT);
-            Bitmap bitmap;
-            bitmap = BitmapFactory.decodeByteArray(byt,0, byt.length);
-
-            productPicture.setImageBitmap(bitmap);
-        }
-
-
-
-
-
-        rangeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            int index = rangeSpinner.getSelectedItemPosition();
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(context, "בחרת מידה " + ranges[index], Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-
-
 
 
                 // go to buy page
