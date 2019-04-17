@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
@@ -82,14 +83,13 @@ public class ProductAdapter extends BaseAdapter {
         Bitmap bm = StringToBitmap(currentProduct.getProPic()); // the string we got from the json object
         productImage.setImageBitmap(bm); // function to encode the string
 
-        cellLayout.setOnLongClickListener(new View.OnLongClickListener() {
+        cellLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
+            public void onClick(View view) {
                 Toast.makeText(context, "hii" + currentProduct.getProName(), Toast.LENGTH_SHORT).show();
 
                 ProductInfoFragment productInfoFragment = new ProductInfoFragment();
                 initFragment(productInfoFragment);
-                return true;
             }
         });
 
@@ -98,14 +98,11 @@ public class ProductAdapter extends BaseAdapter {
 
 }
             // encode the image(String) to base64
+    @Nullable
     private Bitmap StringToBitmap(String encodedString){
-        try {
+
             byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        }catch (Exception e){
-            e.getMessage();
-        }
-        return null;
 }
 
     private void initFragment(Fragment fragment){
@@ -113,6 +110,7 @@ public class ProductAdapter extends BaseAdapter {
         if (fragment.getFragmentManager() != null) {
             fragmentTransaction = fragment.getFragmentManager().beginTransaction();
         }
+        assert fragmentTransaction != null;
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack("fragment");
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
