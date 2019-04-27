@@ -1,38 +1,38 @@
 package com.store.hasanfadool.mystore.ui.adapters;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.ProductInfoFragment;
-import com.store.hasanfadool.mystore.fragments.app.ProductsListFragment;
 import com.store.hasanfadool.mystore.models.Product;
 
 import java.util.List;
-import java.util.Objects;
 
 public class ProductAdapter extends BaseAdapter {
 
     private static final String TAG = "ProductsAdapter";
 
-    Context context;
-    List<Product> productList;
+
+    private Context context;
+      private List<Product> productList;
+
 
 
     public ProductAdapter(Context context, List<Product> productList) {
@@ -55,12 +55,15 @@ public class ProductAdapter extends BaseAdapter {
         return position;
     }
 
+
     @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final Product currentProduct = productList.get(position);
         @SuppressLint("ViewHolder") View cellLayout = LayoutInflater.from(context).inflate(R.layout.product_item, parent,false);
+
+
 
 
         TextView productName = cellLayout.findViewById(R.id.productNameTV_productItem);
@@ -88,15 +91,30 @@ public class ProductAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Toast.makeText(context, "hii" + currentProduct.getProName(), Toast.LENGTH_SHORT).show();
 
-                ProductInfoFragment productInfoFragment = new ProductInfoFragment();
-                initFragment(productInfoFragment);
+ // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
+                Product proInfo = new Product(currentProduct.getProName(),currentProduct.getProColor(),currentProduct.getCompName(),
+                        currentProduct.getGender(),currentProduct.getProPrice(),currentProduct.getCheap(),currentProduct.getShipping(),
+                        currentProduct.getProPic());
+
+                Bundle sendProInfoBundle = new Bundle();
+                sendProInfoBundle.putSerializable("proInfo", proInfo);
+
+
+//                Fragment fragment = new ProductInfoFragment();
+//                FragmentManager fragmentManager ;
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.container, fragment);
+//                fragmentTransaction.commit();
+
+
             }
         });
 
 
         return cellLayout;
 
-}
+    }
+
             // encode the image(String) to base64
     @Nullable
     private Bitmap StringToBitmap(String encodedString){
@@ -105,17 +123,11 @@ public class ProductAdapter extends BaseAdapter {
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 }
 
-    private void initFragment(Fragment fragment){
-        FragmentTransaction fragmentTransaction = null;
-        if (fragment.getFragmentManager() != null) {
-            fragmentTransaction = fragment.getFragmentManager().beginTransaction();
-        }
-        assert fragmentTransaction != null;
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.addToBackStack("fragment");
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-        fragmentTransaction.commit();
 
-    }
+
+
+
+
 
 }
+

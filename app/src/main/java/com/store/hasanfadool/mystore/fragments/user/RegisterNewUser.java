@@ -47,6 +47,8 @@ public class RegisterNewUser extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        context = getActivity();
+
         userFName = view.findViewById(R.id.userFNameET_registerNewUser);
         userLName = view.findViewById(R.id.userLNameET_registerNewUser);
         userEmail = view.findViewById(R.id.userEmailET_registerNewUser);

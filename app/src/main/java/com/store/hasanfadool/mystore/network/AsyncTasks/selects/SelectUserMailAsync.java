@@ -1,11 +1,8 @@
-package com.store.hasanfadool.mystore.network.AsyncTasks.inserts;
+package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.store.hasanfadool.mystore.fragments.user.SignInUser;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
 import org.ksoap2.SoapEnvelope;
@@ -15,16 +12,10 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-public class CheckUser extends AsyncTask<Void,Void,String> {
+public class SelectUserMailAsync extends AsyncTask<Void,Void,String> {
 
-
-
-    private Bundle getUserMail = new Bundle();
-    private Bundle getUserPass = new Bundle();
-
-    private String mail = getUserMail.getString("UserMAil");
-    private String pass = getUserPass.getString("userPAss");
-
+    private Bundle getPhoneBundle = new Bundle();
+    private String getPhoneSt = getPhoneBundle.getString("");
 
     private GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
@@ -35,26 +26,19 @@ public class CheckUser extends AsyncTask<Void,Void,String> {
     private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME; // http://vip_register/RegisterVIP
 
 
+
     @Override
     protected String doInBackground(Void... voids) {
 
-        if (mail != null || pass != null) {
+        if (getPhoneSt != null){
             try {
                 SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-                //1 userMail
-                PropertyInfo proMail = new PropertyInfo();
-                proMail.setName("userMail");
-                proMail.setValue(mail);
-                proMail.setType(PropertyInfo.STRING_CLASS);
-                request.addProperty(proMail);
-
-                //2 userPass
-                PropertyInfo proPass = new PropertyInfo();
-                proPass.setName("userPass");
-                proPass.setValue(pass);
-                proPass.setType(PropertyInfo.STRING_CLASS);
-                request.addProperty(proPass);
+                    // send the phone number
+                PropertyInfo proPhone = new PropertyInfo();
+                proPhone.setName("userPhone");
+                proPhone.setValue(getPhoneSt);
+                proPhone.setType(PropertyInfo.STRING_CLASS);
 
                 SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
                 envelope.setOutputSoapObject(request);
@@ -65,10 +49,9 @@ public class CheckUser extends AsyncTask<Void,Void,String> {
                 SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
 
                 return response.toString();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            }catch (Exception e){
+                e.printStackTrace();
             }
-
         }
         return "error";
     }

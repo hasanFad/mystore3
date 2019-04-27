@@ -20,7 +20,6 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
     private static final String TAG = "SelectProductsAsync";
 
 
-    Context context;
 
     public AsyncResponse delegate = null;
 

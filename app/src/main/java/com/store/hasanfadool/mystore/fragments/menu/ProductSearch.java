@@ -18,9 +18,10 @@ public class ProductSearch extends Fragment {
 
     Context context;
     AutoCompleteTextView searchText;
-    String myText;
 
-    String[] productData;
+    String[] productName;
+
+
 
     @Nullable
     @Override
@@ -28,21 +29,30 @@ public class ProductSearch extends Fragment {
         return inflater.inflate(R.layout.search_product, null);
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity();
-        searchText = view.findViewById(R.id.searchET_searchProduct);
-        Bundle getProductData = getArguments();
+        searchText = view.findViewById(R.id.searchET_searchProduct); // the AutoCompleteTextView
+
+        Bundle getProductData = getArguments(); // get the
         if (getProductData != null) {
-             productData = getProductData.getStringArray("productName");
+
+            productName = getProductData.getStringArray("productName");
         }
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, productData);
 
-        searchText.setThreshold(2);
-        searchText.setAdapter(adapter);
+            ArrayAdapter<String>adapter;
+            if (productName != null) {
+                adapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, productName);
 
+
+            searchText.setThreshold(1);
+            searchText.setAdapter(adapter);
+
+
+        }
 
 
 

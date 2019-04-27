@@ -1,26 +1,16 @@
 package com.store.hasanfadool.mystore.models;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.stream.Stream;
 
 public class Product implements Serializable {
 
     private String proName, proColor, compName, gender, proPic;
-    private int proPrice, shipping;
+    private int proPrice, shipping, range;
     private double cheap;
     private boolean favoriteProduct;
 
 
-                // for testing
-    public Product(String productName,int productPrice){
-        this.proName = productName;
-        this.proPrice = productPrice;
-    }
+
 
             // for details
     public Product(String productName, String productColor,
@@ -46,6 +36,14 @@ public class Product implements Serializable {
         this.shipping = shipping;
     }
 
+    public Product(int range){
+        this.range = range;
+
+    }
+
+    public Product(String proName){
+        this.proName = proName;
+    }
 
     public String getProPic() {
     return proPic;
@@ -119,6 +117,16 @@ public class Product implements Serializable {
         this.proPic = proPic;
     }
 
+
+
+//    public Array getRange() {
+//        return range;
+//    }
+
+
+    public void setRange(int range) {
+        this.range = range;
+    }
 
     @Override
     public boolean equals(Object proObj) {

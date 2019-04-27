@@ -12,9 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.ListView;
-import android.widget.Toast;
+
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
@@ -27,7 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
+
 
 
 public class ProductsListFragment extends Fragment implements AsyncResponse {
@@ -40,7 +40,6 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
     ListView listViewProduct;
 
 
-    Product productInfo;
 
 
 
@@ -68,7 +67,7 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
 
 
-        SelectProductsAsync selectProductsAsync = new SelectProductsAsync();
+        SelectProductsAsync selectProductsAsync = new SelectProductsAsync(); // class will connection to th WS
 
         selectProductsAsync.execute();
 
@@ -93,6 +92,7 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
             productList.clear();
 
+
             for (int i = 0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
 
@@ -102,13 +102,11 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
                         object.getInt("productPrice"),object.getDouble("cheap"),
                         object.getInt("shipping"), object.getString("productPicture"));
 
-// Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
+                Product productsName = new Product(object.getString("productName")); // for the search
 
-                 productInfo = new Product(object.getString("productName"),
-                        object.getString("productColor"),
-                        object.getString("companyName"),object.getString("gender"),
-                        object.getInt("productPrice"),
-                        object.getDouble("cheap"),object.getInt("shipping"),object.getString("productPicture"));
+                Bundle setProductsName = new Bundle();
+                setProductsName.putSerializable("productsName", productsName);
+
 
              productList.add(mainListPro);
             }
@@ -123,16 +121,9 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
     }
 
-
-
-
-//    public void initFragment(Fragment fragment){
-//        FragmentTransaction fragmentTransaction = Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.container, fragment);
-//        fragmentTransaction.addToBackStack("fragment");
-//        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-//        fragmentTransaction.commit();
-//
-//    }
-
 }
+
+
+
+
+

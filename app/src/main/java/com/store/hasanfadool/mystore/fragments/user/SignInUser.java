@@ -105,6 +105,11 @@ public class SignInUser extends Fragment {
                 // forget Email >> an idea the mail has in a file ?
                // readMailFromFile();
                 Toast.makeText(getActivity(), "readMailFromFile", Toast.LENGTH_SHORT).show();
+                String m = readMailFromFile().toString();
+
+                Bundle sendMAilBundle = new Bundle();
+                sendMAilBundle.putString("mailInBundle", m);
+
 
             }
         });
