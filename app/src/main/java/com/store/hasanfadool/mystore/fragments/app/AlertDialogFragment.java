@@ -1,5 +1,6 @@
 package com.store.hasanfadool.mystore.fragments.app;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.user.RegisterNewUser;
+import com.store.hasanfadool.mystore.fragments.user.SignInUser;
 
 public class AlertDialogFragment extends DialogFragment {
 
@@ -24,6 +26,7 @@ public class AlertDialogFragment extends DialogFragment {
     Button noBtn, yesBtn;
     Context context;
 
+    @SuppressLint("InflateParams")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,6 +72,8 @@ public class AlertDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 Toast.makeText(context, "כן, זהו המיל שלי", Toast.LENGTH_SHORT).show();
                     // go to sign in page and set the mail at the box Edit text
+                SignInUser signInUser = new SignInUser();
+                initFragment(signInUser);
             }
         });
 
