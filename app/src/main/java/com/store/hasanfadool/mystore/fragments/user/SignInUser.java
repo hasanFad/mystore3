@@ -29,10 +29,11 @@ public class SignInUser extends Fragment implements AsyncResponse {
     Context context;
     FragmentManager fragmentManager;
     EditText mail, pass;
-    Button sendData, forgetPass,forgetMail;
+    Button sendData, forgetPass;
 
     CheckUserAsync checkUserAsync = new CheckUserAsync();
 
+    String userPassFromFile;
     User myUser;
 
     Bundle sendUser = new Bundle();
@@ -59,7 +60,6 @@ public class SignInUser extends Fragment implements AsyncResponse {
             // Buttons
         sendData = view.findViewById(R.id.signInButton_signInUser);
         forgetPass = view.findViewById(R.id.forgetPassButton_signInUser);
-        forgetMail = view.findViewById(R.id.forgetMailButton_signInUser);
 
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +82,7 @@ public class SignInUser extends Fragment implements AsyncResponse {
                     sendUser.putString("myUserMail", mail.getText().toString());
                     sendUser.putString("myUserPass", pass.getText().toString());
 
+
                     checkUserAsync.execute(sendUser);
                     getTheAsync();
 
@@ -97,51 +98,16 @@ public class SignInUser extends Fragment implements AsyncResponse {
             public void onClick(View view) {
                 // forget password search by mail
 
-               View adView =  LayoutInflater.from(context).inflate(R.layout.forget_password_user, null, false);
-                final AlertDialog dialog = new AlertDialog.Builder(context)
-                        .setView(adView).create();
-
-                final EditText forgetText = adView.findViewById(R.id.forgetPassET_forgetPasswordUser);
-                Button cancelButton = adView.findViewById(R.id.forgetPassCancelButton_forgetPasswordUser);
-                Button okButton = adView.findViewById(R.id.forgetPassOkButton_forgetPasswordUser);
-
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // button to cancel the forget pass dialog
-                        dialog.dismiss();
-                    }
-                });
-
-                okButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // button to get start from the Edit Text
-                        String myText = forgetText.getText().toString();
-                        Bundle sendText = new Bundle();
-                        sendText.putString("userMail", myText);
-                        
-                    }
-                });
+                readMailFromFile();
+                if (userPassFromFile != null){
+                    Toast.makeText(context, "your password is " + userPassFromFile, Toast.LENGTH_SHORT).show();
+                    pass.setText(userPassFromFile);
+                }
 
 
             }
         });
 
-        forgetMail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // forget Email >> an idea the mail has in a file ?
-               // readMailFromFile();
-                Toast.makeText(getActivity(), "readMailFromFile", Toast.LENGTH_SHORT).show();
-                String m = readMailFromFile().toString();
-
-                Bundle sendMAilBundle = new Bundle();
-                sendMAilBundle.putString("mailInBundle", m);
-
-
-            }
-        });
 
 
     }
@@ -172,11 +138,11 @@ public class SignInUser extends Fragment implements AsyncResponse {
     }
 
 
-    private StringBuilder readMailFromFile() {
+    private void readMailFromFile() {
 
         StringBuilder st = new StringBuilder();
         try{
-            FileInputStream fileInputStream = context.openFileInput("userMailLocalFile.txt");
+            FileInputStream fileInputStream = context.openFileInput("userPassLocalFile.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 
             char[] inputBuffer = new char[100];
@@ -194,7 +160,9 @@ public class SignInUser extends Fragment implements AsyncResponse {
         }catch (IOException e){
             e.printStackTrace();
         }
-        return st;
+
+        userPassFromFile = String.valueOf(st);
+
     }
 
 }
