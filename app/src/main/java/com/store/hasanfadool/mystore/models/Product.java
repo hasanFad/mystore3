@@ -1,15 +1,14 @@
 package com.store.hasanfadool.mystore.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Product implements Serializable {
+public class Product extends ArrayList<String> implements Serializable {
 
-    private String proName, proColor, compName, gender, proPic;
+    private String proName, proColor, compName, gender, proPic, proCode;
     private int proPrice, shipping, range;
     private double cheap;
     private boolean favoriteProduct;
-
-
 
 
             // for details
@@ -41,9 +40,6 @@ public class Product implements Serializable {
 
     }
 
-    public Product(String proName){
-        this.proName = proName;
-    }
 
     public String getProPic() {
     return proPic;
@@ -99,6 +95,22 @@ public class Product implements Serializable {
         return gender;
     }
 
+
+    public String getProCode() {
+        return proCode;
+    }
+
+    public void setProCode(String proCode) {
+        this.proCode = proCode;
+    }
+
+    public void setFavoriteProduct(boolean favoriteProduct) {
+        this.favoriteProduct = favoriteProduct;
+    }
+
+    public int getRange() {
+        return range;
+    }
 
     public void setCompName(String compName) {
         this.compName = compName;

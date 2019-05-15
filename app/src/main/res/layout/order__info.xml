@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:background="@color/blue"
         android:orientation="horizontal">
 
@@ -16,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/orderNum"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:layout_marginTop="10dp"
 
         />
@@ -26,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/noNum"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/red"/>
 
@@ -34,14 +35,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@color/red">
+        android:layout_height="wrap_content">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
-            android:text="תודה שקניתם אצלינו, הקבלה תשלח אליכם עם המוצר!"/>
+            android:text="@string/thanksForBuy"/>
+
     </LinearLayout>
 
     <RelativeLayout
@@ -52,12 +53,15 @@
             android:id="@+id/shoppingCardButton-orderInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/shoppingCard"
-           android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="20dp"
+            android:layout_toEndOf="@+id/continueToProductsButton_orderInfo"
+            android:text="@string/shoppingCard"
+            android:textColor="@color/blue"
             android:textSize="20sp"
-            android:textColor="@color/blue"/>
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/continueToProductsButton_orderInfo"
@@ -68,19 +72,20 @@
             android:textSize="20sp"
             android:layout_alignBaseline="@id/shoppingCardButton-orderInfo"
             android:layout_marginLeft="20dp"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            tools:ignore="RtlHardcoded" />
 
         <Button
             android:id="@+id/userOrdersButton_orderInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/myOrders"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold"
+            android:layout_below="@+id/continueToProductsButton_orderInfo"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/shoppingCardButton-orderInfo"
-            android:layout_marginTop="20dp"/>
+            android:layout_marginTop="20dp"
+            android:text="@string/myOrders"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
 

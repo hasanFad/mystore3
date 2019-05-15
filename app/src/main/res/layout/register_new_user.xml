@@ -185,11 +185,29 @@
         android:layout_alignBaseline="@id/userPasswordTV_registerNewUser"
         android:inputType="textPassword"/>
 
+    <CheckBox
+        android:id="@+id/userAgreeSMS_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sms"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:layout_below="@id/userPasswordTV_registerNewUser"/>
+
+    <CheckBox
+        android:id="@+id/userAgreeMail_registerNewUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/agreeMail"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:layout_below="@id/userAgreeSMS_registerNewUser"/>
+
     <Button
-        android:id="@+id/sendUserDataButton__registerNewUser"
+        android:id="@+id/sendUserDataButton_registerNewUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/userPasswordTV_registerNewUser"
+        android:layout_below="@id/userAgreeMail_registerNewUser"
         android:layout_marginStart="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="100dp"

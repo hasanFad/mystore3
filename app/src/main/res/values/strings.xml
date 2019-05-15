@@ -32,7 +32,7 @@
     <string name="yourPass">סיסמה שלך</string>
     <string name="invaledUser">משתמש קיים</string>
     <string name="enter">כניסה</string>
-    <string name="forgetPassTxt">אם הינך לא זוכר סיסמה שלך נא לחץ.י כאן</string>
+    <string name="forgetPassTxt">שכחתם סיסמה?לא נורה!</string>
     <string name="pressHere">לחץ.י כאן</string>
     <string name="forgetMailTxt">אם שכחתה את המיל שלך נא</string>
     <string name="goT">go To Pay Page</string>
@@ -42,5 +42,18 @@
     <string name="continueToProducts">המשך למוצרים</string>
     <string name="myOrders">הזמנות שלי</string>
     <string name="searchProduct">חיפוש מוצר</string>
+    <string name="alertYourMail">האם זהו המיל שלך?</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+    <string name="developerMail">hasasana68@gmail.com</string>
+    <string name="noProducts">אין מוצרים</string>
+    <string name="sms">רוצה לקבל הודעות SMS</string>
+    <string name="agreeMail">רוצה לקבל הודעות מיל</string>
+    <string name="forgetPass">שכחתי סיסמה</string>
+    <string name="cancel">ביטול</string>
+    <string name="ok">אישור</string>
+    <string name="freeShipping">משלוח חינם</string>
+    <string name="thanksForBuy">תודה שקניתם אצלינו, הקבלה תשלח אליכם עם המוצר!</string>
+
 
 </resources>

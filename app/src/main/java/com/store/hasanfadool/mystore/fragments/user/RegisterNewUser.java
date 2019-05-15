@@ -1,5 +1,6 @@
 package com.store.hasanfadool.mystore.fragments.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
+import com.store.hasanfadool.mystore.models.User;
+import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.InsertNewUser;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
 import org.ksoap2.SoapEnvelope;
@@ -32,9 +36,14 @@ public class RegisterNewUser extends Fragment {
     EditText userFName, userLName, userEmail, userPhone, userCity, userStreet ,userHomeNumber, userPostelCode, userPOpost, userPass;
     Button sendData;
 
+    CheckBox smsAgree,mailAgree;
+    int sms, mail,userHN;
+    User newUser;
+
     GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
 
+    @SuppressLint("InflateParams")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,14 +68,27 @@ public class RegisterNewUser extends Fragment {
         userPostelCode = view.findViewById(R.id.userPostelCodeET_registerNewUser);
         userPOpost = view.findViewById(R.id.userPOpostET_registerNewUser);
         userPass = view.findViewById(R.id.userPasswordET_registerNewUser);
+        smsAgree = view.findViewById(R.id.userAgreeSMS_registerNewUser);
+        mailAgree = view.findViewById(R.id.userAgreeMail_registerNewUser);
 
 
-        sendData = view.findViewById(R.id.sendUserDataButton__registerNewUser);
+
+        sendData = view.findViewById(R.id.sendUserDataButton_registerNewUser);
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Toast.makeText(context, getString(R.string.pleaseWait), Toast.LENGTH_SHORT).show();
 
+                if (smsAgree.isChecked()){
+                    sms = 1;
+                }else {
+                    sms = 0;
+                }
+                if (mailAgree.isChecked()){
+                    mail = 1;
+                }else {
+                    mail = 0;
+                }
                 if (userFName.getText() ==null || userFName.getText().toString().equals("")){
                     Toast.makeText(context, "שם שלך לא יכול להיות ריק!", Toast.LENGTH_SHORT).show();
                 }else if (userFName.getText().length() < 3){
@@ -92,6 +114,7 @@ public class RegisterNewUser extends Fragment {
                 }else if (userHomeNumber.getText().toString().equals("")){
                     Toast.makeText(context, "מס' בית ריק!", Toast.LENGTH_SHORT).show();
                 }else if (userPostelCode.getText().toString().equals("")){
+                    userHN  = Integer.parseInt(userHomeNumber.getText().toString());
                     Toast.makeText(context, "מס' ת.ד ריק!", Toast.LENGTH_SHORT).show();
                 }else if (userPass.getText().length() < 6 ){
                     Toast.makeText(context, "הסיסמה שלך לא יכולה להיות פחות מ-6 אותיות ", Toast.LENGTH_SHORT).show();
@@ -101,7 +124,14 @@ public class RegisterNewUser extends Fragment {
                             // it's O.K
                     Toast.makeText(context, "ההרשמה מתבצעת..תועבר בהמשך...", Toast.LENGTH_SHORT).show();
 
-                    new InserNewUser().doInBackground();
+                    newUser = new User(userFName.getText().toString(),userLName.getText().toString(), userEmail.getText().toString(),
+                            userPhone.getText().toString(), userCity.getText().toString(),
+                            userStreet.getText().toString(),Integer.parseInt(userHomeNumber.getText().toString()),
+                            Integer.parseInt(userPostelCode.getText().toString())
+                            ,userPOpost.getText().toString(),userPass.getText().toString(),sms,mail);
+
+                    InsertNewUser insertNewUser = new InsertNewUser();
+                    insertNewUser.execute(newUser);
 
 
                 }
@@ -109,106 +139,7 @@ public class RegisterNewUser extends Fragment {
         });
     }
 
-    private static final String NAMESPACE = "http://it.pro.com/"; // http://vip_register/
-    private  final String url = myIp + "/insertProductDataWS/InsertWS?WSDL"; // http://localhost:8080/MyWorkerApp/RegisterVIP?WSDL
-    private static final String METHOD_NAME = "insertProductsWS"; // RegisterVIP
-    private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME; // http://vip_register/RegisterVIP
 
-public class InserNewUser extends AsyncTask<Void,Void,String>{
-
-    @Override
-    protected String doInBackground(Void... voids) {
-        try{
-            SoapObject request = new SoapObject(NAMESPACE,METHOD_NAME);
-            //  userFName userLName userEmail  userPhone  userCity userStreet
-            // userHomeNumber userPostelCode  userPOpost userPass
-
-            //1
-            PropertyInfo proFName = new PropertyInfo();
-            proFName.setName("userFName");
-            proFName.setValue(userFName.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proFName);
-
-             //2
-            PropertyInfo proLName = new PropertyInfo();
-            proFName.setName("userLName");
-            proFName.setValue(userLName.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proLName);
-
-             //3
-            PropertyInfo proMail = new PropertyInfo();
-            proFName.setName("userEmail");
-            proFName.setValue(userEmail.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proMail);
-
-             //4
-            PropertyInfo proPhone = new PropertyInfo();
-            proFName.setName("userPhone");
-            proFName.setValue(userPhone.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proPhone);
-
-             //5
-            PropertyInfo proCity = new PropertyInfo();
-            proFName.setName("userCity");
-            proFName.setValue(userCity.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proCity);
-
-             //6
-            PropertyInfo proStreet = new PropertyInfo();
-            proFName.setName("userStreet");
-            proFName.setValue(userStreet.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proStreet);
-
-             //7
-            PropertyInfo proHomeNum = new PropertyInfo();
-            proFName.setName("userHomeNumber");
-            proFName.setValue(userHomeNumber.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proHomeNum);
-
-             //8
-            PropertyInfo proPostilCode = new PropertyInfo();
-            proFName.setName("userPostelCode");
-            proFName.setValue(userPostelCode.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proPostilCode);
-
-             //9
-            PropertyInfo proPOPost = new PropertyInfo();
-            proFName.setName("userPOpost");
-            proFName.setValue(userPOpost.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proPOPost);
-
-             //10
-            PropertyInfo proPass = new PropertyInfo();
-            proFName.setName("userPass");
-            proFName.setValue(userPass.getText().toString());
-            proFName.setType(PropertyInfo.STRING_CLASS);
-            request.addProperty(proPass);
-
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-            envelope.dotNet = false;
-
-            HttpTransportSE httpTransportSE = new HttpTransportSE(url);
-            httpTransportSE.call(SOAP_ACTION, envelope);
-            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
-
-            return response.toString();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        return "error";
-
-    }
-}
 
 
 }

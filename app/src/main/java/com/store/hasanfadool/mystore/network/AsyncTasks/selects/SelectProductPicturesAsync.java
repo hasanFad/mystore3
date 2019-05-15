@@ -1,11 +1,9 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.network.GetDomin;
-import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -46,7 +44,7 @@ public class SelectProductPicturesAsync extends AsyncTask<Void,Void, String> {
         }
 
 
-        return "";
+        return "error";
     }
 
     // send the response.toString() to the interface

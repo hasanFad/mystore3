@@ -1,7 +1,9 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.network.GetDomin;
@@ -15,10 +17,11 @@ import org.ksoap2.transport.HttpTransportSE;
 
 public class SelectProductRangeAsync extends AsyncTask<Void,Void,String> {
 
-    private Bundle getProductCode = new Bundle();
 
     public AsyncResponse delegate = null;
+    Context context;
 
+    String proCode;
     private GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
     private final String url = myIp + "";
@@ -27,35 +30,50 @@ public class SelectProductRangeAsync extends AsyncTask<Void,Void,String> {
     private static final String METHOD_NAME = "insertProductsWS"; // RegisterVIP
     private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME; // http://vip_register/RegisterVIP
 
+
     @Override
     protected String doInBackground(Void... voids) {
-        String productCode = "From BUNDLE";
+        if (proCode != null) {
+            try {
 
-        try{
-            SoapObject rquest = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            PropertyInfo proCode = new PropertyInfo();
-            proCode.setName("productCode");
-            proCode.setValue(productCode);
-            proCode.setType(PropertyInfo.STRING_CLASS);
-            rquest.addProperty(proCode);
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(rquest);
-            envelope.dotNet = false;
+                // product code
+                PropertyInfo propCode = new PropertyInfo();
+                propCode.setName("proCode");
+                propCode.setValue(proCode);
+                propCode.setType(PropertyInfo.STRING_CLASS);
+                request.addProperty(propCode);
 
-            HttpTransportSE ht = new HttpTransportSE(url);
-            ht.call(SOAP_ACTION, envelope);
-            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                envelope.dotNet = false;
 
-            return response.toString();
-        }catch (Exception e){
-            e.printStackTrace();
+                HttpTransportSE ht = new HttpTransportSE(url);
+                ht.call(SOAP_ACTION, envelope);
+                SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+
+                String status =  response.toString();
+                if (status.isEmpty()){
+                    // no user
+                    Toast.makeText(context, "no product", Toast.LENGTH_SHORT).show();
+                }else {
+                    // product ok
+                    Toast.makeText(context, "yse product", Toast.LENGTH_SHORT).show();
+
+                return response.toString();
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
+            return "error";
 
-        return "error";
     }
-
 
     @Override
     protected void onPostExecute(String jsonString) {
@@ -64,4 +82,9 @@ public class SelectProductRangeAsync extends AsyncTask<Void,Void,String> {
             delegate.processFinish(jsonString);
         }
     }
+
+    public void execute(String proCode) {
+    this.proCode = proCode;
+    }
+
 }

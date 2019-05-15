@@ -2,14 +2,13 @@ package com.store.hasanfadool.mystore.ui.adapters;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +16,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.ProductInfoFragment;
+import com.store.hasanfadool.mystore.fragments.app.ProductPicturesFragment;
 import com.store.hasanfadool.mystore.models.Product;
 
 import java.util.List;
@@ -32,12 +31,22 @@ public class ProductAdapter extends BaseAdapter {
 
     private Context context;
       private List<Product> productList;
+      private FragmentManager fragmentManager;
 
 
+    public Context getContext() {
+        return context;
+    }
 
-    public ProductAdapter(Context context, List<Product> productList) {
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+
+    public ProductAdapter(FragmentManager fragmentManager,Context context, List<Product> productList) {
         this.context = context;
         this.productList = productList;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override
@@ -77,6 +86,7 @@ public class ProductAdapter extends BaseAdapter {
                         // if the product don't has cheap it's will disappear from the xml
         if (currentProduct.getCheap()  == 0 ){
             productCheap.setText("");
+
         }else {
             // this is the format for the double
         productCheap.setText(String.format("הנחה ב %.2f", currentProduct.getCheap()));
@@ -85,27 +95,47 @@ public class ProductAdapter extends BaseAdapter {
 
         Bitmap bm = StringToBitmap(currentProduct.getProPic()); // the string we got from the json object
         productImage.setImageBitmap(bm); // function to encode the string
+            // on click from the image go to product images
+        productImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Bundle sendImageBundle = new Bundle();
+                sendImageBundle.putString("productPicture", currentProduct.getProPic());
+
+                ProductPicturesFragment productPicturesFragment = new ProductPicturesFragment();
+                productPicturesFragment.setArguments(sendImageBundle);
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, productPicturesFragment);
+                fragmentTransaction.addToBackStack("fragment");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+            }
+        });
 
         cellLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "hii" + currentProduct.getProName(), Toast.LENGTH_SHORT).show();
 
  // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
-                Product proInfo = new Product(currentProduct.getProName(),currentProduct.getProColor(),currentProduct.getCompName(),
-                        currentProduct.getGender(),currentProduct.getProPrice(),currentProduct.getCheap(),currentProduct.getShipping(),
-                        currentProduct.getProPic());
 
                 Bundle sendProInfoBundle = new Bundle();
-                sendProInfoBundle.putSerializable("proInfo", proInfo);
+                sendProInfoBundle.putString("proName", currentProduct.getProName());
+                sendProInfoBundle.putString("proColor", currentProduct.getProColor());
+                sendProInfoBundle.putString("companName", currentProduct.getCompName());
+                sendProInfoBundle.putString("gnder", currentProduct.getGender());
+                sendProInfoBundle.putInt("proPrice", currentProduct.getProPrice());
+                sendProInfoBundle.putDouble("productCheap", currentProduct.getCheap());
+                sendProInfoBundle.putInt("proShipping", currentProduct.getShipping());
+                sendProInfoBundle.putString("productPicture", currentProduct.getProPic());
 
-
-//                Fragment fragment = new ProductInfoFragment();
-//                FragmentManager fragmentManager ;
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.container, fragment);
-//                fragmentTransaction.commit();
-
+                ProductInfoFragment productInfoFragment = new ProductInfoFragment();
+                productInfoFragment.setArguments(sendProInfoBundle);
+                @SuppressLint("CommitTransaction") FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, productInfoFragment);
+                fragmentTransaction.addToBackStack("fragment");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
 
             }
         });
@@ -122,12 +152,6 @@ public class ProductAdapter extends BaseAdapter {
             byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 }
-
-
-
-
-
-
 
 }
 

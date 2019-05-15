@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class ShoppingCard extends Fragment {
     ArrayList<Product> arrayList;
     ProductAdapter adapter;
     ListView listView;
+    FragmentManager fragmentManager;
 
     Context context;
     @Nullable
@@ -34,11 +36,8 @@ public class ShoppingCard extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity();
+        fragmentManager = getFragmentManager();
 
-        listView = view.findViewById(R.id.productsList);
-        arrayList = new ArrayList<>();
-        adapter = new ProductAdapter(context, arrayList);
-        listView.setAdapter(adapter);
 
         // send the product codes from local DB to WS to get the product runtime info
 

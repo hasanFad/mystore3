@@ -2,7 +2,7 @@ package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
 import android.os.AsyncTask;
 
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.fragments.user.SignInUser;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
 import org.ksoap2.SoapEnvelope;
@@ -13,7 +13,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 public class SelectUserPasswordAsync extends AsyncTask<Void,Void,String> {
 
-    public AsyncResponse delegate = null;
+    public SignInUser delegat = null;
 
 
     private static final String NAMESPACE = "http://it.pro.com/";
@@ -49,7 +49,7 @@ public class SelectUserPasswordAsync extends AsyncTask<Void,Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (s != null && !s.isEmpty()){
-            delegate.processFinish(s);
+            delegat.processFinish(s);
         }
     }
 }

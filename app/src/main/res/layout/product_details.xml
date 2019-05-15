@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -24,13 +23,16 @@
         android:layout_alignParentRight="true"
         android:textStyle="bold"/>
 
-   <CheckBox
-       android:id="@+id/favoriteProductCB_productDetails"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignBaseline="@id/productNameTV_productDetails"
-       android:text="@string/addToShoppingCard"
-       android:textStyle="bold"/>
+ <CheckBox
+     android:id="@+id/favoriteProductCB_productDetails"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_alignBaseline="@id/productNameTV_productDetails"
+     android:layout_alignParentLeft="true"
+     android:layout_marginEnd="157dp"
+     android:layout_toStartOf="@+id/productNameTV_productDetails"
+     android:text="@string/addToShoppingCard"
+     android:textStyle="bold" />
 
     <TextView
         android:id="@+id/productColorTV_productDetails"
@@ -97,11 +99,16 @@
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_alignBaseline="@id/productPriceTV_productDetails"
-       android:layout_margin="5dp"
+       android:layout_alignParentLeft="true"
+       android:layout_marginStart="5dp"
+       android:layout_marginLeft="4dp"
+       android:layout_marginTop="5dp"
+       android:layout_marginBottom="5dp"
+       android:layout_toStartOf="@+id/productCheapTV_productDetails"
        android:text="@string/finalPrice"
-       android:textStyle="bold"
        android:textColor="@color/colorPrimary"
-       android:textSize="25sp" />
+       android:textSize="25sp"
+       android:textStyle="bold" />
 
     <TextView
         android:id="@+id/rangeTV_productDetails"
@@ -118,8 +125,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/genderTV_productDetails"
+        android:layout_alignEnd="@+id/rangeTV_productDetails"
         android:layout_marginStart="-6dp"
         android:layout_marginTop="7dp"
+        android:layout_marginEnd="73dp"
         android:layout_toEndOf="@+id/productFinalPriceTV_productDetails">
 
     </Spinner>
@@ -128,25 +137,29 @@
         android:id="@+id/shippingTV_productDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/productPriceTV_productDetails"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="53dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/shipping"
         android:textSize="20sp"
-        android:textStyle="italic"
-        android:layout_below="@id/productCheapTV_productDetails"
-        android:layout_alignParentRight="true"
-        android:layout_margin="5dp"/>
+        android:textStyle="italic" />
 
     <ImageView
         android:id="@+id/productIV_productDetails"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_below="@id/productPriceTV_productDetails"
-        android:layout_alignStart="@+id/rangeSpinner_productDetails"
-        android:layout_marginTop="100dp"
+        android:layout_below="@+id/shippingTV_productDetails"
+        android:layout_alignStart="@id/rangeSpinner_productDetails"
+        android:layout_marginStart="-56dp"
+        android:layout_marginTop="47dp"
         android:layout_marginBottom="10dp"
         android:clickable="true"
         android:contentDescription="@string/image"
-        android:focusable="true"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:focusable="true" />
 
 
 

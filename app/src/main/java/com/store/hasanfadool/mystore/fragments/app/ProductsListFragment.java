@@ -7,14 +7,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ListView;
-
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
@@ -27,21 +24,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class ProductsListFragment extends Fragment implements AsyncResponse {
     private static final String TAG = "ProductsListFragment";
 
-
-    ArrayList<Product> productList;
-    ProductAdapter adapter;
-    Context context;
+    ArrayList<Product> productList; // the main array list
+    ProductAdapter adapter; // adapter for main array list
     ListView listViewProduct;
+    Context context;
 
-
-
-
+    FragmentManager fragmentManager; // send with adapter for init fragment
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -58,23 +52,22 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
         Log.d(TAG, "onViewCreated: ");
 
         context = getActivity();
+        fragmentManager = getFragmentManager();
+
+
 
         listViewProduct = view.findViewById(R.id.productsList);
 
         productList = new ArrayList<>();
-        adapter = new ProductAdapter(context, productList);
+        adapter = new ProductAdapter(fragmentManager,context, productList);
         listViewProduct.setAdapter(adapter);
-
 
 
         SelectProductsAsync selectProductsAsync = new SelectProductsAsync(); // class will connection to th WS
 
         selectProductsAsync.execute();
 
-        selectProductsAsync.delegate = this; // the listener
-
-
-
+        selectProductsAsync.delegate = this;
 
     }
 
@@ -92,7 +85,6 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
             productList.clear();
 
-
             for (int i = 0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
 
@@ -102,14 +94,10 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
                         object.getInt("productPrice"),object.getDouble("cheap"),
                         object.getInt("shipping"), object.getString("productPicture"));
 
-                Product productsName = new Product(object.getString("productName")); // for the search
-
-                Bundle setProductsName = new Bundle();
-                setProductsName.putSerializable("productsName", productsName);
-
-
              productList.add(mainListPro);
+
             }
+
             adapter.notifyDataSetChanged();
 
         } catch (JSONException e) {
@@ -118,8 +106,13 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
 
         return productList;
 
-
     }
+
+    public List<Product> getProductList(){
+
+        return this.productList;
+    }
+
 
 }
 

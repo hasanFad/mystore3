@@ -12,15 +12,19 @@ public class ForNewVersion {
 
 
     // 3
-//    start getting the products from WS when start the splash screen
+//     getting the products from WS when start the splash screen
 
     // 4
 
-//    the user can add notes or remarks for the products
+//    the user can add notes/remarks/feedback for the products
 
     // 5
 
 //    the user can add picture for his profile
 
+
+    // 6
+
+//    get the register with facebook/instagram
 
 }

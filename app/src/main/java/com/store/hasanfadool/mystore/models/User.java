@@ -1,6 +1,8 @@
 package com.store.hasanfadool.mystore.models;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
     private String userName,userLName,userMail,userPhone,userCity,uStreet,  uPO_post, userPass, userImage;
     private int  uHomeNum, uPstelCode, mailAgree, smsAgree;

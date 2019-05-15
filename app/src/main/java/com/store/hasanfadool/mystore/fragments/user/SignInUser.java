@@ -1,11 +1,13 @@
 package com.store.hasanfadool.mystore.fragments.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +17,27 @@ import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
-import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.CheckUser;
-import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectUserPasswordAsync;
+import com.store.hasanfadool.mystore.models.User;
+import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SignInUser extends Fragment {
+public class SignInUser extends Fragment implements AsyncResponse {
 
-    SharedPreferences preferences;
-    SharedPreferences.Editor editor;
-
-    // ET mail , pass
-    //btn sendData, forgetPass, forgetMail
-
+    Context context;
+    FragmentManager fragmentManager;
     EditText mail, pass;
     Button sendData, forgetPass,forgetMail;
 
+    CheckUserAsync checkUserAsync = new CheckUserAsync();
+
+    User myUser;
+
+    Bundle sendUser = new Bundle();
+
+    @SuppressLint("InflateParams")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,11 +48,11 @@ public class SignInUser extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-                // to get the interface
-        final SelectUserPasswordAsync selectUserPasswordAsync = new SelectUserPasswordAsync();
-        selectUserPasswordAsync.delegate = (AsyncResponse) this;
 
-        final Context context = getActivity();
+        context = getActivity();
+        fragmentManager = getFragmentManager();
+
+
         // Edit Text
         mail = view.findViewById(R.id.mailET_signInUser);
         pass = view.findViewById(R.id.passwordET_signInUser);
@@ -70,17 +75,15 @@ public class SignInUser extends Fragment {
                 }else {
                   // it's O.K
 
+                    myUser =  new User(mail.getText().toString(), pass.getText().toString());
 
                         // save the values
 
-                    Bundle sendMail = new Bundle();
-                    sendMail.putString("UserMAil", mail.getText().toString());
+                    sendUser.putString("myUserMail", mail.getText().toString());
+                    sendUser.putString("myUserPass", pass.getText().toString());
 
-                    Bundle sendPass = new Bundle();
-                    sendPass.putString("userPAss", pass.getText().toString());
-
-                    CheckUser checkUser = new CheckUser();
-                    checkUser.execute();
+                    checkUserAsync.execute(sendUser);
+                    getTheAsync();
 
                 }
 
@@ -94,7 +97,33 @@ public class SignInUser extends Fragment {
             public void onClick(View view) {
                 // forget password search by mail
 
-                selectUserPasswordAsync.execute();
+               View adView =  LayoutInflater.from(context).inflate(R.layout.forget_password_user, null, false);
+                final AlertDialog dialog = new AlertDialog.Builder(context)
+                        .setView(adView).create();
+
+                final EditText forgetText = adView.findViewById(R.id.forgetPassET_forgetPasswordUser);
+                Button cancelButton = adView.findViewById(R.id.forgetPassCancelButton_forgetPasswordUser);
+                Button okButton = adView.findViewById(R.id.forgetPassOkButton_forgetPasswordUser);
+
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // button to cancel the forget pass dialog
+                        dialog.dismiss();
+                    }
+                });
+
+                okButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // button to get start from the Edit Text
+                        String myText = forgetText.getText().toString();
+                        Bundle sendText = new Bundle();
+                        sendText.putString("userMail", myText);
+                        
+                    }
+                });
+
 
             }
         });
@@ -117,8 +146,34 @@ public class SignInUser extends Fragment {
 
     }
 
+    private void getTheAsync() {
+        checkUserAsync.resultInterFace = this;
+    }
+
+    @SuppressLint("ResourceAsColor")
+    @Override
+    public void processFinish(String outPut) {
+
+        if (outPut.isEmpty()){
+            mail.setTextColor(R.color.red);
+            pass.setTextColor(R.color.red);
+        }else {
+            // the mail & pass are ok , go to user panel
+            goToUserPanel();
+        }
+
+    }
+
+    private void goToUserPanel() {
+
+        // the mail & pass ok now will go to user panel
+        // the shared prenfesses will be at here
+        Toast.makeText(context, "the mail and the pass are okay", Toast.LENGTH_SHORT).show();
+    }
+
+
     private StringBuilder readMailFromFile() {
-        Context context = getActivity();
+
         StringBuilder st = new StringBuilder();
         try{
             FileInputStream fileInputStream = context.openFileInput("userMailLocalFile.txt");

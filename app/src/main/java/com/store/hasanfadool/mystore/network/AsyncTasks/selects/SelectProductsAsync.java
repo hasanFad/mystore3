@@ -1,9 +1,6 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.content.Loader;
 import android.util.Log;
 
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
@@ -19,13 +16,11 @@ import org.ksoap2.transport.HttpTransportSE;
 public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
     private static final String TAG = "SelectProductsAsync";
 
-
-
     public AsyncResponse delegate = null;
 
     private static final String NAMESPACE = "http://it.pro.com/";
 
-    private GetDomin getDomin = new GetDomin(); // to get the ip and port from GetDomin class
+    private GetDomin getDomin = new GetDomin(); // to get the ip and port from/ GetDomin class
     private String myIp = getDomin.myIpPort();
 
     private final String URL = myIp + "/Selects/Selects?WSDL";
@@ -64,16 +59,14 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
 
 
+
     @Override
     protected void onPostExecute(String jsonString) {
         super.onPostExecute(jsonString);
         if (jsonString != null && !jsonString.isEmpty()){
-
             delegate.processFinish(jsonString);
 
-
         }
-
 
     }
 
