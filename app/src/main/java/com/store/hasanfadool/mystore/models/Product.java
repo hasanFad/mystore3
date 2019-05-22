@@ -6,15 +6,16 @@ import java.util.ArrayList;
 public class Product extends ArrayList<String> implements Serializable {
 
     private String proName, proColor, compName, gender, proPic, proCode;
-    private int proPrice, shipping, range;
+    private int proPrice, shipping, range , quantity;
     private double cheap;
     private boolean favoriteProduct;
 
 
             // for details
-    public Product(String productName, String productColor,
+    public Product(String proCode,String productName, String productColor,
                    String companyName, String gender, int productPrice,
                   double productCheap, int shipping ,String productPicture) {
+        this.proCode = proCode;
         this.compName = companyName;
         this.gender = gender;
         this.shipping = shipping;
@@ -35,15 +36,28 @@ public class Product extends ArrayList<String> implements Serializable {
         this.shipping = shipping;
     }
 
-    public Product(int range){
+    public Product(String proCode, int range, int quantity){
         this.range = range;
+        this.proCode = proCode;
+        this.quantity = quantity;
 
     }
 
+    public Product(String proCode){
+        this.proCode = proCode;
+    }
 
     public String getProPic() {
     return proPic;
 
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public boolean isFavoriteProduct() {

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.ProductInfoFragment;
 import com.store.hasanfadool.mystore.fragments.app.ProductPicturesFragment;
+import com.store.hasanfadool.mystore.fragments.app.ProductsListFragment;
 import com.store.hasanfadool.mystore.models.Product;
 
 import java.util.List;
@@ -32,6 +34,8 @@ public class ProductAdapter extends BaseAdapter {
     private Context context;
       private List<Product> productList;
       private FragmentManager fragmentManager;
+
+      Product iProduct;
 
 
     public Context getContext() {
@@ -113,24 +117,20 @@ public class ProductAdapter extends BaseAdapter {
             }
         });
 
+            // click for information
         cellLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
  // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
 
-                Bundle sendProInfoBundle = new Bundle();
-                sendProInfoBundle.putString("proName", currentProduct.getProName());
-                sendProInfoBundle.putString("proColor", currentProduct.getProColor());
-                sendProInfoBundle.putString("companName", currentProduct.getCompName());
-                sendProInfoBundle.putString("gnder", currentProduct.getGender());
-                sendProInfoBundle.putInt("proPrice", currentProduct.getProPrice());
-                sendProInfoBundle.putDouble("productCheap", currentProduct.getCheap());
-                sendProInfoBundle.putInt("proShipping", currentProduct.getShipping());
-                sendProInfoBundle.putString("productPicture", currentProduct.getProPic());
+                ProductsListFragment productsListFragment = new ProductsListFragment();
+                productsListFragment.sendMyProduct();
 
+
+                Log.d("hasan", "my code is: " + currentProduct.getProCode());
                 ProductInfoFragment productInfoFragment = new ProductInfoFragment();
-                productInfoFragment.setArguments(sendProInfoBundle);
+                productInfoFragment.setiProduct(currentProduct);
                 @SuppressLint("CommitTransaction") FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, productInfoFragment);
                 fragmentTransaction.addToBackStack("fragment");
@@ -152,6 +152,7 @@ public class ProductAdapter extends BaseAdapter {
             byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
 }
+
 
 }
 

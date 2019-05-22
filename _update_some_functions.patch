@@ -1,0 +1,512 @@
+Index: app/src/main/java/com/store/hasanfadool/mystore/fragments/app/ProductPicturesFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/store/hasanfadool/mystore/fragments/app/ProductPicturesFragment.java	(date 1557932343000)
++++ app/src/main/java/com/store/hasanfadool/mystore/fragments/app/ProductPicturesFragment.java	(date 1557779007000)
+@@ -1,13 +1,14 @@
+ package com.store.hasanfadool.mystore.fragments.app;
+ 
++import android.annotation.SuppressLint;
+ import android.content.Context;
+ import android.graphics.Bitmap;
+ import android.graphics.BitmapFactory;
+-import android.graphics.drawable.Drawable;
+ import android.os.Bundle;
+ import android.support.annotation.NonNull;
+ import android.support.annotation.Nullable;
+ import android.support.v4.app.Fragment;
++import android.support.v4.app.FragmentManager;
+ import android.util.Base64;
+ import android.view.LayoutInflater;
+ import android.view.View;
+@@ -18,6 +19,7 @@
+ 
+ import com.store.hasanfadool.mystore.R;
+ import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
++import com.store.hasanfadool.mystore.models.Picture;
+ import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductPicturesAsync;
+ 
+ import org.json.JSONArray;
+@@ -27,10 +29,15 @@
+ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
+ 
+     Context context;
++    FragmentManager fragmentManager;
+ 
+-    ImageView bigPicture,picture1,picture2,picture3;
+-    Button rightButton,leftButton;
++    Bitmap b0,b1,b2,b3;
++    ImageView smallPic1,smallPic2,smallPic3, bigPic;
++    Button leftButton,rightButton;
++    Picture myPictures;
++    String mm ;
+ 
++    @SuppressLint("InflateParams")
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+@@ -43,94 +50,151 @@
+         super.onViewCreated(view, savedInstanceState);
+ 
+ 
+-
+-        bigPicture = view.findViewWithTag(R.id.bigPicture_productPictures);
+-        picture1 = view.findViewWithTag(R.id.smallPic1_productPictures);
+-        picture2 = view.findViewWithTag(R.id.smallPic2_productPictures);
+-        picture3 = view.findViewWithTag(R.id.smallPic3_productPictures);
++        context = getActivity();
++        fragmentManager = getFragmentManager();
++        Bundle getProductImage = getArguments();
++        if (getProductImage != null){
++            mm = getProductImage.getString("productPicture");
++        }
+ 
+-        rightButton = view.findViewWithTag(R.id.rightButton_productPictures);
+-        leftButton = view.findViewWithTag(R.id.leftButton_productPictures);
+-
++            // get the pictures from the WS and use the listener
+         SelectProductPicturesAsync selectProductPicturesAsync = new SelectProductPicturesAsync();
+-        selectProductPicturesAsync.delegate = this;
+         selectProductPicturesAsync.execute();
+-
++        selectProductPicturesAsync.delegate = this;
+ 
+ 
+-        rightButton.setOnClickListener(new View.OnClickListener() {
+-            @Override
+-            public void onClick(View view) {
+-                // set the right picture to the big picture
+-                Toast.makeText(context, "the right Button", Toast.LENGTH_SHORT).show();
+ 
++        smallPic1 = view.findViewById(R.id.smallPic1_productPictures);
++        smallPic2 = view.findViewById(R.id.smallPic2_productPictures);
++        smallPic3 = view.findViewById(R.id.smallPic3_productPictures);
++        bigPic = view.findViewById(R.id.bigPicture_productPictures);
+ 
++        leftButton = view.findViewById(R.id.leftButton_productPictures);
++        rightButton = view.findViewById(R.id.rightButton_productPictures);
+ 
+-
+-            }
+-        });
+ 
+         leftButton.setOnClickListener(new View.OnClickListener() {
+             @Override
+-            public void onClick(View view) {
+-                // set the left picture to the big picture
+-                Toast.makeText(context, "the left Button", Toast.LENGTH_SHORT).show();
+-            }
+-        });
++            public void onClick(View v) {
++                    // go to next picture
++
++                Toast.makeText(context, "go to next image", Toast.LENGTH_SHORT).show();
++
++                if (bigPic.getDrawable().toString().equals(b0.toString())){
++                    bigPic.setImageBitmap(b1);
++
++                    smallPic1.setImageBitmap(b2);
++                    smallPic2.setImageBitmap(b3);
++                    smallPic3.setImageBitmap(b0);
++
++                }else if(bigPic.getDrawable().toString().equals(b1.toString())){
++                    bigPic.setImageBitmap(b2);
++
++                    smallPic1.setImageBitmap(b3);
++                    smallPic2.setImageBitmap(b0);
++                    smallPic3.setImageBitmap(b1);
++
++                }else if (bigPic.getDrawable().toString().equals(b2.toString())){
++                    bigPic.setImageBitmap(b3);
++                    smallPic1.setImageBitmap(b0);
++                    smallPic2.setImageBitmap(b1);
++                    smallPic3.setImageBitmap(b2);
++
++                }else {
++                    bigPic.setImageBitmap(b0);
++                    smallPic1.setImageBitmap(b1);
++                    smallPic2.setImageBitmap(b2);
++                    smallPic3.setImageBitmap(b3);
++                }
++
++
++            }
++        });
++
++
++        rightButton.setOnClickListener(new View.OnClickListener() {
++            @Override
++            public void onClick(View v) {
++                    // go to back picture
++                Toast.makeText(context, "go te back image", Toast.LENGTH_SHORT).show();
++                if (bigPic.getDrawable().toString().equals(b0.toString())){
++                    bigPic.setImageBitmap(b3);
++                    smallPic1.setImageBitmap(b2);
++                    smallPic2.setImageBitmap(b1);
++                    smallPic3.setImageBitmap(b0);
+ 
++                }else if (bigPic.getDrawable().toString().equals(myPictures.getPicture3())){
++                    bigPic.setImageBitmap(b2);
++                    smallPic1.setImageBitmap(b1);
++                    smallPic2.setImageBitmap(b0);
++                    smallPic3.setImageBitmap(b3);
+ 
++                }else if (bigPic.getDrawable().toString().equals(myPictures.getPicture2())){
++                    bigPic.setImageBitmap(b1);
++                    smallPic1.setImageBitmap(b0);
++                    smallPic2.setImageBitmap(b3);
++                    smallPic3.setImageBitmap(b2);
+ 
+-    }
+-
++                }else {
++                    bigPic.setImageBitmap(b0);
++                    smallPic1.setImageBitmap(b3);
++                    smallPic2.setImageBitmap(b2);
++                    smallPic3.setImageBitmap(b1);
++                }
++            }
+ 
++        });
++    }
+ 
+ 
+     @Override
+-    public void processFinish(String result) {
+-        getPictures(result);
++    public void processFinish(String outPut) { // the function from the listener
++        readJson(outPut);
+     }
+ 
+-    private void getPictures(String result) {
++    private void readJson(String result) { // set the pictures to object
+         try {
+-            JSONArray ary = new JSONArray(result);
+-            for (int i = 0; i <ary.length(); i++){
+-                JSONObject object = ary.getJSONObject(i);
+-                String  st0,st1,st2,st3;
+-
+-                Bundle bundleGetProPic = getArguments();
++            JSONArray array = new JSONArray(result);
+ 
+-                    // set the result WS to string
+-                st0 = bundleGetProPic.getString("myStringImage");
+-                st1 = object.getString("productPicture1");
+-                st2 = object.getString("productPicture2");
+-                st3 = object.getString("productPicture3");
++            for (int i = 0; i<array.length(); i++){
++                JSONObject object = array.getJSONObject(i);
+ 
+-                    // convert and decode the strings to Base64
+-                byte[] by0,by1,by2,by3;
+-                by0 = Base64.decode(st0, Base64.DEFAULT);
+-                by1 = Base64.decode(st1, Base64.DEFAULT);
+-                by2 = Base64.decode(st2, Base64.DEFAULT);
+-                by3 = Base64.decode(st3, Base64.DEFAULT);
++                myPictures = new Picture(object.getString("productPicture1"),
++                        object.getString("productPicture2"),
++                        object.getString("productPicture3"));
+ 
+-                Bitmap b0,b1,b2,b3;
+-                    // set the Base64 to Bitmap
+-                b0 = BitmapFactory.decodeByteArray(by0,0,by0.length);
+-                b1 = BitmapFactory.decodeByteArray(by1,0, by1.length);
+-                b2 = BitmapFactory.decodeByteArray(by2,0, by2.length);
+-                b3 = BitmapFactory.decodeByteArray(by3,0, by3.length);
++                convert2Bitmap(myPictures); // convert the pictures to bitmap
++                setPictures();
++            }
+ 
+-                bigPicture.setImageBitmap(b0);
+-                picture1.setImageBitmap(b1);
+-                picture2.setImageBitmap(b2);
+-                picture3.setImageBitmap(b3);
+-
+-
+-            }
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+     }
+ 
+ 
++    private void convert2Bitmap(Picture strings) { // set the pictures at the imageView
++        b0 = string2Bitmap(mm);
++        b1 = string2Bitmap(strings.getPicture1());
++        b2 = string2Bitmap(strings.getPicture2());
++        b3 = string2Bitmap(strings.getPicture3());
++    }
++
++    private void setPictures(){
++        bigPic.setImageBitmap(b0);
++        smallPic1.setImageBitmap(b1);
++        smallPic2.setImageBitmap(b2);
++        smallPic3.setImageBitmap(b3);
++    }
++
++
++    private Bitmap string2Bitmap(String encodedString){ // convert the pictures from string to bitmap
++        byte[] encodedByte = Base64.decode(encodedString, Base64.DEFAULT);
++        return BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
++    }
++
++
++
++
+ }
+ 
+Index: app/src/main/java/com/store/hasanfadool/mystore/fragments/app/AlertDialogFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/store/hasanfadool/mystore/fragments/app/AlertDialogFragment.java	(date 1557932343000)
++++ app/src/main/java/com/store/hasanfadool/mystore/fragments/app/AlertDialogFragment.java	(date 1557862123000)
+@@ -16,6 +16,7 @@
+ 
+ import com.store.hasanfadool.mystore.R;
+ import com.store.hasanfadool.mystore.fragments.user.RegisterNewUser;
++import com.store.hasanfadool.mystore.fragments.user.SignInUser;
+ 
+ public class AlertDialogFragment extends DialogFragment {
+ 
+@@ -69,6 +70,8 @@
+             public void onClick(View view) {
+                 Toast.makeText(context, "כן, זהו המיל שלי", Toast.LENGTH_SHORT).show();
+                     // go to sign in page and set the mail at the box Edit text
++                SignInUser signInUser = new SignInUser();
++                initFragment(signInUser);
+             }
+         });
+ 
+Index: app/src/main/java/com/store/hasanfadool/mystore/fragments/app/ProductInfoFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/store/hasanfadool/mystore/fragments/app/ProductInfoFragment.java	(date 1557932343000)
++++ app/src/main/java/com/store/hasanfadool/mystore/fragments/app/ProductInfoFragment.java	(date 1557785406000)
+@@ -9,6 +9,7 @@
+ import android.support.annotation.Nullable;
+ import android.support.v4.app.Fragment;
+ import android.util.Base64;
++import android.util.Log;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+@@ -28,44 +29,61 @@
+ import org.json.JSONException;
+ import org.json.JSONObject;
+ 
+-import java.lang.reflect.Array;
++import java.util.List;
+ 
+ 
+-public class ProductInfoFragment extends Fragment  implements AsyncResponse{
++public class ProductInfoFragment extends Fragment  implements AsyncResponse {
+ 
+     Context context;
+ 
+-    TextView productName, productColor, companyName, gender, productPrice, productCheap;
++    TextView productName, productColor,companyName, gender, productPrice, productCheap, finalPrice, shipp;
+     ImageView productPicture;
+     Spinner rangeSpinner;
+     Button goToBayPage;
+-    Array ranges;
++
++    Product productRange;
++
++    List<Product> proRanges;
++
++    String prodName,prodColor,companyNam,gndr,productPic, proCode;
++    int proShipping,prodPrice;
++    double prodCheap, proFinalPrice;
+ 
+ 
+ 
+ 
++
++    @SuppressLint("InflateParams")
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+         return inflater.inflate(R.layout.product_details, null);
+     }
+ 
+-    @SuppressLint("DefaultLocale")
++    @SuppressLint({"DefaultLocale", "SetTextI18n"})
+     @Override
+     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+         super.onViewCreated(view, savedInstanceState);
+ 
+         context = getActivity();
++
+         Bundle getProInfoBundle = getArguments();
+ 
+-        Product productInfo = null;
+         if (getProInfoBundle != null) {
+-            productInfo = (Product) getProInfoBundle.getSerializable("proInfo");
++            prodName = getProInfoBundle.getString("proName");
++            prodColor = getProInfoBundle.getString("proColor");
++            companyNam = getProInfoBundle.getString("companName");
++            gndr = getProInfoBundle.getString("gnder");
++            prodPrice = getProInfoBundle.getInt("proPrice");
++            prodCheap = getProInfoBundle.getDouble("productCheap");
++            proShipping = getProInfoBundle.getInt("proShipping");
++            productPic = getProInfoBundle.getString("productPicture");
++            proCode = getProInfoBundle.getString("proCode");
+         }
+ 
+ 
+         SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync();
+-        selectProductRangeAsync.execute();
++        selectProductRangeAsync.execute(proCode);
+         selectProductRangeAsync.delegate = this;
+ 
+         productName = view.findViewById(R.id.productNameTV_productDetails);
+@@ -73,31 +91,55 @@
+         companyName = view.findViewById(R.id.companyNameTV_productDetails);
+         gender = view.findViewById(R.id.genderTV_productDetails);
+         productPrice = view.findViewById(R.id.productPriceTV_productDetails);
++        finalPrice = view.findViewById(R.id.productFinalPriceTV_productDetails);
+         productCheap = view.findViewById(R.id.productCheapTV_productDetails);
+         productPicture = view.findViewById(R.id.productIV_productDetails);
++        shipp = view.findViewById(R.id.shippingTV_productDetails);
+ 
+         rangeSpinner = view.findViewById(R.id.rangeSpinner_productDetails);
+-        if (productInfo != null) {
+-            productName.setText(productInfo.getProName());
+-            productColor.setText(productInfo.getProColor());
+-            companyName.setText(productInfo.getCompName());
+-            gender.setText(productInfo.getGender());
+-            productPrice.setText(productInfo.getProPrice());
++
++        // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
++
++            productName.setText(prodName);
++            productColor.setText(prodColor);
++            companyName.setText(companyNam);
++            gender.setText(gndr);
++            productPrice.setText(prodPrice  + "₪");
+             // if the product don't has cheap it's will disappear from the xml
+-            if (productInfo.getCheap()  == 0 ){
++            if ((prodCheap == 0.00 )){
+                 productCheap.setText("");
++                finalPrice.setText("");
+             }else {
+                 // this is the format for the double
+-                productCheap.setText(String.format("הנחה ב %.2f", productInfo.getCheap()));
++                getFinalPrice(prodCheap, (double) prodPrice);
++                productCheap.setText(String.format("הנחה ב %.2f", prodCheap));
++                finalPrice.setText(String.format("%.2f", proFinalPrice));
++
++               // getFinalPrice();
++            //   finalPrice.setText((int) proFinalPrice);
+             }
+-            Bitmap bm = StringToBitmap(productInfo.getProPic()); // the string we got from the  object
++            if (proShipping == 0 ){
++                shipp.setText(getString(R.string.freeShipping));
++            }else {
++                shipp.setText("משלוח ₪" + proShipping);
++            }
++            Bitmap bm = StringToBitmap(productPic); // the string we got from the  object
+             productPicture.setImageBitmap(bm);
+ 
+-        }
++
++
++
++       final ArrayAdapter<Integer> adapter ;
++
++       Integer[] ranges = new Integer[proRanges.size()];
++
++       for (int i = 0; i< proRanges.size(); i++){
++           Log.d("productInfoFragment", "the ranges is : " + proRanges.get(i).getRange());
++           ranges[i] = proRanges.get(i).getRange();
++       }
+ 
+-//        ArrayAdapter<Product> adapter = new ArrayAdapter<>(
+-//                context ,android.R.layout.simple_spinner_item, ranges);
+-//        rangeSpinner.setAdapter(adapter);
++       adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_item, ranges);
++        rangeSpinner.setAdapter(adapter);
+ 
+ 
+                 // go to buy page
+@@ -114,9 +156,16 @@
+     }
+ 
+ 
++
++    private void getFinalPrice(Double cheap, Double price) {
++        Double correctPrice;
++        correctPrice = 1.0 - (cheap) ;
++        proFinalPrice = correctPrice * price;
++    }
++
++
+     @Override
+     public void processFinish(String outPut) {
+-
+         readRangeJson(outPut);
+     }
+ 
+@@ -126,8 +175,7 @@
+             for (int i =0; i < ary.length(); i++){
+                 JSONObject object = ary.getJSONObject(i);
+ 
+-                Product productRange = new Product(object.getInt("range"));
+-//                ranges = productRange.getRange();
++                productRange = new Product(object.getInt("range"));
+ 
+             }
+ 
+@@ -143,4 +191,6 @@
+         byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);
+         return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+     }
++
++
+ }
+Index: app/src/main/java/com/store/hasanfadool/mystore/fragments/app/OrderInfo.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/store/hasanfadool/mystore/fragments/app/OrderInfo.java	(date 1557932343000)
++++ app/src/main/java/com/store/hasanfadool/mystore/fragments/app/OrderInfo.java	(date 1556980530000)
+@@ -1,10 +1,12 @@
+ package com.store.hasanfadool.mystore.fragments.app;
+ 
++import android.annotation.SuppressLint;
+ import android.content.Context;
+ import android.os.Bundle;
+ import android.support.annotation.NonNull;
+ import android.support.annotation.Nullable;
+ import android.support.v4.app.Fragment;
++import android.support.v4.app.FragmentManager;
+ import android.view.LayoutInflater;
+ import android.view.View;
+ import android.view.ViewGroup;
+@@ -17,9 +19,11 @@
+ public class OrderInfo extends Fragment {
+ 
+     Context context;
++    FragmentManager fragmentManager;
+     TextView orderNum;
+     Button shoppingCard, goMainProducts, userOrders;
+ 
++    @SuppressLint("InflateParams")
+     @Nullable
+     @Override
+     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+@@ -32,6 +36,7 @@
+         super.onViewCreated(view, savedInstanceState);
+ 
+         context = getActivity();
++        fragmentManager = getFragmentManager();
+ 
+         orderNum = view.findViewById(R.id.orderNum_orderInfo);
+         shoppingCard = view.findViewById(R.id.shoppingCardButton_orderInfo);

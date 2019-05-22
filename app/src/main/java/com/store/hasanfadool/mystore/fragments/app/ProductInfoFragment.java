@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -42,12 +44,11 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
     Button goToBayPage;
 
     Product productRange;
+    Product iProduct;
 
-    List<Product> proRanges;
+    Double proFinalPrice;
+    List<Integer> proRanges;
 
-    String prodName,prodColor,companyNam,gndr,productPic, proCode;
-    int proShipping,prodPrice;
-    double prodCheap, proFinalPrice;
 
 
 
@@ -67,24 +68,14 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
 
         context = getActivity();
 
-        Bundle getProInfoBundle = getArguments();
-
-        if (getProInfoBundle != null) {
-            prodName = getProInfoBundle.getString("proName");
-            prodColor = getProInfoBundle.getString("proColor");
-            companyNam = getProInfoBundle.getString("companName");
-            gndr = getProInfoBundle.getString("gnder");
-            prodPrice = getProInfoBundle.getInt("proPrice");
-            prodCheap = getProInfoBundle.getDouble("productCheap");
-            proShipping = getProInfoBundle.getInt("proShipping");
-            productPic = getProInfoBundle.getString("productPicture");
-            proCode = getProInfoBundle.getString("proCode");
-        }
 
 
         SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync();
-        selectProductRangeAsync.execute(proCode);
+        selectProductRangeAsync.setProCode(iProduct.getProCode());
+        selectProductRangeAsync.execute();
         selectProductRangeAsync.delegate = this;
+
+        proRanges = new ArrayList<>();
 
         productName = view.findViewById(R.id.productNameTV_productDetails);
         productColor = view.findViewById(R.id.productColorTV_productDetails);
@@ -100,46 +91,57 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
 
         // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
 
-            productName.setText(prodName);
-            productColor.setText(prodColor);
-            companyName.setText(companyNam);
-            gender.setText(gndr);
-            productPrice.setText(prodPrice  + "₪");
+
+
+            productName.setText(iProduct.getProName());
+            productColor.setText(iProduct.getProColor());
+            companyName.setText(iProduct.getCompName());
+            gender.setText(iProduct.getGender());
+            productPrice.setText(iProduct.getProPrice()  + "₪");
             // if the product don't has cheap it's will disappear from the xml
-            if ((prodCheap == 0.00 )){
+            if ((iProduct.getCheap() == 0.00 )){
                 productCheap.setText("");
                 finalPrice.setText("");
             }else {
                 // this is the format for the double
-                getFinalPrice(prodCheap, (double) prodPrice);
-                productCheap.setText(String.format("הנחה ב %.2f", prodCheap));
+                getFinalPrice(iProduct.getCheap(), (double) iProduct.getProPrice());
+                productCheap.setText(String.format("הנחה ב %.2f", iProduct.getCheap()));
                 finalPrice.setText(String.format("%.2f", proFinalPrice));
 
                // getFinalPrice();
             //   finalPrice.setText((int) proFinalPrice);
             }
-            if (proShipping == 0 ){
+            if (iProduct.getShipping() == 0 ){
                 shipp.setText(getString(R.string.freeShipping));
             }else {
-                shipp.setText("משלוח ₪" + proShipping);
+                shipp.setText("משלוח ₪" + iProduct.getShipping());
             }
-            Bitmap bm = StringToBitmap(productPic); // the string we got from the  object
+            Bitmap bm = StringToBitmap(iProduct.getProPic()); // the string we got from the  object
             productPicture.setImageBitmap(bm);
 
 
 
 
-       final ArrayAdapter<Integer> adapter ;
-
-       Integer[] ranges = new Integer[proRanges.size()];
-
-       for (int i = 0; i< proRanges.size(); i++){
-           Log.d("productInfoFragment", "the ranges is : " + proRanges.get(i).getRange());
-           ranges[i] = proRanges.get(i).getRange();
-       }
-
-       adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_item, ranges);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_item, proRanges);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rangeSpinner.setAdapter(adapter);
+
+        rangeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int index = rangeSpinner.getSelectedItemPosition();
+                Log.d("hasan", "my select " + index);
+                Toast.makeText(context, "my select " + index, Toast.LENGTH_SHORT).show();
+                parent.setSelection(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+                parent.getFirstVisiblePosition();
+            }
+        });
+
 
 
                 // go to buy page
@@ -157,6 +159,8 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
 
 
 
+
+
     private void getFinalPrice(Double cheap, Double price) {
         Double correctPrice;
         correctPrice = 1.0 - (cheap) ;
@@ -169,20 +173,31 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
         readRangeJson(outPut);
     }
 
-    public int readRangeJson(String outPut) {
+    public List<Integer> readRangeJson(String outPut) {
+
         try {
             JSONArray ary = new JSONArray(outPut);
             for (int i =0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
 
-                productRange = new Product(object.getInt("range"));
+                productRange = new Product(object.getString("productCode1"),object.getInt("productRangeOfDimensions"),object.getInt("quantity"));
+Log.d("hasan ", "my code :" + productRange.getProCode() + " productRangeOfDimensions " + productRange.getRange() + " quantity " + productRange.getQuantity());
+
+
+                proRanges.add(productRange.getRange());
+
 
             }
+                setProRange(proRanges);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return 0;
+            return proRanges;
+    }
+
+    private void setProRange(List<Integer> proRanges) {
+        this.proRanges = proRanges;
     }
 
 
@@ -192,5 +207,8 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
         return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
     }
 
+    public void setiProduct(Product iProduct){
+        this.iProduct = iProduct;
+    }
 
 }

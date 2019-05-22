@@ -31,7 +31,7 @@ public class MyProblems {
 
 
 ///////////////////////////////////////////////////////////////////////
-    // 4
+    // 4      the code is fixed must to check it
 //   about the WS >> send code from app to WS and get from where
 
 //    at the SingInUser how know if the user has the userName & the pass .. (about the WS)
@@ -49,14 +49,13 @@ public class MyProblems {
 
 //     the ProgressBar
 //    at the start , when send and get any data from DB
+//////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////////////////////
-    // 6
-
-//    send the product name from list productsListFragment to search productsListFragment.
-//    and the other sends from all fragments must be check.
-
+    /////////////////////////////////////////////////////////////////////////////////////////////
+   // 6                            OK                                                         //
+  //   send the product name from list productsListFragment to search productsListFragment.  //
+ //    and the other sends from all fragments must be check.                                //
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////
     // 7

@@ -2,12 +2,13 @@ package com.store.hasanfadool.mystore.fragments.user;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
+import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -26,17 +28,14 @@ import java.io.InputStreamReader;
 
 public class SignInUser extends Fragment implements AsyncResponse {
 
+
     Context context;
     FragmentManager fragmentManager;
     EditText mail, pass;
     Button sendData, forgetPass;
-
-    CheckUserAsync checkUserAsync = new CheckUserAsync();
-
     String userPassFromFile;
     User myUser;
-
-    Bundle sendUser = new Bundle();
+    CheckUserAsync checkUserAsync = new CheckUserAsync();
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -49,7 +48,6 @@ public class SignInUser extends Fragment implements AsyncResponse {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         context = getActivity();
         fragmentManager = getFragmentManager();
 
@@ -70,20 +68,16 @@ public class SignInUser extends Fragment implements AsyncResponse {
                     Toast.makeText(context, "המיל שלך לא יכול להיות ריק", Toast.LENGTH_SHORT).show();
                 }else if (mail.getText().length() < 10){
                     Toast.makeText(context, "מיל שלך לא יכול קטן מ-10 אותיות!", Toast.LENGTH_SHORT).show();
-                }else if (pass.getText().length() < 6){
-                    Toast.makeText(context, "הסיסמה שלך לא יכולה להיות פחות מ-6 אותיות", Toast.LENGTH_SHORT).show();
+
                 }else {
                   // it's O.K
 
                     myUser =  new User(mail.getText().toString(), pass.getText().toString());
 
-                        // save the values
+                        // save the values to bundle to send them to check user Async
 
-                    sendUser.putString("myUserMail", mail.getText().toString());
-                    sendUser.putString("myUserPass", pass.getText().toString());
-
-
-                    checkUserAsync.execute(sendUser);
+                    checkUserAsync.setUser(myUser);
+                    checkUserAsync.execute();
                     getTheAsync();
 
                 }
@@ -120,12 +114,15 @@ public class SignInUser extends Fragment implements AsyncResponse {
     @Override
     public void processFinish(String outPut) {
 
-        if (outPut.isEmpty()){
+        if (outPut.equals(0)){ // the result is empty so, set red the text color
             mail.setTextColor(R.color.red);
             pass.setTextColor(R.color.red);
         }else {
-            // the mail & pass are ok , go to user panel
-            goToUserPanel();
+            // the mail & pass are ok , go to user panel and save the mail & pass to sharedPreferences
+            Toast.makeText(context, "your maul is : " + myUser.getUserMail(), Toast.LENGTH_SHORT).show();
+
+            goToUserPanel(); // go to user panel
+
         }
 
     }
@@ -133,7 +130,7 @@ public class SignInUser extends Fragment implements AsyncResponse {
     private void goToUserPanel() {
 
         // the mail & pass ok now will go to user panel
-        // the shared prenfesses will be at here
+        // the shared preferences will be at here
         Toast.makeText(context, "the mail and the pass are okay", Toast.LENGTH_SHORT).show();
     }
 
@@ -163,6 +160,10 @@ public class SignInUser extends Fragment implements AsyncResponse {
 
         userPassFromFile = String.valueOf(st);
 
+    }
+
+    public User getUser(){
+        return this.myUser;
     }
 
 }

@@ -18,14 +18,14 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
     public AsyncResponse delegate = null;
 
-    private static final String NAMESPACE = "http://it.pro.com/";
-
     private GetDomin getDomin = new GetDomin(); // to get the ip and port from/ GetDomin class
     private String myIp = getDomin.myIpPort();
-
     private final String URL = myIp + "/Selects/Selects?WSDL";
+
+    private static final String NAMESPACE = "http://it.pro.com/";
     private static final String METHOD_NAME = "getAllProducts";
     private static final String SOAP_ACTION = "http://it.pro.com/getAllProducts";
+
 
 
     @Override
@@ -56,7 +56,6 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
         return "error";
         }
-
 
 
 

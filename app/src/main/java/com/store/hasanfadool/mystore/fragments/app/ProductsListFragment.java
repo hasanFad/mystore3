@@ -35,6 +35,7 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
     ListView listViewProduct;
     Context context;
 
+    Product  iProduct;
     FragmentManager fragmentManager; // send with adapter for init fragment
 
     @SuppressLint("InflateParams")
@@ -88,13 +89,21 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
             for (int i = 0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
 
-
 //    Product   (String productName, int productPrice, double productCheap, int shipping, String productImage)
                 Product mainListPro = new Product(object.getString("productName"),
                         object.getInt("productPrice"),object.getDouble("cheap"),
                         object.getInt("shipping"), object.getString("productPicture"));
 
-             productList.add(mainListPro);
+//                Product(String proCode,String productName, String productColor,
+//                   String companyName, String gender, int productPrice,
+//                  double productCheap, int shipping ,String productPicture)
+
+                 iProduct = new Product(object.getString("productCode"),object.getString("productName"),
+                        object.getString("productColor"), object.getString("companyName"),object.getString("gender"),
+                        object.getInt("productPrice"),object.getDouble("cheap"),object.getInt("shipping"),
+                        object.getString("productPicture"));
+
+             productList.add(iProduct);
 
             }
 
@@ -111,6 +120,11 @@ public class ProductsListFragment extends Fragment implements AsyncResponse {
     public List<Product> getProductList(){
 
         return this.productList;
+    }
+
+    public Product  sendMyProduct (){
+      return   this.iProduct ;
+
     }
 
 

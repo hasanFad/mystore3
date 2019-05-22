@@ -40,9 +40,6 @@ public class RegisterNewUser extends Fragment {
     int sms, mail,userHN;
     User newUser;
 
-    GetDomin getDomin = new GetDomin();
-    private String myIp = getDomin.myIpPort();
-
     @SuppressLint("InflateParams")
     @Nullable
     @Override
