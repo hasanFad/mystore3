@@ -5,7 +5,7 @@ public class GetDomin {
     // http://192.168.1.4:8080
                                             // the ip of the computer
     public final String myIpPort(){
-        return "http://" + "192.168.1.4" + ":" + "8080";
+        return "http://" + "192.168.1.5" + ":" + "8080";
     }
 
 

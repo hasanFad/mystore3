@@ -37,21 +37,15 @@ import java.util.List;
 public class ProductInfoFragment extends Fragment  implements AsyncResponse {
 
     Context context;
-
+            // from the xml
     TextView productName, productColor,companyName, gender, productPrice, productCheap, finalPrice, shipp;
     ImageView productPicture;
     Spinner rangeSpinner;
     Button goToBayPage;
 
-    Product productRange;
-    Product iProduct;
-
-    Double proFinalPrice;
-    List<Integer> proRanges;
-
-
-
-
+    Double proFinalPrice; // the final price value
+    List<Integer> proRanges; // the list will be into the spinner
+    Product productRange, iProduct; // productRange for the object we get from the last class / iProduct the object we get from the WS
 
 
     @SuppressLint("InflateParams")
@@ -68,15 +62,13 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
 
         context = getActivity();
 
+        SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync(); // the select product range Async class
+        selectProductRangeAsync.setProCode(iProduct.getProCode()); // send product code to method at the Async class
+        selectProductRangeAsync.execute(); // do the Async
+        selectProductRangeAsync.delegate = this; // the listener
 
-
-        SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync();
-        selectProductRangeAsync.setProCode(iProduct.getProCode());
-        selectProductRangeAsync.execute();
-        selectProductRangeAsync.delegate = this;
-
-        proRanges = new ArrayList<>();
-
+        proRanges = new ArrayList<>(); // init the list
+                // connected the view to the xml
         productName = view.findViewById(R.id.productNameTV_productDetails);
         productColor = view.findViewById(R.id.productColorTV_productDetails);
         companyName = view.findViewById(R.id.companyNameTV_productDetails);
@@ -86,13 +78,13 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
         productCheap = view.findViewById(R.id.productCheapTV_productDetails);
         productPicture = view.findViewById(R.id.productIV_productDetails);
         shipp = view.findViewById(R.id.shippingTV_productDetails);
-
         rangeSpinner = view.findViewById(R.id.rangeSpinner_productDetails);
 
-        // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
+        //  the object we get from the last class is:
+        //  Product(String proCode,String productName, String productColor, String companyName, String gender,
+        //  int productPrice, double productCheap, int shipping ,String productPicture)
 
-
-
+                // set the product object elemints
             productName.setText(iProduct.getProName());
             productColor.setText(iProduct.getProColor());
             companyName.setText(iProduct.getCompName());
@@ -103,42 +95,42 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
                 productCheap.setText("");
                 finalPrice.setText("");
             }else {
-                // this is the format for the double
-                getFinalPrice(iProduct.getCheap(), (double) iProduct.getProPrice());
-                productCheap.setText(String.format("הנחה ב %.2f", iProduct.getCheap()));
-                finalPrice.setText(String.format("%.2f", proFinalPrice));
+                // if we have a cheap and price
+                // the format of double "%.2f"
+                getFinalPrice(iProduct.getCheap(), (double) iProduct.getProPrice()); // sent product cheap & price to considered a math operation to get the final price
+                productCheap.setText(String.format("הנחה ב %.2f", iProduct.getCheap())); // set a text of cheap
+                finalPrice.setText(String.format("%.2f", proFinalPrice)); // set the final price after math operation method
 
-               // getFinalPrice();
-            //   finalPrice.setText((int) proFinalPrice);
             }
             if (iProduct.getShipping() == 0 ){
                 shipp.setText(getString(R.string.freeShipping));
             }else {
                 shipp.setText("משלוח ₪" + iProduct.getShipping());
             }
-            Bitmap bm = StringToBitmap(iProduct.getProPic()); // the string we got from the  object
-            productPicture.setImageBitmap(bm);
+            Bitmap bm = StringToBitmap(iProduct.getProPic()); // send the string we got from the object to encoding it at method
+            productPicture.setImageBitmap(bm); // set the picture after encoded it
 
-
-
-
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_item, proRanges);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_item, proRanges); //  adapter for the spinner
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // set drop down of the spinner
         rangeSpinner.setAdapter(adapter);
 
         rangeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                int index = rangeSpinner.getSelectedItemPosition();
-                Log.d("hasan", "my select " + index);
-                Toast.makeText(context, "my select " + index, Toast.LENGTH_SHORT).show();
-                parent.setSelection(position);
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-                parent.getFirstVisiblePosition();
+            }
+        });
+
+        rangeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
 
@@ -153,60 +145,55 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
                 Toast.makeText(context, getString(R.string.goT), Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 
 
-
-
-
-    private void getFinalPrice(Double cheap, Double price) {
+        // method to calculate the final price if we have chap and price
+    private void getFinalPrice(Double cheap, Double price){
         Double correctPrice;
-        correctPrice = 1.0 - (cheap) ;
+        correctPrice = 1.0 - (cheap) ; // get the left after cheap
         proFinalPrice = correctPrice * price;
     }
 
-
+        // the listener
     @Override
     public void processFinish(String outPut) {
         readRangeJson(outPut);
     }
 
+            // set the ranges we get to list of integer
     public List<Integer> readRangeJson(String outPut) {
 
         try {
             JSONArray ary = new JSONArray(outPut);
             for (int i =0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
-
+                    // set the object at product object
                 productRange = new Product(object.getString("productCode1"),object.getInt("productRangeOfDimensions"),object.getInt("quantity"));
-Log.d("hasan ", "my code :" + productRange.getProCode() + " productRangeOfDimensions " + productRange.getRange() + " quantity " + productRange.getQuantity());
-
-
+                    // set the product range we get to the list of ranges
                 proRanges.add(productRange.getRange());
 
-
             }
-                setProRange(proRanges);
+                setProRange(proRanges); //  method to set the ranges we have to proRanges list
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
             return proRanges;
     }
-
+        //et the ranges we have to proRanges list
     private void setProRange(List<Integer> proRanges) {
         this.proRanges = proRanges;
     }
 
 
+        // method to convert pictures from string to bitmap
     private Bitmap StringToBitmap(String encodedString){
 
-        byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);  // encode the string to base64
+        return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); // // set the string encode to bitmap
     }
-
+        // method to get the object from the WS after we download from the WS with Async
     public void setiProduct(Product iProduct){
         this.iProduct = iProduct;
     }

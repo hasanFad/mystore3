@@ -55,6 +55,7 @@
     <string name="freeShipping">משלוח חינם</string>
     <string name="thanksForBuy">תודה שקניתם אצלינו, הקבלה תשלח אליכם עם המוצר!</string>
     <string name="noOrderNum">עוד אין לכם הזמנה!</string>
+    <string name="choose">בחר</string>
 
 
 </resources>
