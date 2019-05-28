@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,9 +46,13 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
     Button goToBayPage;
 
     Double proFinalPrice; // the final price value
-    List<Integer> proRanges; // the list will be into the spinner
-    Product productRange, iProduct; // productRange for the object we get from the last class / iProduct the object we get from the WS
+    List<String> proRanges; // the list will be into the spinner
+    Product productRange, iProduct, p; // productRange is the object we get from the last class / iProduct the object we get from the WS
 
+    String myRange;
+    int myQuantity;
+
+    FragmentManager fragmentManager;
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -61,6 +67,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity();
+        fragmentManager = getFragmentManager();
 
         SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync(); // the select product range Async class
         selectProductRangeAsync.setProCode(iProduct.getProCode()); // send product code to method at the Async class
@@ -68,6 +75,8 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
         selectProductRangeAsync.delegate = this; // the listener
 
         proRanges = new ArrayList<>(); // init the list
+        proRanges.add("בחר");
+
                 // connected the view to the xml
         productName = view.findViewById(R.id.productNameTV_productDetails);
         productColor = view.findViewById(R.id.productColorTV_productDetails);
@@ -84,7 +93,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
         //  Product(String proCode,String productName, String productColor, String companyName, String gender,
         //  int productPrice, double productCheap, int shipping ,String productPicture)
 
-                // set the product object elemints
+                // set the product object elements
             productName.setText(iProduct.getProName());
             productColor.setText(iProduct.getProColor());
             companyName.setText(iProduct.getCompName());
@@ -110,15 +119,28 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
             Bitmap bm = StringToBitmap(iProduct.getProPic()); // send the string we got from the object to encoding it at method
             productPicture.setImageBitmap(bm); // set the picture after encoded it
 
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_item, proRanges); //  adapter for the spinner
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // set drop down of the spinner
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_dropdown_item, proRanges); //  adapter for the spinner
         rangeSpinner.setAdapter(adapter);
 
         rangeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
+
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+                if (position != 0){
+                    myRange = String.valueOf(parent.getItemAtPosition(position)); // save the value at the position
+                    Log.d("hasan", "my range is: " + myRange);
+                    Log.d("hasan", "my quantity is: " + myQuantity);
+
+
+                    
+                }
+
+                if (myQuantity == 0){ //  check if don't have quantity will not choose this range
+                    parent.setSelection(0);
+                    Toast.makeText(context, R.string.noQuantity, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -127,13 +149,23 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
             }
         });
 
-        rangeSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+        productPicture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onClick(View v) {
+                Toast.makeText(context, "the picture is clicked" + productName.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                ProductPicturesFragment productPicturesFragment = new ProductPicturesFragment();
+                productPicturesFragment.setProductCodeToGetPictures(productRange.getProCode());
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container, productPicturesFragment);
+                fragmentTransaction.addToBackStack("fragment");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
 
             }
         });
-
 
 
                 // go to buy page
@@ -148,7 +180,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
     }
 
 
-        // method to calculate the final price if we have chap and price
+        // method to calculate the final price if we have cheap and price
     private void getFinalPrice(Double cheap, Double price){
         Double correctPrice;
         correctPrice = 1.0 - (cheap) ; // get the left after cheap
@@ -162,7 +194,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
     }
 
             // set the ranges we get to list of integer
-    public List<Integer> readRangeJson(String outPut) {
+    public List<String> readRangeJson(String outPut) {
 
         try {
             JSONArray ary = new JSONArray(outPut);
@@ -171,8 +203,8 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
                     // set the object at product object
                 productRange = new Product(object.getString("productCode1"),object.getInt("productRangeOfDimensions"),object.getInt("quantity"));
                     // set the product range we get to the list of ranges
-                proRanges.add(productRange.getRange());
-
+                proRanges.add(String.valueOf(productRange.getRange())); // save the range
+                myQuantity = productRange.getQuantity(); // save the quantity
             }
                 setProRange(proRanges); //  method to set the ranges we have to proRanges list
 
@@ -182,7 +214,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponse {
             return proRanges;
     }
         //et the ranges we have to proRanges list
-    private void setProRange(List<Integer> proRanges) {
+    private void setProRange(List<String> proRanges) {
         this.proRanges = proRanges;
     }
 

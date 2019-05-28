@@ -16,7 +16,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        android:focusableInTouchMode="true"
+        android:clickable="true"
         android:src="@mipmap/ic_launcher_round"
         tools:ignore="ContentDescription,RtlHardcoded"/>
 

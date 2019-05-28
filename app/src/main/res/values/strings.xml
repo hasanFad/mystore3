@@ -8,8 +8,8 @@
     <string name="listErrorMsg">שגיאה בהבאת הנתונים</string>
     <string name="shoppingCard">סל הקניות</string>
     <string name="message">הודעה</string>
-    <string name="goToLeft"><![CDATA[<]]></string>
-    <string name="goToRight"><![CDATA[>]]></string>
+    <string name="goToLeft"><![CDATA[>]]></string>
+    <string name="goToRight"><![CDATA[<]]></string>
     <string name="pleaseWait">נא המתן...</string>
     <string name="productColor">צבע</string>
     <string name="companyName">שם חברה</string>
@@ -56,6 +56,7 @@
     <string name="thanksForBuy">תודה שקניתם אצלינו, הקבלה תשלח אליכם עם המוצר!</string>
     <string name="noOrderNum">עוד אין לכם הזמנה!</string>
     <string name="choose">בחר</string>
+    <string name="noQuantity">אין כמות למידה הזאת. נבקשך ליצור קשר איתנו</string>
 
 
 </resources>

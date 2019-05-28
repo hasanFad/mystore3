@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.ProductInfoFragment;
@@ -34,8 +35,7 @@ public class ProductAdapter extends BaseAdapter {
     private Context context;
       private List<Product> productList;
       private FragmentManager fragmentManager;
-
-      Product iProduct;
+      
 
 
     public Context getContext() {
@@ -79,7 +79,7 @@ public class ProductAdapter extends BaseAdapter {
 
 
 
-        TextView productName = cellLayout.findViewById(R.id.productNameTV_productItem);
+        final TextView productName = cellLayout.findViewById(R.id.productNameTV_productItem);
         TextView productPrice = cellLayout.findViewById(R.id.productPriceTV_productItem);
         TextView productCheap = cellLayout.findViewById(R.id.productCheapTV_productItem);
         TextView shipping = cellLayout.findViewById(R.id.shippingTV_productItem);
@@ -103,12 +103,10 @@ public class ProductAdapter extends BaseAdapter {
         productImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Bundle sendImageBundle = new Bundle();
-                sendImageBundle.putString("productPicture", currentProduct.getProPic());
+                Toast.makeText(context, "the picture is clicked " + productName.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 ProductPicturesFragment productPicturesFragment = new ProductPicturesFragment();
-                productPicturesFragment.setArguments(sendImageBundle);
+                productPicturesFragment.setProductCodeToGetPictures(currentProduct.getProCode());
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, productPicturesFragment);
                 fragmentTransaction.addToBackStack("fragment");
@@ -117,12 +115,13 @@ public class ProductAdapter extends BaseAdapter {
             }
         });
 
-            // click for information
+            // click to go to productInfoFragment -> information about the product
         cellLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
  // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
+
 
                 ProductsListFragment productsListFragment = new ProductsListFragment();
                 productsListFragment.sendMyProduct();
@@ -131,7 +130,7 @@ public class ProductAdapter extends BaseAdapter {
                 Log.d("hasan", "my code is: " + currentProduct.getProCode());
                 ProductInfoFragment productInfoFragment = new ProductInfoFragment();
                 productInfoFragment.setiProduct(currentProduct);
-                @SuppressLint("CommitTransaction") FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, productInfoFragment);
                 fragmentTransaction.addToBackStack("fragment");
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);

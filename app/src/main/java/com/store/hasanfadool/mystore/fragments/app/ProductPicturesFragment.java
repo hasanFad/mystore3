@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +33,11 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
     Context context;
     FragmentManager fragmentManager;
 
-    Bitmap b0,b1,b2,b3;
+    Bitmap b1,b2,b3,b4;
     ImageView smallPic1,smallPic2,smallPic3, bigPic;
     Button leftButton,rightButton;
     Picture myPictures;
-    String mm ;
+    String  productCode;
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -52,14 +54,13 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
 
         context = getActivity();
         fragmentManager = getFragmentManager();
-        Bundle getProductImage = getArguments();
-        if (getProductImage != null){
-            mm = getProductImage.getString("productPicture");
-        }
+
 
             // get the pictures from the WS and use the listener
         SelectProductPicturesAsync selectProductPicturesAsync = new SelectProductPicturesAsync();
+        selectProductPicturesAsync.setProductCode(productCode);
         selectProductPicturesAsync.execute();
+
         selectProductPicturesAsync.delegate = this;
 
 
@@ -68,6 +69,7 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
         smallPic2 = view.findViewById(R.id.smallPic2_productPictures);
         smallPic3 = view.findViewById(R.id.smallPic3_productPictures);
         bigPic = view.findViewById(R.id.bigPicture_productPictures);
+
 
         leftButton = view.findViewById(R.id.leftButton_productPictures);
         rightButton = view.findViewById(R.id.rightButton_productPictures);
@@ -78,30 +80,28 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
             public void onClick(View v) {
                     // go to next picture
 
-                Toast.makeText(context, "go to next image", Toast.LENGTH_SHORT).show();
-
-                if (bigPic.getDrawable().toString().equals(b0.toString())){
+                if (((BitmapDrawable)bigPic.getDrawable()).getBitmap() == b4){
                     bigPic.setImageBitmap(b1);
 
                     smallPic1.setImageBitmap(b2);
                     smallPic2.setImageBitmap(b3);
-                    smallPic3.setImageBitmap(b0);
+                    smallPic3.setImageBitmap(b4);
 
-                }else if(bigPic.getDrawable().toString().equals(b1.toString())){
+                }else if(((BitmapDrawable)bigPic.getDrawable()).getBitmap() == b1){
                     bigPic.setImageBitmap(b2);
 
                     smallPic1.setImageBitmap(b3);
-                    smallPic2.setImageBitmap(b0);
+                    smallPic2.setImageBitmap(b4);
                     smallPic3.setImageBitmap(b1);
 
-                }else if (bigPic.getDrawable().toString().equals(b2.toString())){
+                }else if (((BitmapDrawable)bigPic.getDrawable()).getBitmap() == b2){
                     bigPic.setImageBitmap(b3);
-                    smallPic1.setImageBitmap(b0);
+                    smallPic1.setImageBitmap(b4);
                     smallPic2.setImageBitmap(b1);
                     smallPic3.setImageBitmap(b2);
 
                 }else {
-                    bigPic.setImageBitmap(b0);
+                    bigPic.setImageBitmap(b4);
                     smallPic1.setImageBitmap(b1);
                     smallPic2.setImageBitmap(b2);
                     smallPic3.setImageBitmap(b3);
@@ -116,27 +116,27 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
             @Override
             public void onClick(View v) {
                     // go to back picture
-                Toast.makeText(context, "go te back image", Toast.LENGTH_SHORT).show();
-                if (bigPic.getDrawable().toString().equals(b0.toString())){
+                if (((BitmapDrawable) bigPic.getDrawable()).getBitmap() ==b4){
                     bigPic.setImageBitmap(b3);
+                    Log.d("hasan", "now my big picture is : " + b3);
                     smallPic1.setImageBitmap(b2);
                     smallPic2.setImageBitmap(b1);
-                    smallPic3.setImageBitmap(b0);
+                    smallPic3.setImageBitmap(b4);
 
-                }else if (bigPic.getDrawable().toString().equals(myPictures.getPicture3())){
+                }else if (((BitmapDrawable) bigPic.getDrawable()).getBitmap() ==b3){
                     bigPic.setImageBitmap(b2);
                     smallPic1.setImageBitmap(b1);
-                    smallPic2.setImageBitmap(b0);
+                    smallPic2.setImageBitmap(b4);
                     smallPic3.setImageBitmap(b3);
 
-                }else if (bigPic.getDrawable().toString().equals(myPictures.getPicture2())){
+                }else if (((BitmapDrawable) bigPic.getDrawable()).getBitmap() ==b2){
                     bigPic.setImageBitmap(b1);
-                    smallPic1.setImageBitmap(b0);
+                    smallPic1.setImageBitmap(b4);
                     smallPic2.setImageBitmap(b3);
                     smallPic3.setImageBitmap(b2);
 
                 }else {
-                    bigPic.setImageBitmap(b0);
+                    bigPic.setImageBitmap(b4);
                     smallPic1.setImageBitmap(b3);
                     smallPic2.setImageBitmap(b2);
                     smallPic3.setImageBitmap(b1);
@@ -161,7 +161,8 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
 
                 myPictures = new Picture(object.getString("productPicture1"),
                         object.getString("productPicture2"),
-                        object.getString("productPicture3"));
+                        object.getString("productPicture3"),
+                        object.getString("productPicture4"));
 
                 convert2Bitmap(myPictures); // convert the pictures to bitmap
                 setPictures();
@@ -174,17 +175,18 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
 
 
     private void convert2Bitmap(Picture strings) { // set the pictures at the imageView
-        b0 = string2Bitmap(mm);
+
         b1 = string2Bitmap(strings.getPicture1());
         b2 = string2Bitmap(strings.getPicture2());
         b3 = string2Bitmap(strings.getPicture3());
+        b4 = string2Bitmap(strings.getPicture4());
     }
 
     private void setPictures(){
-        bigPic.setImageBitmap(b0);
-        smallPic1.setImageBitmap(b1);
-        smallPic2.setImageBitmap(b2);
-        smallPic3.setImageBitmap(b3);
+        bigPic.setImageBitmap(b1);
+        smallPic1.setImageBitmap(b2);
+        smallPic2.setImageBitmap(b3);
+        smallPic3.setImageBitmap(b4);
     }
 
 
@@ -193,6 +195,9 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
         return BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
     }
 
+    public String setProductCodeToGetPictures(String productCode){
+       return this.productCode = productCode;
+    }
 
 
 

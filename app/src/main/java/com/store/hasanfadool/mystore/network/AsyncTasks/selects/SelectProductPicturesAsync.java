@@ -6,6 +6,7 @@ import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -16,34 +17,42 @@ public class SelectProductPicturesAsync extends AsyncTask<Void,Void, String> {
 
     public AsyncResponse delegate = null;
 
-    private static final String NAMESPACE = "http://it.pro.com/";
-
+    String productCode;
     private GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
+    private final String url = myIp + "/Selects/Selects?WSDL";
 
-    private final String URL = myIp + "/Selects/Selects?WSDL";
+    private static final String NAMESPACE = "http://it.pro.com/";
     private static final String METHOD_NAME = "getProductPictures";
     private static final String SOAP_ACTION = "http://it.pro.com/getProductPictures";
 
 
     @Override
     protected String doInBackground(Void... voids) {
-        try{
-            SoapObject request = new SoapObject(NAMESPACE,METHOD_NAME);
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-            envelope.setOutputSoapObject(request);
-            envelope.dotNet = false;
+        if (productCode != null){
+            try {
+                SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-            HttpTransportSE httpTransportSE = new HttpTransportSE(URL);
-            httpTransportSE.call(SOAP_ACTION, envelope);
-            SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+                // product code
+                PropertyInfo proCode = new PropertyInfo();
+                proCode.setName("productCode");
+                proCode.setValue(productCode);
+                proCode.setType(PropertyInfo.STRING_CLASS);
+                request.addProperty(proCode);
 
-            return response.toString();
-        }catch (Exception e){
-            e.printStackTrace();
+                SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+                envelope.setOutputSoapObject(request);
+                envelope.dotNet = false;
+
+                HttpTransportSE ht = new HttpTransportSE(url);
+                ht.call(SOAP_ACTION, envelope);
+                SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
+
+                return response.toString();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
-
-
         return "error";
     }
 
@@ -54,6 +63,10 @@ public class SelectProductPicturesAsync extends AsyncTask<Void,Void, String> {
         if (st != null && !st.isEmpty()){
             delegate.processFinish(st);
         }
+    }
+
+    public void setProductCode(String productCode){
+        this.productCode = productCode;
     }
 
 
