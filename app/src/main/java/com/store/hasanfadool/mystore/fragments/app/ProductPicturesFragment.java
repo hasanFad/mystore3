@@ -29,7 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProductPicturesFragment extends Fragment implements AsyncResponse {
-
+    private static final String TAG = "ProductPicturesFragment";
     Context context;
     FragmentManager fragmentManager;
 
@@ -118,7 +118,7 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponse {
                     // go to back picture
                 if (((BitmapDrawable) bigPic.getDrawable()).getBitmap() ==b4){
                     bigPic.setImageBitmap(b3);
-                    Log.d("hasan", "now my big picture is : " + b3);
+                    Log.d(TAG, "now my big picture is : " + b3);
                     smallPic1.setImageBitmap(b2);
                     smallPic2.setImageBitmap(b1);
                     smallPic3.setImageBitmap(b4);
