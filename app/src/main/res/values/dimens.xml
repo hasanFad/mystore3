@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marginRight">5dp</dimen>
+    <dimen name="TVSize">18sp</dimen>
+    <dimen name="marginTop">10dp</dimen>
+</resources>

@@ -145,6 +145,7 @@ public class Product extends ArrayList<String> implements Serializable {
 
 
 
+
 //    public Array getRange() {
 //        return range;
 //    }
@@ -154,43 +155,7 @@ public class Product extends ArrayList<String> implements Serializable {
         this.range = range;
     }
 
-    @Override
-    public boolean equals(Object proObj) {
-        if (this == proObj){
-            return true;}
 
-        if (proObj == null || getClass() != proObj.getClass()){
-            return false;
-        }
-
-        Product product = (Product) proObj;
-
-        if (proPic != product.proPic){
-            return false;
-        }
-
-        if (proColor != product.proColor){
-            return false;
-        }
-
-        if (proPrice != product.proPrice){
-            return false;
-        }
-        if (compName != product.compName){
-            return false;
-        }
-
-        if (proName != product.proName){
-            return false;
-        }
-
-        if (gender != product.gender){
-            return false;
-        }
-
-        return proName != null ? proName.equals(product.proName) : product.proName == null;
-
-    }
 
 
 

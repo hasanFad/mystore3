@@ -67,7 +67,7 @@ public class CheckUserAsync extends AsyncTask<Void,Void,String> {
 
             }
 
-            return "error";
+            return "error: the user not send yet!";
 
     }
 

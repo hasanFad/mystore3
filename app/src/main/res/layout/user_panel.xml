@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/TV_UserPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/PanelUpdateUser"
+            android:gravity="center"
+            android:textColor="@color/colorAccent"
+            android:layout_marginTop="5dp"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/TV2_userPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="נתונים אלה,מה שנרשמתם איתם בהתחלה.רוצים להחליף משהו?אין בעיה גש לשורה מתאימה החלף ולחץ עדכן בסוף !"
+            android:layout_below="@id/TV_UserPanel"
+            android:textSize="@dimen/TVSize"
+            android:textStyle="bold"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/yourName"
+                android:textSize="@dimen/TVSize"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/marginTop"
+                android:layout_marginRight="@dimen/marginRight"
+                android:layout_below="@id/TV2_userPanel"/>
+
+            <EditText
+                android:id="@+id/userFNameET_userPanel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="9"
+                android:layout_below="@id/TV2_userPanel"
+                android:layout_alignParentLeft="true"
+                android:inputType="text"/>
+
+        <TextView
+            android:text="@string/lastName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userFNameET_userPanel"
+            android:textSize="@dimen/TVSize"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/marginRight"
+            android:layout_marginTop="@dimen/marginTop"/>
+
+        <EditText
+            android:id="@+id/userLNameET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userFNameET_userPanel"
+            android:ems="9"
+            android:layout_alignParentLeft="true"
+            android:inputType="text"/>
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mail"
+            android:layout_below="@id/userLNameET_userPanel"
+            android:textSize="@dimen/TVSize"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/marginTop"
+            android:layout_marginRight="@dimen/marginRight"/>
+
+        <EditText
+            android:id="@+id/mailET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userLNameET_userPanel"
+            android:ems="9"
+            android:inputType="text"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone"
+            android:textSize="@dimen/TVSize"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/mailET_userPanel"
+            android:layout_marginRight="@dimen/marginRight"
+            android:layout_marginTop="@dimen/marginTop"/>
+
+        <EditText
+            android:id="@+id/userPhoneET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mailET_userPanel"
+            android:ems="9"
+            android:layout_alignParentLeft="true"
+            android:inputType="number"
+            tools:ignore="TextFields" />
+
+        <TextView
+            android:layout_below="@id/userPhoneET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/marginTop"
+            android:layout_marginRight="@dimen/marginRight"
+            android:textSize="@dimen/TVSize"
+            android:text="@string/city" />
+
+        <EditText
+            android:id="@+id/userCityET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userPhoneET_userPanel"
+            android:ems="9"
+            android:inputType="text"
+            android:layout_alignParentLeft="true"/>
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userCityET_userPanel"
+            android:text="@string/street"
+            android:textSize="@dimen/TVSize"
+            android:layout_marginTop="@dimen/marginTop"
+            android:layout_marginRight="@dimen/marginRight"/>
+
+        <EditText
+            android:id="@+id/userStreetET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="9"
+            android:layout_below="@id/userCityET_userPanel"
+            android:layout_alignParentLeft="true"
+            android:inputType="text"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/homeNumber"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/userStreetET_userPanel"
+            android:layout_marginRight="@dimen/marginRight"
+            android:layout_marginTop="@dimen/marginTop"
+            android:textSize="@dimen/TVSize"/>
+
+        <EditText
+            android:id="@+id/userHomeNumberET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="9"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/userStreetET_userPanel"/>
+
+
+        <TextView
+            android:layout_below="@id/userHomeNumberET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/postilCode"
+            android:textSize="@dimen/TVSize"
+            android:layout_marginTop="@dimen/marginTop"
+            android:layout_marginRight="@dimen/marginRight"/>
+
+        <EditText
+            android:id="@+id/userPostelCodeET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userHomeNumberET_userPanel"
+            android:ems="9"
+            android:inputType="number"/>
+
+        <TextView
+            android:text="@string/poPost"
+            android:layout_below="@id/userPostelCodeET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="@dimen/TVSize"
+            android:layout_marginRight="@dimen/marginRight"
+            android:layout_marginTop="@dimen/marginTop"/>
+
+        <EditText
+            android:id="@+id/userPOpostET_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/userPostelCodeET_userPanel"
+            android:ems="9"
+            android:inputType="number"/>
+
+        <CheckBox
+            android:id="@+id/userAgreeSMS_userPanel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sms"
+            android:textSize="@dimen/TVSize"
+            android:layout_marginTop="@dimen/marginTop"
+            android:layout_below="@id/userPOpostET_userPanel"/>
+
+       <CheckBox
+           android:id="@+id/userAgreeMail_userPanel"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/agreeMail"
+           android:layout_below="@id/userAgreeSMS_userPanel"
+           android:textSize="@dimen/TVSize"
+           android:layout_marginTop="@dimen/marginTop"/>
+
+        <TextView
+            android:id="@+id/lookingBeforeUpdateUserInfoTV_userPanel"
+            android:text="@string/lookingBeforeUpdateUserInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/TVSize"
+            android:layout_below="@id/userAgreeMail_userPanel"
+            android:layout_marginTop="@dimen/marginTop"
+            android:textColor="@color/red"/>
+
+        <Button
+            android:id="@+id/cancelButton_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/lookingBeforeUpdateUserInfoTV_userPanel"
+            android:text="@string/cancel"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"/>
+
+        <Button
+            android:id="@+id/updateButton_userPanel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/lookingBeforeUpdateUserInfoTV_userPanel"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:text="@string/update"/>
+
+
+
+
+
+    </RelativeLayout>
+
+</ScrollView>

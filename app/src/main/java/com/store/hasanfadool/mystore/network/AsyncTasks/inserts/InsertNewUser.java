@@ -1,6 +1,7 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.inserts;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
@@ -19,13 +20,13 @@ public class InsertNewUser extends AsyncTask<Void,Void,String> {
 
     public User newUser;
 
-    private static final String NAMESPACE = "";
     private GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
-
-    private final  String url = myIp + "/insert";
-    private static final String METHOD_NAME = "";
-    private static final String SOAP_ACTION = "";
+//      http://192.168.1.2:8080/
+    private final  String url = myIp + "/insertDataWS/InsertWS?WSDL";
+    private static final String NAMESPACE = "http://it.pro.com/";
+    private static final String METHOD_NAME = "insertUserWS";
+    private static final String SOAP_ACTION = "http://it.pro.com/insertUserWS";
 
 
     @Override
@@ -127,6 +128,7 @@ public class InsertNewUser extends AsyncTask<Void,Void,String> {
                 SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
 
 
+                Log.d("insertNewUser", "the response is : " + response.toString());
                 return response.toString();
             }catch (Exception e){
                 e.printStackTrace();
@@ -135,7 +137,20 @@ public class InsertNewUser extends AsyncTask<Void,Void,String> {
         return "error";
     }
 
-    public void execute(User newUser) {
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+        if (s != null){
+            Log.d("insertNewUser", "yes > " + s);
+        }
+    }
+
+    public void setUser(User newUser) {
         this.newUser = newUser;
+        Log.d("insertNewUser", "the new user " + "name/" + newUser.getUserName() +"/mail /" +  newUser.getUserMail() +
+                "lstName/" + newUser.getUserLName() + "phone/" + newUser.getUserPhone() + "city/" + newUser.getUserCity() +
+                "street/" + newUser.getuStreet() + "homeNum/" + newUser.getuHomeNum() + "postel/" + newUser.getuPstelCode()+
+                "popsot/" + newUser.getuPO_post() + "pass/" + newUser.getUserPass() + "sms/" + newUser.getSmsAgree() +
+                "mailAgree" + newUser.getMailAgree());
     }
 }

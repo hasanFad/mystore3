@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <!-- userFName userLName userEmail  userPhone  userCity userStreet
     userhomeNumber userPostelCode  userPOpost userPassword -->
 
@@ -11,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
@@ -23,6 +27,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:inputType="text"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userFNameTV_registerNewUser"
         android:hint="@string/firstName"/>
 
@@ -40,6 +47,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:layout_alignParentLeft="true"
+        android:maxLines="1"
+        android:inputType="text"
         android:hint="@string/lastName"
         android:layout_alignBaseline="@id/userLNameTV_registerNewUser"/>
 
@@ -57,6 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
         android:hint="@string/mail"
         android:layout_alignBaseline="@id/userEmailTV_registerNewUser"
         android:inputType="textEmailAddress"/>
@@ -75,6 +87,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:maxLength="10"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userPhoneTV_registerNewUser"
         android:hint="@string/phone"
         android:inputType="number"/>
@@ -93,6 +108,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:inputType="text"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userCityTV_registerNewUser"
         android:hint="@string/city"/>
 
@@ -110,6 +128,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:inputType="text"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userStreetTV_registerNewUser"
         android:hint="@string/street"/>
 
@@ -127,6 +148,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userHomeNumberTV_registerNewUser"
         android:hint="@string/homeNumber"
         android:inputType="number"/>
@@ -145,6 +168,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userPostelCodeTV_registerNewUser"
         android:hint="@string/postilCode"
         android:inputType="number"/>
@@ -163,6 +188,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="7"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userPOpostTV_registerNewUser"
         android:hint="@string/poPost"
         android:inputType="number"/>
@@ -182,12 +209,14 @@
         android:layout_height="wrap_content"
         android:hint="@string/yourPass"
         android:ems="7"
+        android:maxLines="1"
+        android:layout_alignParentLeft="true"
         android:layout_alignBaseline="@id/userPasswordTV_registerNewUser"
         android:inputType="textPassword"/>
 
     <CheckBox
         android:id="@+id/userAgreeSMS_registerNewUser"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sms"
         android:layout_alignParentRight="true"
@@ -196,7 +225,7 @@
 
     <CheckBox
         android:id="@+id/userAgreeMail_registerNewUser"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/agreeMail"
         android:layout_alignParentRight="true"
@@ -216,5 +245,5 @@
         android:layout_marginBottom="20dp"
         android:text="@string/registerMe" />
 
-
 </RelativeLayout>
+</ScrollView>

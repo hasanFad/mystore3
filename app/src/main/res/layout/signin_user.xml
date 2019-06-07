@@ -53,7 +53,17 @@
         android:text="@string/enter"
         android:layout_below="@id/passwordET_signInUser"
         android:layout_marginTop="60dp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"/>
+
+        <Button
+            android:id="@+id/registerNewUser_signInUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/newUser"
+            android:layout_alignBaseline="@id/signInButton_signInUser"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"/>
     </RelativeLayout>
 
     <LinearLayout

@@ -26,10 +26,27 @@ public class User implements Serializable {
         this.mailAgree = mailAgree;
     }
 
+    public User(String userName, String userLName, String userMail, String userPhone, String userCity,
+                String uStreet, int uHomeNum , int uPstelCode, String uPO_post, int smsAgree, int mailAgree){
+
+        this.userName = userName;
+        this.userLName = userLName;
+        this.userMail = userMail;
+        this.userPhone = userPhone;
+        this.userCity = userCity;
+        this.uStreet = uStreet;
+        this.uHomeNum = uHomeNum;
+        this.uPstelCode = uPstelCode;
+        this.uPO_post = uPO_post;
+        this.smsAgree = smsAgree;
+        this.mailAgree = mailAgree;
+    }
+
     public User(String userMail, String userPass){
         this.userMail = userMail;
         this.userPass = userPass;
     }
+
 
 
     public String getUserCity() {

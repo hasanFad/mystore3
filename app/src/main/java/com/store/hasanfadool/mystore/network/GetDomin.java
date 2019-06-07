@@ -2,10 +2,10 @@ package com.store.hasanfadool.mystore.network;
 
 public class GetDomin {
 
-    // http://192.168.1.4:8080
-                                            // the ip of the computer
+
+                                            // the ip of the server
     public final String myIpPort(){
-        return "http://" + "192.168.1.5" + ":" + "8080";
+        return "http://" + "192.168.1.2" + ":" + "8080";
     }
 
 

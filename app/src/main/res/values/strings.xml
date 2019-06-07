@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">my store</string>
+    <string name="app_name">חנות שלי</string>
     <string name="userLogin">כניסת משתמש</string>
     <string name="productName">שם המוצר</string>
     <string name="productPrice">מחיר המוצר</string>
@@ -30,7 +30,7 @@
     <string name="poPost">ת.ד</string>
     <string name="registerMe">רשום אותי</string>
     <string name="yourPass">סיסמה שלך</string>
-    <string name="invaledUser">משתמש קיים</string>
+    <string name="invaledUser">משתמש לא קיים</string>
     <string name="enter">כניסה</string>
     <string name="forgetPassTxt">שכחתם סיסמה?לא נורה!</string>
     <string name="pressHere">לחץ.י כאן</string>
@@ -57,6 +57,11 @@
     <string name="noOrderNum">עוד אין לכם הזמנה!</string>
     <string name="choose">בחר</string>
     <string name="noQuantity">אין כמות למידה הזאת. נבקשך ליצור קשר איתנו</string>
+    <string name="newUser">משתמש חדש</string>
+    <string name="PanelUpdateUser">עדכון נתוני המשתמש</string>
+    <string name="yourName">שם שלך</string>
+    <string name="update">עדכן</string>
+    <string name="lookingBeforeUpdateUserInfo">לפני עדכון רצוי מאוד ומומלץ אפילו להביט על הנתונים אם יש משהו לא תקין לשנות לפני עדכון- במיוחד אם נגעתם בכתובת - להבטחת קבלת המשלוח אחרי קניה!</string>
 
 
 </resources>

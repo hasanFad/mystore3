@@ -2,13 +2,12 @@ package com.store.hasanfadool.mystore.fragments.user;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,17 +22,19 @@ import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
 import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class SignInUser extends Fragment implements AsyncResponse {
 
 
+    ShPUsers shPUsers;
     Context context;
     FragmentManager fragmentManager;
     EditText mail, pass;
-    Button sendData, forgetPass;
-    String userPassFromFile;
+    Button sendData, forgetPass, newUser;
+    String userPassFromFile,userMailFromFile;
     User myUser;
     CheckUserAsync checkUserAsync = new CheckUserAsync();
 
@@ -52,12 +53,26 @@ public class SignInUser extends Fragment implements AsyncResponse {
         fragmentManager = getFragmentManager();
 
 
+        shPUsers = new ShPUsers(context);
         // Edit Text
         mail = view.findViewById(R.id.mailET_signInUser);
         pass = view.findViewById(R.id.passwordET_signInUser);
             // Buttons
         sendData = view.findViewById(R.id.signInButton_signInUser);
         forgetPass = view.findViewById(R.id.forgetPassButton_signInUser);
+        newUser = view.findViewById(R.id.registerNewUser_signInUser);
+
+        newUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterNewUser registerNewUser = new RegisterNewUser();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.container,registerNewUser);
+                fragmentTransaction.addToBackStack("fragment");
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                fragmentTransaction.commit();
+            }
+        });
 
         sendData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,9 +108,15 @@ public class SignInUser extends Fragment implements AsyncResponse {
                 // forget password search by mail
 
                 readMailFromFile();
-                if (userPassFromFile != null){
+                readMailFromFile();
+                if (userPassFromFile != null && userMailFromFile !=null){
                     Toast.makeText(context, "your password is " + userPassFromFile, Toast.LENGTH_SHORT).show();
                     pass.setText(userPassFromFile);
+                    mail.setText(userMailFromFile);
+
+                }else {
+                    // file not exist then not register yet/ the user was delete the app
+                    Toast.makeText(context, "משתמש לא קיים,נא להירשם !", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -114,15 +135,20 @@ public class SignInUser extends Fragment implements AsyncResponse {
     @Override
     public void processFinish(String outPut) {
 
-        if (outPut.equals(0)){ // the result is empty so, set red the text color
-            mail.setTextColor(R.color.red);
-            pass.setTextColor(R.color.red);
-        }else {
-            // the mail & pass are ok , go to user panel and save the mail & pass to sharedPreferences
-            Toast.makeText(context, "your maul is : " + myUser.getUserMail(), Toast.LENGTH_SHORT).show();
+
+        if (outPut.equals(mail.getText().toString())){ 
+            // the user is ok will save the user with shared preferences and go to user panel 
+            Toast.makeText(context, "your mail is : " + myUser.getUserMail(), Toast.LENGTH_SHORT).show();
+
+            shPUsers.saveUser(mail.getText().toString(), pass.getText().toString());
 
             goToUserPanel(); // go to user panel
+        }else {
+            // the mail & pass are not ok 
+            mail.setTextColor(R.color.red);
+            pass.setTextColor(R.color.red);
 
+            Toast.makeText(context, "שם משתמש, או סיסמה לא נכונים!", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -132,6 +158,15 @@ public class SignInUser extends Fragment implements AsyncResponse {
         // the mail & pass ok now will go to user panel
         // the shared preferences will be at here
         Toast.makeText(context, "the mail and the pass are okay", Toast.LENGTH_SHORT).show();
+
+        UserPanel userPanel = new UserPanel();
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.container, userPanel);
+        fragmentTransaction.addToBackStack("fragment");
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
+
     }
 
 
@@ -139,7 +174,7 @@ public class SignInUser extends Fragment implements AsyncResponse {
 
         StringBuilder st = new StringBuilder();
         try{
-            FileInputStream fileInputStream = context.openFileInput("userPassLocalFile.txt");
+            FileInputStream fileInputStream = context.openFileInput("userMailLocalFile.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream);
 
             char[] inputBuffer = new char[100];
@@ -158,8 +193,34 @@ public class SignInUser extends Fragment implements AsyncResponse {
             e.printStackTrace();
         }
 
-        userPassFromFile = String.valueOf(st);
+        userMailFromFile = String.valueOf(st);
 
+        readPassFromFile();
+
+    }
+
+    private void readPassFromFile() {
+        StringBuilder stB = new StringBuilder();
+        try{
+            FileInputStream fIS = context.openFileInput("userPassLocalFile.txt");
+            InputStreamReader iSR = new InputStreamReader(fIS);
+            char[] inputBuffer = new char[100];
+            int charRead;
+            while ((charRead = iSR.read(inputBuffer)) > 0){
+             String read =  String.copyValueOf(inputBuffer,0,charRead);
+             stB.append(read);
+             inputBuffer = new char[100];
+            }
+            iSR.close();
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        userPassFromFile = String.valueOf(stB);
     }
 
     public User getUser(){

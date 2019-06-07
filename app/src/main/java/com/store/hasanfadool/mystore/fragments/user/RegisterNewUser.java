@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +28,14 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 public class RegisterNewUser extends Fragment {
 
+    final static private String TAG = "RegisterNewUser";
  // 10 param-->  userFName userLName userEmail  userPhone  userCity
     // userStreet userhomeNumber userPostelCode  userPOpost userPass
 
@@ -121,6 +128,8 @@ public class RegisterNewUser extends Fragment {
                             // it's O.K
                     Toast.makeText(context, "ההרשמה מתבצעת..תועבר בהמשך...", Toast.LENGTH_SHORT).show();
 
+                    writeMailToFile(userEmail.getText().toString(),userPass.getText().toString());
+
                     newUser = new User(userFName.getText().toString(),userLName.getText().toString(), userEmail.getText().toString(),
                             userPhone.getText().toString(), userCity.getText().toString(),
                             userStreet.getText().toString(),Integer.parseInt(userHomeNumber.getText().toString()),
@@ -128,7 +137,10 @@ public class RegisterNewUser extends Fragment {
                             ,userPOpost.getText().toString(),userPass.getText().toString(),sms,mail);
 
                     InsertNewUser insertNewUser = new InsertNewUser();
-                    insertNewUser.execute(newUser);
+                    insertNewUser.setUser(newUser);
+                    insertNewUser.execute();
+
+
 
 
                 }
@@ -136,7 +148,38 @@ public class RegisterNewUser extends Fragment {
         });
     }
 
+    private void writeMailToFile(String mailString,String pas) {
 
+        try{
+            FileOutputStream fOut = new FileOutputStream(  "userMailLocalFile.txt");
+
+            OutputStreamWriter opsw = new OutputStreamWriter(fOut);
+            opsw.write(mailString);
+            opsw.close();
+            Log.d(TAG, "the mail was saved!");
+
+            writePassToFile(pas);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void writePassToFile(String pas) {
+        try{
+            FileOutputStream fileOutputStream = new FileOutputStream("userPassLocalFile.txt");
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream);
+            outputStreamWriter.write(pas);
+            Log.d(TAG, "the pass was saved");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
 }
