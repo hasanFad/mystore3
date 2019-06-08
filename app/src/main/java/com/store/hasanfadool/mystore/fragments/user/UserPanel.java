@@ -42,6 +42,7 @@ public class UserPanel extends Fragment implements AsyncResponse {
 
 
     FragmentManager fragmentManager;
+    AsyncResponse responseAfterUpdate ;
 
     SelectUserInfoAsync selectUserInfo = new SelectUserInfoAsync();
 
@@ -76,7 +77,7 @@ public class UserPanel extends Fragment implements AsyncResponse {
         userInfoAsync.setMail(myMail);
         userInfoAsync.execute();
 
-        getTheAsync();
+        getTheAsyncSelected();
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,16 +121,22 @@ public class UserPanel extends Fragment implements AsyncResponse {
                 UpdateUserInfoAsync updateUserInfoAsync = new UpdateUserInfoAsync();
                 updateUserInfoAsync.setMyUser(updateUser);
                 updateUserInfoAsync.execute();
-
+                getTheAsyncUpdate();
 
             }
         });
 
     }
 
-    private void getTheAsync() {
+    private void getTheAsyncUpdate() {
+        responseAfterUpdate = this;
+
+    }
+
+    private void getTheAsyncSelected() {
         selectUserInfo.mySelectUserResponse = this;
     }
+
 
     public void setUser(String myMail){
         this.myMail = myMail;
@@ -157,7 +164,7 @@ public class UserPanel extends Fragment implements AsyncResponse {
 
     }
 
-    private void setUserInfoAtET(User info) {
+    public void setUserInfoAtET(User info) {
         userFName.setText(info.getUserName());
         userLName.setText(info.getUserLName());
         userEmail.setText(info.getUserMail());
@@ -175,8 +182,5 @@ public class UserPanel extends Fragment implements AsyncResponse {
         }
     }
 
-    public void setUserMailFromSomeSh(){
-        ShPUsers shPUsers = new ShPUsers(context);
-        sendMail2Asnyc = shPUsers.getUser().getUserMail();
-    }
+
 }

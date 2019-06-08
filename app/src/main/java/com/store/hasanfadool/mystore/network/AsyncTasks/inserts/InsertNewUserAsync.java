@@ -3,6 +3,7 @@ package com.store.hasanfadool.mystore.network.AsyncTasks.inserts;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
@@ -13,22 +14,25 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-public class InsertNewUser extends AsyncTask<Void,Void,String> {
+public class InsertNewUserAsync extends AsyncTask<Void,Void,String> {
 
     // 12 param-->  userFName userLName userEmail  userPhone  userCity
     // userStreet userhomeNumber userPostelCode  userPOpost userPass agreeSms agreeMail
+
+//    the object not null, i was check it with log but at the WS we got the userFName is null
 
     public User newUser;
 
     private GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
-//      http://192.168.1.2:8080/
+
     private final  String url = myIp + "/insertDataWS/InsertWS?WSDL";
     private static final String NAMESPACE = "http://it.pro.com/";
     private static final String METHOD_NAME = "insertUserWS";
     private static final String SOAP_ACTION = "http://it.pro.com/insertUserWS";
 
 
+    AsyncResponse asyncResponse = null;
     @Override
     protected String doInBackground(Void... voids) {
         if (newUser.getUserName() != null){
@@ -142,6 +146,7 @@ public class InsertNewUser extends AsyncTask<Void,Void,String> {
         super.onPostExecute(s);
         if (s != null){
             Log.d("insertNewUser", "yes > " + s);
+            asyncResponse.processFinish(s);
         }
     }
 

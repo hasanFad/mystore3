@@ -66,7 +66,7 @@ public class SelectUserInfoAsync extends AsyncTask<Void,Void,String > {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (s != null && !s.isEmpty()){
-            mySelectUserResponse.processFinish(s);
+            mySelectUserResponse.finishProces(s);
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.updates;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
@@ -23,6 +25,8 @@ public class UpdateUserInfoAsync extends AsyncTask<Void,Void,String> {
     private final  String url = myIp + "/insert";
     private static final String METHOD_NAME = "";
     private static final String SOAP_ACTION = "";
+
+    AsyncResponse responseAfterUpdate = null;
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -139,7 +143,10 @@ public class UpdateUserInfoAsync extends AsyncTask<Void,Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (s.equals("error")){
+            Log.d("", "error : "+ s);
 
+        }else {
+            responseAfterUpdate.processFinish(s);
         }
     }
 }

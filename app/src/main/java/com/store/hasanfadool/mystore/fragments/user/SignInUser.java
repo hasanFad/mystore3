@@ -160,7 +160,7 @@ public class SignInUser extends Fragment implements AsyncResponse {
         Toast.makeText(context, "the mail and the pass are okay", Toast.LENGTH_SHORT).show();
 
         UserPanel userPanel = new UserPanel();
-
+        userPanel.setUser(myUser.getUserMail());
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, userPanel);
         fragmentTransaction.addToBackStack("fragment");

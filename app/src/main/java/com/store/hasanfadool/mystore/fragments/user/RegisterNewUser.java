@@ -2,11 +2,12 @@ package com.store.hasanfadool.mystore.fragments.user;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,23 +18,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
 import com.store.hasanfadool.mystore.models.User;
-import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.InsertNewUser;
-import com.store.hasanfadool.mystore.network.GetDomin;
-
-import org.ksoap2.SoapEnvelope;
-import org.ksoap2.serialization.PropertyInfo;
-import org.ksoap2.serialization.SoapObject;
-import org.ksoap2.serialization.SoapPrimitive;
-import org.ksoap2.serialization.SoapSerializationEnvelope;
-import org.ksoap2.transport.HttpTransportSE;
+import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.InsertNewUserAsync;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-public class RegisterNewUser extends Fragment {
+public class RegisterNewUser extends Fragment implements AsyncResponse {
 
     final static private String TAG = "RegisterNewUser";
  // 10 param-->  userFName userLName userEmail  userPhone  userCity
@@ -46,6 +40,7 @@ public class RegisterNewUser extends Fragment {
     CheckBox smsAgree,mailAgree;
     int sms, mail,userHN;
     User newUser;
+    FragmentManager fragmentManager;
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -61,6 +56,7 @@ public class RegisterNewUser extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         context = getActivity();
+        fragmentManager = getFragmentManager();
 
         userFName = view.findViewById(R.id.userFNameET_registerNewUser);
         userLName = view.findViewById(R.id.userLNameET_registerNewUser);
@@ -136,9 +132,9 @@ public class RegisterNewUser extends Fragment {
                             Integer.parseInt(userPostelCode.getText().toString())
                             ,userPOpost.getText().toString(),userPass.getText().toString(),sms,mail);
 
-                    InsertNewUser insertNewUser = new InsertNewUser();
-                    insertNewUser.setUser(newUser);
-                    insertNewUser.execute();
+                    InsertNewUserAsync insertNewUserAsync = new InsertNewUserAsync();
+                    insertNewUserAsync.setUser(newUser);
+                    insertNewUserAsync.execute();
 
 
 
@@ -181,5 +177,28 @@ public class RegisterNewUser extends Fragment {
 
     }
 
+            // after send new user will get the response if the saved the user or not
+    @Override
+    public void processFinish(String outPut) {
+        Log.d(TAG, "get the WS : " + outPut );
+        getResponseInsertUser(outPut);
+    }
 
+    private void getResponseInsertUser(String outPut) {
+        if (Integer.parseInt(outPut) == 0){
+            // can't save the user maybe have his mail at the system
+            Log.d(TAG, "can't save the user");
+        }else {
+            // the user was insert to the system
+            Log.d(TAG, "the user was insert into the system");
+            UserPanel userPanel = new UserPanel();
+            userPanel.setUserInfoAtET(newUser);
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.container, userPanel);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            fragmentTransaction.commit();
+        }
+    }
 }
