@@ -52,6 +52,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
     String myRange;
     int myQuantity;
 
+
     FragmentManager fragmentManager;
 
     @SuppressLint("InflateParams")
@@ -157,7 +158,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
                 Toast.makeText(context, "the picture is clicked" + productName.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 ProductPicturesFragment productPicturesFragment = new ProductPicturesFragment();
-                productPicturesFragment.setProductCodeToGetPictures(productRange.getProCode());
+                productPicturesFragment.setProductCodeToGetPictures(iProduct.getProCode());
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, productPicturesFragment);
                 fragmentTransaction.addToBackStack("fragment");
@@ -173,8 +174,10 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
         goToBayPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        // go to page for pay
-                Toast.makeText(context, getString(R.string.goT), Toast.LENGTH_SHORT).show();
+                        // go to page for pay will minos 1 from he quantity
+
+                int newQuantity = productRange.getQuantity() - 1;
+                Toast.makeText(context, "הכמות שנשאר לאותו מידה היא: " + newQuantity, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -201,7 +204,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
             for (int i =0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
                     // set the object at product object
-                productRange = new Product(object.getString("productCode1"),object.getInt("productRangeOfDimensions"),object.getInt("quantity"));
+                productRange = new Product(object.getString("productCode"),object.getInt("productRangeOfDimensions"),object.getInt("quantity"));
                     // set the product range we get to the list of ranges
                 proRanges.add(String.valueOf(productRange.getRange())); // save the range
                 myQuantity = productRange.getQuantity(); // save the quantity
@@ -228,6 +231,9 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
         // method to get the object from the WS after we download from the WS with Async
     public void setiProduct(Product iProduct){
         this.iProduct = iProduct;
+        Log.d("productInfo", "my: " + iProduct.getProCode());
     }
+
+
 
 }

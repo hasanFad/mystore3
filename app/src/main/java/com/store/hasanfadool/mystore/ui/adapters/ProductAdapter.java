@@ -123,11 +123,7 @@ public class ProductAdapter extends BaseAdapter {
  // Product(String productName, String productColor, String companyName, String gender, int productPrice, double productCheap, int shipping ,String productPicture)
 
 
-                ProductsListFragment productsListFragment = new ProductsListFragment();
-                productsListFragment.sendMyProduct();
 
-
-                Log.d("hasan", "my code is: " + currentProduct.getProCode());
                 ProductInfoFragment productInfoFragment = new ProductInfoFragment();
                 productInfoFragment.setiProduct(currentProduct);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
