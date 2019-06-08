@@ -16,17 +16,16 @@ import android.widget.EditText;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.ProductsListFragment;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectUserInfoAsync;
 import com.store.hasanfadool.mystore.network.AsyncTasks.updates.UpdateUserInfoAsync;
-import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class UserPanel extends Fragment implements AsyncResponse {
+public class UserPanel extends Fragment implements AsyncResponseString {
 
     // 9 param-->  userFName userLName userEmail  userPhone  userCity
     // userStreet userhomeNumber userPostelCode  userPOpost
@@ -42,7 +41,7 @@ public class UserPanel extends Fragment implements AsyncResponse {
 
 
     FragmentManager fragmentManager;
-    AsyncResponse responseAfterUpdate ;
+    AsyncResponseString responseAfterUpdate ;
 
     SelectUserInfoAsync selectUserInfo = new SelectUserInfoAsync();
 

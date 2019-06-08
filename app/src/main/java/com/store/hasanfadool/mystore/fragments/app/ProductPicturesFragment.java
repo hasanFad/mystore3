@@ -17,10 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.Picture;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductPicturesAsync;
 
@@ -28,7 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class ProductPicturesFragment extends Fragment implements AsyncResponse {
+public class ProductPicturesFragment extends Fragment implements AsyncResponseString {
     private static final String TAG = "ProductPicturesFragment";
     Context context;
     FragmentManager fragmentManager;

@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
 import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
@@ -26,7 +26,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SignInUser extends Fragment implements AsyncResponse {
+public class SignInUser extends Fragment implements AsyncResponseString {
 
 
     ShPUsers shPUsers;

@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.InsertNewUserAsync;
 
@@ -27,7 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-public class RegisterNewUser extends Fragment implements AsyncResponse {
+public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
 
     final static private String TAG = "RegisterNewUser";
  // 10 param-->  userFName userLName userEmail  userPhone  userCity
@@ -178,21 +178,24 @@ public class RegisterNewUser extends Fragment implements AsyncResponse {
     }
 
             // after send new user will get the response if the saved the user or not
-    @Override
-    public void processFinish(String outPut) {
-        Log.d(TAG, "get the WS : " + outPut );
-        getResponseInsertUser(outPut);
-    }
 
-    private void getResponseInsertUser(String outPut) {
-        if (Integer.parseInt(outPut) == 0){
-            // can't save the user maybe have his mail at the system
-            Log.d(TAG, "can't save the user");
-        }else {
+    private void getResponseInsertUser(int outPut) {
+
+        switch (outPut){
             // the user was insert to the system
+            case -1:
+//                the mail was insert into the system in past
+                Toast.makeText(context, "המיל הזה רשום במערכת", Toast.LENGTH_SHORT).show();
+                return;
+            case 0:
+//                we have an error at the SQL code(SQLException)
+                Toast.makeText(context, "בעיית תקשורת, נסה הרשמה במועד מאוחר יותר!", Toast.LENGTH_SHORT).show();
+                return;
+            case 1:
+//                insert the user into the system successful
             Log.d(TAG, "the user was insert into the system");
             UserPanel userPanel = new UserPanel();
-            userPanel.setUserInfoAtET(newUser);
+            userPanel.setUserInfoAtET(newUser); // send the user information to the user panel
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, userPanel);
@@ -200,5 +203,11 @@ public class RegisterNewUser extends Fragment implements AsyncResponse {
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.commit();
         }
+    }
+
+    @Override
+    public void processFinishInt(int outPut) {
+        Log.d(TAG, "the response is: " + outPut);
+        getResponseInsertUser(outPut);
     }
 }

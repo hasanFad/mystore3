@@ -2,7 +2,7 @@ package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
 import android.os.AsyncTask;
 
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
 import org.ksoap2.SoapEnvelope;
@@ -14,7 +14,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 public class SelectUserInfoAsync extends AsyncTask<Void,Void,String > {
 
-    public AsyncResponse mySelectUserResponse = null;
+    public AsyncResponseString mySelectUserResponse = null;
 
     String myMail;
 
@@ -66,7 +66,7 @@ public class SelectUserInfoAsync extends AsyncTask<Void,Void,String > {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (s != null && !s.isEmpty()){
-            mySelectUserResponse.finishProces(s);
+            mySelectUserResponse.processFinish(s);
         }
     }
 }

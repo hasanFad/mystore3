@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.store.hasanfadool.mystore.R;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.Product;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductsAsync;
 import com.store.hasanfadool.mystore.ui.adapters.ProductAdapter;
@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductsListFragment extends Fragment implements AsyncResponse {
+public class ProductsListFragment extends Fragment implements AsyncResponseString {
     private static final String TAG = "ProductsListFragment";
 
     ArrayList<Product> productList; // the main array list

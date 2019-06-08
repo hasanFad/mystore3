@@ -2,7 +2,7 @@ package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
 import android.os.AsyncTask;
 
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
@@ -17,7 +17,7 @@ public class CheckUserAsync extends AsyncTask<Void,Void,String> {
 
 
 
-    public AsyncResponse resultInterFace = null;
+    public AsyncResponseString resultInterFace = null;
 
       User myUser;
 

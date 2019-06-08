@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.util.JsonReader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectOrdersNumAsync;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class OrderInfo extends Fragment implements AsyncResponse {
+public class OrderInfo extends Fragment implements AsyncResponseString {
 
     Context context;
     FragmentManager fragmentManager;

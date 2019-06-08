@@ -42,9 +42,8 @@ public class MyProblems {
 
     /////////////////////////////////////////////////////////////////
    //    6                                                        //
-  //    at register new user class after send the user to async  //
- //    if we got send ok will go to user panel else no          //
-/////////////////////////////////////////////////////////////////
+  // at register new user class nullPointerException at line 149 //
+//////////////////////////////////////////////////////////////////
 
 
 

@@ -2,7 +2,7 @@ package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
 import android.os.AsyncTask;
 
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
 import org.ksoap2.SoapEnvelope;
@@ -15,7 +15,7 @@ import org.ksoap2.transport.HttpTransportSE;
 public class SelectProductPicturesAsync extends AsyncTask<Void,Void, String> {
 
 
-    public AsyncResponse delegate = null;
+    public AsyncResponseString delegate = null;
 
     String productCode;
     private GetDomin getDomin = new GetDomin();

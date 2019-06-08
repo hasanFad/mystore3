@@ -3,7 +3,7 @@ package com.store.hasanfadool.mystore.network.AsyncTasks.updates;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
@@ -26,7 +26,7 @@ public class UpdateUserInfoAsync extends AsyncTask<Void,Void,String> {
     private static final String METHOD_NAME = "";
     private static final String SOAP_ACTION = "";
 
-    AsyncResponse responseAfterUpdate = null;
+    AsyncResponseString responseAfterUpdate = null;
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -50,7 +50,7 @@ public class UpdateUserInfoAsync extends AsyncTask<Void,Void,String> {
 
             //3
             PropertyInfo proMail = new PropertyInfo();
-            proMail.setName("userMail");
+            proMail.setName("userEmail");
             proMail.setValue(myUser.getUserMail());
             proMail.setType(PropertyInfo.STRING_CLASS);
             request.addProperty(proMail);
@@ -99,21 +99,21 @@ public class UpdateUserInfoAsync extends AsyncTask<Void,Void,String> {
 
             //10
             PropertyInfo proPass = new PropertyInfo();
-            proPass.setName("userPass");
+            proPass.setName("userPassword");
             proPass.setValue(myUser.getUserPass());
             proPass.setType(PropertyInfo.STRING_CLASS);
             request.addProperty(proPass);
 
             //11
             PropertyInfo proSMS = new PropertyInfo();
-            proSMS.setName("userSms");
+            proSMS.setName("smsAgree");
             proSMS.setValue(myUser.getSmsAgree());
             proSMS.setType(PropertyInfo.INTEGER_CLASS);
             request.addProperty(proSMS);
 
             //12
             PropertyInfo pro_mail = new PropertyInfo();
-            pro_mail.setName("userMail");
+            pro_mail.setName("mail_agree");
             pro_mail.setValue(myUser.getMailAgree());
             pro_mail.setType(PropertyInfo.INTEGER_CLASS);
             request.addProperty(pro_mail);

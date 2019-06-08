@@ -1,6 +1,6 @@
 package com.store.hasanfadool.mystore.interfaces;
 
-public interface AsyncResponse {
+public interface AsyncResponseString {
 
     void processFinish(String outPut);
 

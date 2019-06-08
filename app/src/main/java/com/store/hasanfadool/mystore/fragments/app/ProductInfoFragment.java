@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponse;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.Product;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductRangeAsync;
 
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductInfoFragment extends Fragment  implements AsyncResponse {
+public class ProductInfoFragment extends Fragment  implements AsyncResponseString {
 
     Context context;
             // from the xml
