@@ -4,16 +4,19 @@ package com.store.hasanfadool.mystore.models;
 public class Picture  {
 
 
-    private String   picture1, picture2 ,picture3, picture4;
+    private String   picture1, picture2 ,picture3, picture;
 
 
-    public Picture(String picture1, String picture2, String picture3, String picture4){
+    public Picture(String picture1, String picture2, String picture3, String picture){
         this.picture1 = picture1;
         this.picture2 = picture2;
         this.picture3 = picture3;
-        this.picture4 = picture4;
+        this.picture = picture;
     }
 
+    public Picture(String picture){
+        this.picture = picture;
+    }
 
     public String getPicture1() {
         return picture1;
@@ -27,12 +30,12 @@ public class Picture  {
         return picture3;
     }
 
-    public String getPicture4() {
-        return picture4;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setPicture4(String picture4) {
-        this.picture4 = picture4;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public void setPicture1(String picture1) {

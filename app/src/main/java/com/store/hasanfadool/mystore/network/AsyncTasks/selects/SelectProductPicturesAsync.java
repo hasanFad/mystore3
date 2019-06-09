@@ -1,6 +1,7 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
@@ -67,6 +68,7 @@ public class SelectProductPicturesAsync extends AsyncTask<Void,Void, String> {
 
     public void setProductCode(String productCode){
         this.productCode = productCode;
+        Log.d("select", "productCode: " + productCode );
     }
 
 

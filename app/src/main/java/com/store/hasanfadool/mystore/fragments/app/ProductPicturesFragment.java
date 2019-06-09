@@ -45,15 +45,12 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         return inflater.inflate(R.layout.product_pictures, null);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         context = getActivity();
         fragmentManager = getFragmentManager();
-
 
             // get the pictures from the WS and use the listener
         SelectProductPicturesAsync selectProductPicturesAsync = new SelectProductPicturesAsync();
@@ -62,18 +59,12 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
 
         selectProductPicturesAsync.delegate = this;
 
-
-
         smallPic1 = view.findViewById(R.id.smallPic1_productPictures);
         smallPic2 = view.findViewById(R.id.smallPic2_productPictures);
         smallPic3 = view.findViewById(R.id.smallPic3_productPictures);
         bigPic = view.findViewById(R.id.bigPicture_productPictures);
-
-
         leftButton = view.findViewById(R.id.leftButton_productPictures);
         rightButton = view.findViewById(R.id.rightButton_productPictures);
-
-
         leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,14 +72,12 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
 
                 if (((BitmapDrawable)bigPic.getDrawable()).getBitmap() == b4){
                     bigPic.setImageBitmap(b1);
-
                     smallPic1.setImageBitmap(b2);
                     smallPic2.setImageBitmap(b3);
                     smallPic3.setImageBitmap(b4);
 
                 }else if(((BitmapDrawable)bigPic.getDrawable()).getBitmap() == b1){
                     bigPic.setImageBitmap(b2);
-
                     smallPic1.setImageBitmap(b3);
                     smallPic2.setImageBitmap(b4);
                     smallPic3.setImageBitmap(b1);
@@ -105,11 +94,8 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
                     smallPic2.setImageBitmap(b2);
                     smallPic3.setImageBitmap(b3);
                 }
-
-
             }
         });
-
 
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +131,6 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         });
     }
 
-
     @Override
     public void processFinish(String outPut) { // the function from the listener
         readJson(outPut);
@@ -158,10 +143,9 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
             for (int i = 0; i<array.length(); i++){
                 JSONObject object = array.getJSONObject(i);
 
-                myPictures = new Picture(object.getString("productPicture1"),
-                        object.getString("productPicture2"),
-                        object.getString("productPicture3"),
-                        object.getString("productPicture4"));
+                myPictures = new Picture(object.getString("productPicture"),
+                        object.getString("productPicture1"),object.getString("productPicture2"),
+                        object.getString("productPicture3"));
 
                 convert2Bitmap(myPictures); // convert the pictures to bitmap
                 setPictures();
@@ -172,13 +156,12 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         }
     }
 
-
     private void convert2Bitmap(Picture strings) { // set the pictures at the imageView
 
         b1 = string2Bitmap(strings.getPicture1());
         b2 = string2Bitmap(strings.getPicture2());
         b3 = string2Bitmap(strings.getPicture3());
-        b4 = string2Bitmap(strings.getPicture4());
+        b4 = string2Bitmap(strings.getPicture());
     }
 
     private void setPictures(){
@@ -188,17 +171,14 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         smallPic3.setImageBitmap(b4);
     }
 
-
     private Bitmap string2Bitmap(String encodedString){ // convert the pictures from string to bitmap
         byte[] encodedByte = Base64.decode(encodedString, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
     }
 
-    public String setProductCodeToGetPictures(String productCode){
-       return this.productCode = productCode;
+    public void setProductCodeToGetPictures(String productCode){
+        this.productCode = productCode;
     }
 
 
-
 }
-

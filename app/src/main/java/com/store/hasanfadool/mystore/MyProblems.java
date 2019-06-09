@@ -2,36 +2,37 @@ package com.store.hasanfadool.mystore;
 
 public class MyProblems {
 
+    //////////////////////////////////////////////////////////////////
+   //    1          EXCEPTION                                      //
+  // at insertNewUserAsync nullPointerException at line 149       //
+ //  at SIngInUser at line 95 > just want to check it            //
+//////////////////////////////////////////////////////////////////
+
 
       ////////////////////////////////////////////////
-     //     1                                      //
+     //     2         NOT EXCEPTION                //
     //    check the class ProductPictures         //
-   //  was  get the pictures from the WS         //
-  // but checked just at case one picture       //
+   //  it's ok,just because don't have any       //
+  //  pictures at product_pictures table mysql  //
  ////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////////
-   //    // 2                                               //
+   //    // 3      NOT EXCEPTION                            //
   //     the ProgressBar                                   //
  //    at the start , when send and get any data from DB  //
 ///////////////////////////////////////////////////////////
 
-   ///////////////////
-  // 3             //
- //    SQlLite    //
-///////////////////
+   //////////////////////
+  // 4 NOT EXCEPTION  //
+ //    SQlLite       //
+//////////////////////
 
      ////////////////////////////////////////////////////////////////
-    // 4                                                          //
+    // 5      NOT EXCEPTION                                       //
    //  at insert products project >> OutOfMemoryError <<         //
   //  when want to decode the pictures from bitmap to base64    //
  //  >>add some code to manifest                               //
 ////////////////////////////////////////////////////////////////
 
-    /////////////////////////////////////////////////////////////////
-   //    5                                                        //
-  // at register new user class nullPointerException at line 149 //
-//////////////////////////////////////////////////////////////////
-    
 
 }
