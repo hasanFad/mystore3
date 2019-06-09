@@ -32,9 +32,6 @@ public class MyProblems {
    //    5                                                        //
   // at register new user class nullPointerException at line 149 //
 //////////////////////////////////////////////////////////////////
-
-//    6
-//    the product pictures class
-
+    
 
 }
