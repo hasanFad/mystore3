@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
@@ -26,7 +27,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SignInUser extends Fragment implements AsyncResponseString {
+public class SignInUser extends Fragment implements AsyncResponseInteger {
 
 
     ShPUsers shPUsers;
@@ -93,7 +94,6 @@ public class SignInUser extends Fragment implements AsyncResponseString {
 
                     checkUserAsync.setUser(myUser);
                     checkUserAsync.execute();
-                    getTheAsync();
 
                 }
 
@@ -127,31 +127,9 @@ public class SignInUser extends Fragment implements AsyncResponseString {
 
     }
 
-    private void getTheAsync() {
-        checkUserAsync.resultInterFace = this;
-    }
-
-    @SuppressLint("ResourceAsColor")
-    @Override
-    public void processFinish(String outPut) {
 
 
-        if (outPut.equals(mail.getText().toString())){ 
-            // the user is ok will save the user with shared preferences and go to user panel 
-            Toast.makeText(context, "your mail is : " + myUser.getUserMail(), Toast.LENGTH_SHORT).show();
 
-            shPUsers.saveUser(mail.getText().toString(), pass.getText().toString());
-
-            goToUserPanel(); // go to user panel
-        }else {
-            // the mail & pass are not ok 
-            mail.setTextColor(R.color.red);
-            pass.setTextColor(R.color.red);
-
-            Toast.makeText(context, "שם משתמש, או סיסמה לא נכונים!", Toast.LENGTH_SHORT).show();
-        }
-
-    }
 
     private void goToUserPanel() {
 
@@ -227,4 +205,22 @@ public class SignInUser extends Fragment implements AsyncResponseString {
         return this.myUser;
     }
 
+    @Override
+    public void processFinishInt(int outPut) {
+
+        switch (outPut){
+            case -1:
+                // a problem with the mail& pass
+                Toast.makeText(context, "בעיית תקשורת! נא נסה שינית במועד מאוחר יותר!", Toast.LENGTH_SHORT).show();
+
+            case 0:
+                // login failed
+                Toast.makeText(context, "שם משתמש או סיסמה לא נכונים!", Toast.LENGTH_SHORT).show();
+
+            case 1:
+                // login is successful
+                goToUserPanel();
+
+        }
+    }
 }

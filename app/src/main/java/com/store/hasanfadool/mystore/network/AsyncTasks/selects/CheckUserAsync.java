@@ -1,8 +1,9 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
-import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
+import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
 
@@ -13,11 +14,11 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-public class CheckUserAsync extends AsyncTask<Void,Void,String> {
+public class CheckUserAsync extends AsyncTask<Void,Void,Integer> {
 
 
 
-    public AsyncResponseString resultInterFace = null;
+    public AsyncResponseInteger resultInterFace = null;
 
       User myUser;
 
@@ -32,7 +33,7 @@ public class CheckUserAsync extends AsyncTask<Void,Void,String> {
 
 
     @Override
-    protected String doInBackground(Void... voids) {
+    protected Integer doInBackground(Void... voids) {
 
             if (myUser.getUserMail() != null && myUser.getUserPass() != null) {
                 try {
@@ -60,23 +61,24 @@ public class CheckUserAsync extends AsyncTask<Void,Void,String> {
                     ht.call(SOAP_ACTION, envelope);
                     SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
 
-                    return response.toString();
+                    return Integer.parseInt(response.toString());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
 
             }
 
-            return "error: the user not send yet!";
+            return -1;
 
     }
 
 
     @Override
-    protected void onPostExecute(String jsonResult) {
+    protected void onPostExecute(Integer jsonResult) {
         super.onPostExecute(jsonResult);
-        if (jsonResult != null && !jsonResult.isEmpty()){
-            resultInterFace.processFinish(jsonResult);
+        if (jsonResult != null ){
+            Log.d("checkUserAsync", "the result is: " + jsonResult);
+            resultInterFace.processFinishInt(jsonResult);
         }
     }
 

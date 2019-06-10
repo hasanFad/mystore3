@@ -146,7 +146,7 @@ public class InsertNewUserAsync extends AsyncTask<Void,Void,Integer> {
         super.onPostExecute(s);
         if (s != null){
             Log.d("insertNewUser", "yes > " + s);
-            asyncResponseInteger.processFinishInt(s);
+            asyncResponseInteger.processFinishInt(s); // here nullPointerException
         }
     }
 

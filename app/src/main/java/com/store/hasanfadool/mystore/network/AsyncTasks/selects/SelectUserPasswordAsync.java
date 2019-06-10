@@ -49,7 +49,7 @@ public class SelectUserPasswordAsync extends AsyncTask<Void,Void,String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (s != null && !s.isEmpty()){
-            delegat.processFinish(s);
+            delegat.processFinishInt(Integer.parseInt(s));
         }
     }
 }
