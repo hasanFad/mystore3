@@ -4,8 +4,9 @@ public class MyProblems {
 
     //////////////////////////////////////////////////////////////////
    //    1          EXCEPTION                                      //
-  // at insertNewUserAsync nullPointerException at line 149       //
- //  at SIngInUser at line 95 > just want to check it            //
+  // at insertNewUserAsync nullPointerException at line 149 but in the WS get int from the response      //
+ //  at SIngInUser at line 95 > just want to check it   maybe the problem because get the response an int not a string?
+    // i was changed the <void,void,string> to <void,void,Integer>
 //////////////////////////////////////////////////////////////////
 
 
@@ -28,7 +29,7 @@ public class MyProblems {
 //////////////////////
 
      ////////////////////////////////////////////////////////////////
-    // 5      NOT EXCEPTION                                       //
+    // 5       NOT EXCEPTION                                       //
    //  at insert products project >> OutOfMemoryError <<         //
   //  when want to decode the pictures from bitmap to base64    //
  //  >>add some code to manifest                               //
