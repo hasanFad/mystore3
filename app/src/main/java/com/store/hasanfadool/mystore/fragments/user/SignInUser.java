@@ -53,6 +53,7 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
         context = getActivity();
         fragmentManager = getFragmentManager();
 
+        checkUserAsync.resultInterFace = this;
 
         shPUsers = new ShPUsers(context);
         // Edit Text
@@ -135,8 +136,6 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
 
         // the mail & pass ok now will go to user panel
         // the shared preferences will be at here
-        Toast.makeText(context, "the mail and the pass are okay", Toast.LENGTH_SHORT).show();
-
         UserPanel userPanel = new UserPanel();
         userPanel.setUser(myUser.getUserMail());
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

@@ -41,6 +41,7 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
     int sms, mail,userHN;
     User newUser;
     FragmentManager fragmentManager;
+    InsertNewUserAsync insertNewUserAsync = new InsertNewUserAsync();
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -57,6 +58,8 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
 
         context = getActivity();
         fragmentManager = getFragmentManager();
+
+        insertNewUserAsync.asyncResponseInteger = this;
 
         userFName = view.findViewById(R.id.userFNameET_registerNewUser);
         userLName = view.findViewById(R.id.userLNameET_registerNewUser);
@@ -132,7 +135,7 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
                             Integer.parseInt(userPostelCode.getText().toString())
                             ,userPOpost.getText().toString(),userPass.getText().toString(),sms,mail);
 
-                    InsertNewUserAsync insertNewUserAsync = new InsertNewUserAsync();
+
                     insertNewUserAsync.setUser(newUser);
                     insertNewUserAsync.execute();
 
