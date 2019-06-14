@@ -33,7 +33,12 @@ public class InsertNewUserAsync extends AsyncTask<Void,Void,Integer> {
     private static final String SOAP_ACTION = "http://it.pro.com/insertUserWS";
 
 
-    public AsyncResponseInteger asyncResponseInteger = null;
+    public AsyncResponseInteger asyncResponseInteger = new AsyncResponseInteger() {
+        @Override
+        public void processFinishInt(int outPut) {
+
+        }
+    };
     @Override
     protected Integer doInBackground(Void... voids) {
         if (newUser.getUserName() != null){

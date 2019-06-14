@@ -199,7 +199,7 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.container, userPanel);
-            fragmentTransaction.addToBackStack(null);
+        //    fragmentTransaction.addToBackStack(null);
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
             fragmentTransaction.commit();
         }

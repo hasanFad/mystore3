@@ -27,6 +27,7 @@ import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.Product;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductRangeAsync;
+import com.store.hasanfadool.mystore.network.AsyncTasks.updates.UpdatingQuantityAsync;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -177,7 +178,13 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
                         // go to page for pay will minos 1 from he quantity
 
                 int newQuantity = productRange.getQuantity() - 1;
+                Product newQuantit = new Product(productRange.getProCode(),Integer.parseInt(myRange),newQuantity);
                 Toast.makeText(context, "הכמות שנשאר לאותו מידה היא: " + newQuantity, Toast.LENGTH_SHORT).show();
+
+                UpdatingQuantityAsync updatingQuantityAsync = new UpdatingQuantityAsync();
+                updatingQuantityAsync.setQuantity(newQuantit);
+                updatingQuantityAsync.execute();
+
             }
         });
     }

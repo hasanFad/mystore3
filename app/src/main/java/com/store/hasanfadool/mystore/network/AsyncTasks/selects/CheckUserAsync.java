@@ -68,7 +68,7 @@ public class CheckUserAsync extends AsyncTask<Void,Void,Integer> {
 
             }
 
-            return -1;
+            return -1; // 0 - 1 response
 
     }
 
