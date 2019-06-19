@@ -52,7 +52,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
 
     String myRange;
     int myQuantity;
-
+    Bitmap bm;
 
     FragmentManager fragmentManager;
 
@@ -118,7 +118,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
             }else {
                 shipp.setText("משלוח ₪" + iProduct.getShipping());
             }
-            Bitmap bm = StringToBitmap(iProduct.getProPic()); // send the string we got from the object to encoding it at method
+             bm = StringToBitmap(iProduct.getProPic()); // send the string we got from the object to encoding it at method
             productPicture.setImageBitmap(bm); // set the picture after encoded it
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_dropdown_item, proRanges); //  adapter for the spinner
@@ -159,7 +159,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
                 Toast.makeText(context, "the picture is clicked" + productName.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 ProductPicturesFragment productPicturesFragment = new ProductPicturesFragment();
-                productPicturesFragment.setProductCodeToGetPictures(iProduct.getProCode());
+                productPicturesFragment.setProductCodeToGetPictures(iProduct.getProCode(),bm);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, productPicturesFragment);
                 fragmentTransaction.addToBackStack("fragment");

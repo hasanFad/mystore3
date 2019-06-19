@@ -83,7 +83,7 @@ public class ProductAdapter extends BaseAdapter {
         productCheap.setText(String.format("הנחה ב %.2f", currentProduct.getCheap()));
         }
         shipping.setText(currentProduct.getShipping() + "₪");
-        Bitmap bm = StringToBitmap(currentProduct.getProPic()); // the string we got from the json object
+        final Bitmap bm = StringToBitmap(currentProduct.getProPic()); // the string we got from the json object
         productImage.setImageBitmap(bm); // function to encode the string
             // on click from the image go to product images
         productImage.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +92,7 @@ public class ProductAdapter extends BaseAdapter {
                 Toast.makeText(context, "the picture is clicked " + productName.getText().toString(), Toast.LENGTH_SHORT).show();
 
                 ProductPicturesFragment productPicturesFragment = new ProductPicturesFragment();
-                productPicturesFragment.setProductCodeToGetPictures(currentProduct.getProCode());
+                productPicturesFragment.setProductCodeToGetPictures(currentProduct.getProCode(),bm);
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.container, productPicturesFragment);
                 fragmentTransaction.addToBackStack("fragment");
