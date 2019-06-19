@@ -11,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ProductPicturesFragment extends Fragment implements AsyncResponseString {
-    private static final String TAG = "ProductPicturesFragment";
     Context context;
     FragmentManager fragmentManager;
 
@@ -63,12 +61,14 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         smallPic2 = view.findViewById(R.id.smallPic2_productPictures);
         smallPic3 = view.findViewById(R.id.smallPic3_productPictures);
         bigPic = view.findViewById(R.id.bigPicture_productPictures);
+        bigPic.setImageBitmap(b1);
         leftButton = view.findViewById(R.id.leftButton_productPictures);
         rightButton = view.findViewById(R.id.rightButton_productPictures);
         leftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                     // go to next picture
+
 
                 if (((BitmapDrawable)bigPic.getDrawable()).getBitmap() == b4){
                     bigPic.setImageBitmap(b1);
@@ -103,7 +103,6 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
                     // go to back picture
                 if (((BitmapDrawable) bigPic.getDrawable()).getBitmap() ==b4){
                     bigPic.setImageBitmap(b3);
-                    Log.d(TAG, "now my big picture is : " + b3);
                     smallPic1.setImageBitmap(b2);
                     smallPic2.setImageBitmap(b1);
                     smallPic3.setImageBitmap(b4);
@@ -176,8 +175,9 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         return BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
     }
 
-    public void setProductCodeToGetPictures(String productCode){
+    public void setProductCodeToGetPictures(String productCode, Bitmap bitmap){
         this.productCode = productCode;
+        this.b1 = bitmap;
     }
 
 
