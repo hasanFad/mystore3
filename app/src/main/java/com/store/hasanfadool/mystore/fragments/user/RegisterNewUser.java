@@ -21,6 +21,7 @@ import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.InsertNewUserAsync;
+import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,6 +37,8 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
     Context context;
     EditText userFName, userLName, userEmail, userPhone, userCity, userStreet ,userHomeNumber, userPostelCode, userPOpost, userPass;
     Button sendData;
+
+    ShPUsers shPUsers;
 
     CheckBox smsAgree,mailAgree;
     int sms, mail,userHN;
@@ -60,6 +63,8 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
         fragmentManager = getFragmentManager();
 
         insertNewUserAsync.asyncResponseInteger = this;
+
+        shPUsers = new ShPUsers(context);
 
         userFName = view.findViewById(R.id.userFNameET_registerNewUser);
         userLName = view.findViewById(R.id.userLNameET_registerNewUser);
@@ -197,6 +202,8 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
             case 1:
 //                insert the user into the system successful
             Log.d(TAG, "the user was insert into the system");
+            shPUsers.saveUser(newUser.getUserMail(),newUser.getUserPass());
+
             UserPanel userPanel = new UserPanel();
             userPanel.setUserInfoAtET(newUser); // send the user information to the user panel
 

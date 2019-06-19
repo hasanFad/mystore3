@@ -218,6 +218,7 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
 
             case 1:
                 // login is successful
+                shPUsers.saveUser(myUser.getUserMail(),myUser.getUserPass());
                 goToUserPanel();
 
         }

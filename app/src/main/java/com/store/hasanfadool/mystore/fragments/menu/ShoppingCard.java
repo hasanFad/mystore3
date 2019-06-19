@@ -19,9 +19,6 @@ import java.util.ArrayList;
 
 public class ShoppingCard extends Fragment {
 
-    ArrayList<Product> arrayList;
-    ProductAdapter adapter;
-    ListView listView;
     FragmentManager fragmentManager;
 
     Context context;

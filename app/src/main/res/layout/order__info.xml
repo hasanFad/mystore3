@@ -26,7 +26,7 @@
             android:id="@+id/changedOrderNumTV_orderInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/noOrderNum"
+            android:text="0"
             android:textSize="25sp"
             android:layout_marginTop="10dp"
             android:textColor="@color/red"/>
@@ -72,19 +72,6 @@
             android:layout_marginLeft="20dp"
             android:layout_alignParentLeft="true"
             tools:ignore="RtlHardcoded" />
-
-        <Button
-            android:id="@+id/userOrdersButton_orderInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/continueToProductsButton_orderInfo"
-            android:layout_marginTop="43dp"
-            android:layout_centerHorizontal="true"
-            android:text="@string/myOrders"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
 
 
     </RelativeLayout>
