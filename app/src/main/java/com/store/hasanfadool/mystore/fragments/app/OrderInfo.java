@@ -60,11 +60,10 @@ public class OrderInfo extends Fragment implements AsyncResponseString {
         selectOrdersNumAsync.delegate = this;
 
 
-        if (userOrderNumber != 0){
+        if (userOrderNumber == 0){
             changedOrderNum.setText(getString(R.string.noOrderNum));
 
             changedOrderNum.setText("");
-//            orderNum.setText("");
         }
 
         shoppingCard.setOnClickListener(new View.OnClickListener() {
