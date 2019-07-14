@@ -28,6 +28,7 @@ import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.Product;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductRangeAsync;
 import com.store.hasanfadool.mystore.network.AsyncTasks.updates.UpdatingQuantityAsync;
+import com.store.hasanfadool.mystore.utils.Converts;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -118,7 +119,9 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
             }else {
                 shipp.setText("משלוח ₪" + iProduct.getShipping());
             }
-             bm = StringToBitmap(iProduct.getProPic()); // send the string we got from the object to encoding it at method
+            Converts converts = new Converts();
+
+             bm = converts.StringToBitmap(iProduct.getProPic()); // send the string we got from the object to encoding it at method
             productPicture.setImageBitmap(bm); // set the picture after encoded it
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context ,android.R.layout.simple_spinner_dropdown_item, proRanges); //  adapter for the spinner
@@ -228,13 +231,6 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
         this.proRanges = proRanges;
     }
 
-
-        // method to convert pictures from string to bitmap
-    private Bitmap StringToBitmap(String encodedString){
-
-        byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);  // encode the string to base64
-        return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length); // // set the string encode to bitmap
-    }
         // method to get the object from the WS after we download from the WS with Async
     public void setiProduct(Product iProduct){
         this.iProduct = iProduct;

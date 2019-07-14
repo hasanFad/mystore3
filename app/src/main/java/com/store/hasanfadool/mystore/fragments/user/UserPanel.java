@@ -108,8 +108,6 @@ public class UserPanel extends Fragment implements AsyncResponseString {
                 }else {
                     mail = 0;
                 }
-//                public User(String userName, String userLName, String userMail, String userPhone, String userCity,
-//                        String uStreet, int uHomeNum , int uPstelCode, String uPO_post, int smsAgree, int mailAgree){
 
                     User updateUser = new User(userFName.getText().toString(),userLName.getText().toString(),
                             userEmail.getText().toString(),userPhone.getText().toString(),

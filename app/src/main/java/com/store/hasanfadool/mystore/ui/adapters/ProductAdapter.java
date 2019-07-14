@@ -20,6 +20,7 @@ import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.fragments.app.ProductInfoFragment;
 import com.store.hasanfadool.mystore.fragments.app.ProductPicturesFragment;
 import com.store.hasanfadool.mystore.models.Product;
+import com.store.hasanfadool.mystore.utils.Converts;
 
 import java.util.List;
 
@@ -83,7 +84,9 @@ public class ProductAdapter extends BaseAdapter {
         productCheap.setText(String.format("הנחה ב %.2f", currentProduct.getCheap()));
         }
         shipping.setText(currentProduct.getShipping() + "₪");
-        final Bitmap bm = StringToBitmap(currentProduct.getProPic()); // the string we got from the json object
+
+        Converts converts = new Converts(); // to convert strings to bitmap
+        final Bitmap bm = converts.StringToBitmap(currentProduct.getProPic()); // the string we got from the json object
         productImage.setImageBitmap(bm); // function to encode the string
             // on click from the image go to product images
         productImage.setOnClickListener(new View.OnClickListener() {
@@ -119,13 +122,7 @@ public class ProductAdapter extends BaseAdapter {
 
     }
 
-            // encode the image(String) to base64
-    @Nullable
-    private Bitmap StringToBitmap(String encodedString){
 
-            byte[] encodeByte = Base64.decode(encodedString,  Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-}
 
 
 }

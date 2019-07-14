@@ -89,10 +89,6 @@ public class ProductsListFragment extends Fragment implements AsyncResponseStrin
             for (int i = 0; i < ary.length(); i++){
                 JSONObject object = ary.getJSONObject(i);
 
-//                Product(String proCode,String productName, String productColor,
-//                   String companyName, String gender, int productPrice,
-//                  double productCheap, int shipping ,String productPicture)
-
                  iProduct = new Product(object.getString("productCode"),object.getString("productName"),
                         object.getString("productColor"), object.getString("companyName"),object.getString("gender"),
                         object.getInt("productPrice"),object.getDouble("cheap"),object.getInt("shipping"),
@@ -116,12 +112,6 @@ public class ProductsListFragment extends Fragment implements AsyncResponseStrin
 
         return this.productList;
     }
-
-    public Product  sendMyProduct (){
-      return   this.iProduct ;
-
-    }
-
 
 }
 

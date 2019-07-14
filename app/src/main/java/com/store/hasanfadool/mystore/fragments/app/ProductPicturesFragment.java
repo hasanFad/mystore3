@@ -21,6 +21,7 @@ import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.Picture;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.SelectProductPicturesAsync;
+import com.store.hasanfadool.mystore.utils.Converts;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,10 +158,11 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
 
     private void convert2Bitmap(Picture strings) { // set the pictures at the imageView
 
-        b1 = string2Bitmap(strings.getPicture1());
-        b2 = string2Bitmap(strings.getPicture2());
-        b3 = string2Bitmap(strings.getPicture3());
-        b4 = string2Bitmap(strings.getPicture());
+        Converts converts = new Converts();
+        b1 = converts.StringToBitmap(strings.getPicture1());
+        b2 = converts.StringToBitmap(strings.getPicture2());
+        b3 = converts.StringToBitmap(strings.getPicture3());
+        b4 = converts.StringToBitmap(strings.getPicture());
     }
 
     private void setPictures(){
@@ -170,10 +172,6 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         smallPic3.setImageBitmap(b4);
     }
 
-    private Bitmap string2Bitmap(String encodedString){ // convert the pictures from string to bitmap
-        byte[] encodedByte = Base64.decode(encodedString, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(encodedByte, 0, encodedByte.length);
-    }
 
     public void setProductCodeToGetPictures(String productCode, Bitmap bitmap){
         this.productCode = productCode;
