@@ -14,9 +14,6 @@ public class Picture  {
         this.picture = picture;
     }
 
-    public Picture(String picture){
-        this.picture = picture;
-    }
 
     public String getPicture1() {
         return picture1;
@@ -34,21 +31,6 @@ public class Picture  {
         return picture;
     }
 
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
-
-    public void setPicture1(String picture1) {
-        this.picture1 = picture1;
-    }
-
-    public void setPicture2(String picture2) {
-        this.picture2 = picture2;
-    }
-
-    public void setPicture3(String picture3) {
-        this.picture3 = picture3;
-    }
 
 
 

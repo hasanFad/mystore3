@@ -26,15 +26,7 @@ public class Product extends ArrayList<String> implements Serializable {
         this.cheap = productCheap;
     }
 
-            // for main product list
-    public Product(String productName, int productPrice, double productCheap,
-                   int shipping, String productImage){
-        this.cheap = productCheap;
-        this.proName = productName;
-        this.proPic = productImage;
-        this.proPrice = productPrice;
-        this.shipping = shipping;
-    }
+
 
     public Product(String proCode, int range, int quantity){
         this.range = range;
@@ -43,9 +35,6 @@ public class Product extends ArrayList<String> implements Serializable {
 
     }
 
-    public Product(String proCode){
-        this.proCode = proCode;
-    }
 
     public String getProPic() {
     return proPic;
@@ -142,14 +131,6 @@ public class Product extends ArrayList<String> implements Serializable {
     public void setProPic(String proPic) {
         this.proPic = proPic;
     }
-
-
-
-
-//    public Array getRange() {
-//        return range;
-//    }
-
 
     public void setRange(int range) {
         this.range = range;

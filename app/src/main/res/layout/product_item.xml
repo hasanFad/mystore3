@@ -76,6 +76,7 @@
         android:text="@string/shipping"
         android:textSize="17sp"
         android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
         android:textStyle="bold"
         android:focusable="false"
         android:clickable="false"

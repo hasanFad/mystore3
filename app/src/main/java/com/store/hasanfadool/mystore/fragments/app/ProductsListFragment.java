@@ -64,7 +64,7 @@ public class ProductsListFragment extends Fragment implements AsyncResponseStrin
         listViewProduct.setAdapter(adapter);
 
 
-        SelectProductsAsync selectProductsAsync = new SelectProductsAsync(); // class will connection to th WS
+        SelectProductsAsync selectProductsAsync = new SelectProductsAsync(context); // class will connection to th WS
 
         selectProductsAsync.execute();
 

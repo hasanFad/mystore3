@@ -1,16 +1,21 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
+import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+
+import java.util.Timer;
 
 
 public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
@@ -26,7 +31,22 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
     private static final String METHOD_NAME = "getAllProducts";
     private static final String SOAP_ACTION = "http://it.pro.com/getAllProducts";
 
+    private Context context;
+    private Loader loader;
 
+
+    public SelectProductsAsync(Context context){
+        this.context = context;
+        this.loader = new Loader(context, "Loading...");
+
+    }
+
+
+
+    @Override
+    protected void onPreExecute() {
+        loader.show();
+    }
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -61,10 +81,12 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String jsonString) {
-        super.onPostExecute(jsonString);
-        if (jsonString != null && !jsonString.isEmpty()){
-            delegate.processFinish(jsonString);
+        loader.dismiss();
 
+        if (jsonString != null && !jsonString.equals("error")){
+            delegate.processFinish(jsonString);
+        }else {
+            Toast.makeText(context, "נא להתחבר לרשת שלנו בלבד!", Toast.LENGTH_SHORT).show();
         }
 
     }
