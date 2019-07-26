@@ -21,6 +21,7 @@ import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
 import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
+import com.store.hasanfadool.mystore.utils.HashMD5;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,7 +38,7 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
     Button sendData, forgetPass, newUser;
     String userPassFromFile,userMailFromFile;
     User myUser;
-    CheckUserAsync checkUserAsync = new CheckUserAsync();
+    CheckUserAsync checkUserAsync;
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -53,6 +54,7 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
         context = getActivity();
         fragmentManager = getFragmentManager();
 
+        checkUserAsync = new CheckUserAsync(context);
         checkUserAsync.resultInterFace = this;
 
         shPUsers = new ShPUsers(context);
@@ -89,7 +91,10 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
                 }else {
                   // it's O.K
 
-                    myUser =  new User(mail.getText().toString(), pass.getText().toString());
+                    HashMD5 hashMD5 = new HashMD5();
+                    String passHashed = hashMD5.hashPassword(pass.getText().toString());
+
+                    myUser =  new User(mail.getText().toString(), passHashed);
 
                         // save the values to bundle to send them to check user Async
 

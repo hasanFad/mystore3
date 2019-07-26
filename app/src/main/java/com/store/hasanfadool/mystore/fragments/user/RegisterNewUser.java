@@ -22,6 +22,7 @@ import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.inserts.InsertNewUserAsync;
 import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
+import com.store.hasanfadool.mystore.utils.HashMD5;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -44,7 +45,7 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
     int sms, mail,userHN;
     User newUser;
     FragmentManager fragmentManager;
-    InsertNewUserAsync insertNewUserAsync = new InsertNewUserAsync();
+    InsertNewUserAsync insertNewUserAsync = new InsertNewUserAsync(context);
 
     @SuppressLint("InflateParams")
     @Nullable
@@ -111,8 +112,8 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
                     Toast.makeText(context, "המיל שלך לא יכול להיות ריק!", Toast.LENGTH_SHORT).show();
                 }else if (userEmail.getText().length() < 10){
                     Toast.makeText(context, "מיל שלך לא יכול קטן מ-10 אותיות!", Toast.LENGTH_SHORT).show();
-                }else if (userPhone.getText().length() < 10){
-                    // the mail is O.K
+                }else if (userPhone.getText().length() < 10 || userPhone.getText().length() > 10){
+
 
                     Toast.makeText(context, "טלפון לא תקין!", Toast.LENGTH_SHORT).show();
                 }else if (userCity.getText().length() < 3){
@@ -132,13 +133,19 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
                             // it's O.K
                     Toast.makeText(context, "ההרשמה מתבצעת..תועבר בהמשך...", Toast.LENGTH_SHORT).show();
 
-                    writeMailToFile(userEmail.getText().toString(),userPass.getText().toString());
+
+                    writeMailPassToFiles(userEmail.getText().toString(),userPass.getText().toString());
+
+                    HashMD5 hashMD5 = new HashMD5();
+                String hashedPass =   hashMD5.hashPassword(userPass.getText().toString());
+
 
                     newUser = new User(userFName.getText().toString(),userLName.getText().toString(), userEmail.getText().toString(),
                             userPhone.getText().toString(), userCity.getText().toString(),
                             userStreet.getText().toString(),Integer.parseInt(userHomeNumber.getText().toString()),
                             Integer.parseInt(userPostelCode.getText().toString())
-                            ,userPOpost.getText().toString(),userPass.getText().toString(),sms,mail);
+                            ,userPOpost.getText().toString(),hashedPass,sms,mail);
+
 
 
                     insertNewUserAsync.setUser(newUser);
@@ -152,7 +159,7 @@ public class RegisterNewUser extends Fragment implements AsyncResponseInteger {
         });
     }
 
-    private void writeMailToFile(String mailString,String pas) {
+    private void writeMailPassToFiles(String mailString,String pas) {
 
         try{
             FileOutputStream fOut = new FileOutputStream(  "userMailLocalFile.txt");

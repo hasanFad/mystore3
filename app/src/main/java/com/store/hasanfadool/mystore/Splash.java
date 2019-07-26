@@ -20,7 +20,7 @@ public class Splash extends Activity {
         videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.logo));
         videoView.requestFocus();
         videoView.start();
-        int SPLASH_DISPLAY_LENGTH = 11000; // the time to show the splash
+        int SPLASH_DISPLAY_LENGTH = 13000; // the time to show the splash
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

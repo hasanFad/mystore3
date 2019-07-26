@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
 import com.store.hasanfadool.mystore.utils.Loader;
@@ -15,7 +16,6 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.util.Timer;
 
 
 public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
@@ -37,7 +37,7 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
     public SelectProductsAsync(Context context){
         this.context = context;
-        this.loader = new Loader(context, "Loading...");
+        this.loader = new Loader(context, "טוען...");
 
     }
 
@@ -86,7 +86,7 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
         if (jsonString != null && !jsonString.equals("error")){
             delegate.processFinish(jsonString);
         }else {
-            Toast.makeText(context, "נא להתחבר לרשת שלנו בלבד!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, context.getString(R.string.connectOurNetWork), Toast.LENGTH_SHORT).show();
         }
 
     }

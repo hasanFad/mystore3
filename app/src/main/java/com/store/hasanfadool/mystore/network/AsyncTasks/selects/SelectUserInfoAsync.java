@@ -1,9 +1,13 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
+import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
+import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -26,8 +30,22 @@ public class SelectUserInfoAsync extends AsyncTask<Void,Void,String > {
         private static final String METHOD_NAME = "selectUserInfo";
         private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME;
 
+        private Context context;
+        private Loader loader;
+
+        public SelectUserInfoAsync(Context context){
+            this.context = context;
+            this.loader = new Loader(context, "טוען...");
+        }
+
+    @Override
+    protected void onPreExecute() {
+        loader.show();
+    }
+
     @Override
     protected String doInBackground(Void... voids) {
+
 
         if (myMail != null && !myMail.equals("")){
             try {
@@ -55,7 +73,7 @@ public class SelectUserInfoAsync extends AsyncTask<Void,Void,String > {
             }
 
         }
-        return "error: the mail not send yet!";
+        return "error";
     }
 
     public void setMail(String myMail){
@@ -64,9 +82,11 @@ public class SelectUserInfoAsync extends AsyncTask<Void,Void,String > {
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if (s != null && !s.isEmpty()){
+            loader.dismiss();
+        if (s != null && !s.isEmpty() && !s.equals("error") ){
             mySelectUserResponse.processFinish(s);
+        }else {
+            Toast.makeText(context, context.getString(R.string.connectOurNetWork), Toast.LENGTH_SHORT).show();
         }
     }
 }

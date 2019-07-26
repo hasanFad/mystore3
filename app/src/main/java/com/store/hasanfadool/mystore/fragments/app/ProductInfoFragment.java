@@ -72,7 +72,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
         context = getActivity();
         fragmentManager = getFragmentManager();
 
-        SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync(); // the select product range Async class
+        SelectProductRangeAsync selectProductRangeAsync = new SelectProductRangeAsync(context); // the select product range Async class
         selectProductRangeAsync.setProCode(iProduct.getProCode()); // send product code to method at the Async class
         selectProductRangeAsync.execute(); // do the Async
         selectProductRangeAsync.delegate = this; // the listener
@@ -184,7 +184,7 @@ public class ProductInfoFragment extends Fragment  implements AsyncResponseStrin
                 Product newQuantit = new Product(productRange.getProCode(),Integer.parseInt(myRange),newQuantity);
                 Toast.makeText(context, "הכמות שנשאר לאותו מידה היא: " + newQuantity, Toast.LENGTH_SHORT).show();
 
-                UpdatingQuantityAsync updatingQuantityAsync = new UpdatingQuantityAsync();
+                UpdatingQuantityAsync updatingQuantityAsync = new UpdatingQuantityAsync(context);
                 updatingQuantityAsync.setQuantity(newQuantit);
                 updatingQuantityAsync.execute();
 

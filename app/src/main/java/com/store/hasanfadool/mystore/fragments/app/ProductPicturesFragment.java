@@ -52,7 +52,7 @@ public class ProductPicturesFragment extends Fragment implements AsyncResponseSt
         fragmentManager = getFragmentManager();
 
             // get the pictures from the WS and use the listener
-        SelectProductPicturesAsync selectProductPicturesAsync = new SelectProductPicturesAsync();
+        SelectProductPicturesAsync selectProductPicturesAsync = new SelectProductPicturesAsync(context);
         selectProductPicturesAsync.setProductCode(productCode);
         selectProductPicturesAsync.execute();
 

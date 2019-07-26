@@ -1,10 +1,14 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.network.GetDomin;
+import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -27,6 +31,20 @@ public class SelectProductRangeAsync extends AsyncTask<Void,Void,String> {
     private static final String METHOD_NAME = "getProductRanges"; // RegisterVIP
     private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME; // http://vip_register/RegisterVIP
 
+    private Context context;
+    private Loader loader;
+
+
+    public SelectProductRangeAsync(Context context){
+        this.context = context;
+        this.loader = new Loader(context, "טוען...");
+
+    }
+
+    @Override
+    protected void onPreExecute() {
+        loader.show();
+    }
 
     @Override
     protected String doInBackground(Void... voids) {
@@ -64,10 +82,11 @@ public class SelectProductRangeAsync extends AsyncTask<Void,Void,String> {
 
     @Override
     protected void onPostExecute(String jsonString) {
-        super.onPostExecute(jsonString);
-        if (jsonString != null){
-        Log.d("my codehhh", "my codehh  : " + jsonString);
+        loader.dismiss();
+        if (jsonString != null && !jsonString.equals("error")){
             delegate.processFinish(jsonString);
+        }else {
+            Toast.makeText(context, context.getString(R.string.connectOurNetWork), Toast.LENGTH_SHORT).show();
         }
     }
 

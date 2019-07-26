@@ -62,6 +62,7 @@
     <string name="yourName">שם שלך</string>
     <string name="update">עדכן</string>
     <string name="lookingBeforeUpdateUserInfo">לפני עדכון רצוי מאוד ומומלץ אפילו להביט על הנתונים אם יש משהו לא תקין לשנות לפני עדכון- במיוחד אם נגעתם בכתובת - להבטחת קבלת המשלוח אחרי קניה!</string>
+    <string name="connectOurNetWork">נא להתחבר לרשת שלנו בלבד!</string>
 
 
 </resources>

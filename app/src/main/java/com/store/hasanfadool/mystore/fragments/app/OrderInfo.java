@@ -55,7 +55,7 @@ public class OrderInfo extends Fragment implements AsyncResponseString {
         shoppingCard = view.findViewById(R.id.shoppingCardButton_orderInfo);
         goMainProducts = view.findViewById(R.id.continueToProductsButton_orderInfo);
 
-        SelectOrdersNumAsync selectOrdersNumAsync = new SelectOrdersNumAsync();
+        SelectOrdersNumAsync selectOrdersNumAsync = new SelectOrdersNumAsync(context);
         selectOrdersNumAsync.execute();
         selectOrdersNumAsync.delegate = this;
 

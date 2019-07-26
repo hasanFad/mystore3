@@ -1,11 +1,15 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
+import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -30,7 +34,20 @@ public class CheckUserAsync extends AsyncTask<Void,Void,Integer> {
     private static final String METHOD_NAME = "compareUserMailPass";
     private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME;
 
+    private Context context;
+    private Loader loader;
 
+
+    public CheckUserAsync(Context context){
+        this.context = context;
+        this.loader = new Loader(context, "טוען...");
+
+    }
+
+    @Override
+    protected void onPreExecute() {
+        loader.show();
+    }
 
     @Override
     protected Integer doInBackground(Void... voids) {
@@ -75,10 +92,12 @@ public class CheckUserAsync extends AsyncTask<Void,Void,Integer> {
 
     @Override
     protected void onPostExecute(Integer jsonResult) {
-        super.onPostExecute(jsonResult);
-        if (jsonResult != null ){
-            Log.d("checkUserAsync", "the result is: " + jsonResult);
+        loader.dismiss();
+        if (jsonResult != null && !jsonResult.equals(-1)){
             resultInterFace.processFinishInt(jsonResult);
+        }else {
+            Toast.makeText(context, context.getString(R.string.connectOurNetWork), Toast.LENGTH_SHORT).show();
+
         }
     }
 

@@ -43,7 +43,7 @@ public class UserPanel extends Fragment implements AsyncResponseString {
     FragmentManager fragmentManager;
     AsyncResponseString responseAfterUpdate ;
 
-    SelectUserInfoAsync selectUserInfo = new SelectUserInfoAsync();
+    SelectUserInfoAsync selectUserInfo;
 
     @Nullable
     @Override
@@ -57,6 +57,8 @@ public class UserPanel extends Fragment implements AsyncResponseString {
 
         context = getActivity();
         fragmentManager = getFragmentManager();
+
+        selectUserInfo = new SelectUserInfoAsync(context);
 
         userCity = view.findViewById(R.id.userCityET_userPanel);
         userFName = view.findViewById(R.id.userFNameET_userPanel);
@@ -72,7 +74,7 @@ public class UserPanel extends Fragment implements AsyncResponseString {
         cancelBtn = view.findViewById(R.id.cancelButton_userPanel);
         updateBtn = view.findViewById(R.id.updateButton_userPanel);
 
-        SelectUserInfoAsync userInfoAsync = new SelectUserInfoAsync();
+        SelectUserInfoAsync userInfoAsync = new SelectUserInfoAsync(context);
         userInfoAsync.setMail(myMail);
         userInfoAsync.execute();
 
@@ -115,7 +117,7 @@ public class UserPanel extends Fragment implements AsyncResponseString {
                             Integer.parseInt(userHomeNumber.getText().toString()),Integer.parseInt(userPostelCode.getText().toString()),
                             userPOpost.getText().toString(),sms,mail);
 
-                UpdateUserInfoAsync updateUserInfoAsync = new UpdateUserInfoAsync();
+                UpdateUserInfoAsync updateUserInfoAsync = new UpdateUserInfoAsync(context);
                 updateUserInfoAsync.setMyUser(updateUser);
                 updateUserInfoAsync.execute();
                 getTheAsyncUpdate();

@@ -1,9 +1,11 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import com.store.hasanfadool.mystore.network.GetDomin;
+import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -24,6 +26,23 @@ public class SelectUserMailAsync extends AsyncTask<Void,Void,String> {
     private static final String NAMESPACE = "http://it.pro.com/"; // http://vip_register/
     private static final String METHOD_NAME = "insertProductsWS"; // RegisterVIP
     private static final String SOAP_ACTION =  NAMESPACE + METHOD_NAME; // http://vip_register/RegisterVIP
+
+    private Context context;
+    private Loader loader;
+
+
+    public SelectUserMailAsync(Context context){
+        this.context = context;
+        this.loader = new Loader(context, "טוען...");
+
+    }
+
+
+
+    @Override
+    protected void onPreExecute() {
+        loader.show();
+    }
 
 
 
@@ -55,4 +74,6 @@ public class SelectUserMailAsync extends AsyncTask<Void,Void,String> {
         }
         return "error";
     }
+
+
 }

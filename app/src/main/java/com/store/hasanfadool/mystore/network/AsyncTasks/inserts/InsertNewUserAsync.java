@@ -1,12 +1,16 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.inserts;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.GetDomin;
+import com.store.hasanfadool.mystore.utils.Loader;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.PropertyInfo;
@@ -31,6 +35,23 @@ public class InsertNewUserAsync extends AsyncTask<Void,Void,Integer> {
     private static final String NAMESPACE = "http://it.pro.com/";
     private static final String METHOD_NAME = "insertUserWS";
     private static final String SOAP_ACTION = "http://it.pro.com/insertUserWS";
+
+    private Context context;
+    private Loader loader;
+
+
+    public InsertNewUserAsync(Context context){
+        this.context = context;
+        this.loader = new Loader(context, "טוען...");
+
+    }
+
+
+
+    @Override
+    protected void onPreExecute() {
+        loader.show();
+    }
 
 
     public AsyncResponseInteger asyncResponseInteger = null;
@@ -143,10 +164,11 @@ public class InsertNewUserAsync extends AsyncTask<Void,Void,Integer> {
 
     @Override
     protected void onPostExecute(Integer s) {
-        super.onPostExecute(s);
+        loader.dismiss();
         if (s != null){
-            Log.d("insertNewUser", "yes > " + s);
             asyncResponseInteger.processFinishInt(s); // here nullPointerException
+        }else {
+            Toast.makeText(context, context.getString(R.string.connectOurNetWork), Toast.LENGTH_SHORT).show();
         }
     }
 
