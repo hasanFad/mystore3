@@ -11,7 +11,6 @@ import com.store.hasanfadool.mystore.R;
 
 public class Loader extends AlertDialog {
 
-
     public Loader(Context context){
         this(context, null);
     }
@@ -21,23 +20,22 @@ public class Loader extends AlertDialog {
         super(context);
 
 
-         View layout = LayoutInflater.from(context).inflate(R.layout.loader_layout, null, false);
+        View layout = LayoutInflater.from(context).inflate(R.layout.loader_layout, null, false);
 
         TextView msgTV = layout.findViewById(R.id.messageTextView_Loader);
 
-                // if have the msgTV null or not
+        // if have the msgTV null or not
         if (msg != null) {
             msgTV.setText(msg);
         }else {
             msgTV.setVisibility(View.GONE);
         }
 
-              // set the layout to alertDialog
+        // set the layout to alertDialog
         this.setView(layout);
-              // don't can click outside the dialog to close it
+        // don't can click outside the dialog to close it
         this.setCancelable(false);
 
     }
-
 
 }

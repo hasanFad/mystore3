@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.store.hasanfadool.mystore.R;
 import com.store.hasanfadool.mystore.interfaces.AsyncResponseInteger;
-import com.store.hasanfadool.mystore.interfaces.AsyncResponseString;
 import com.store.hasanfadool.mystore.models.User;
 import com.store.hasanfadool.mystore.network.AsyncTasks.selects.CheckUserAsync;
 import com.store.hasanfadool.mystore.sharedPrfrncs.ShPUsers;
@@ -91,7 +90,7 @@ public class SignInUser extends Fragment implements AsyncResponseInteger {
                 }else {
                   // it's O.K
 
-                    HashMD5 hashMD5 = new HashMD5();
+                    HashMD5 hashMD5 = new HashMD5(); // class to hash the password
                     String passHashed = hashMD5.hashPassword(pass.getText().toString());
 
                     myUser =  new User(mail.getText().toString(), passHashed);

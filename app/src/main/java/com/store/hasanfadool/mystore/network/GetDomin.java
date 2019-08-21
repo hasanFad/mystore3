@@ -7,7 +7,7 @@ public class GetDomin {
     public final String myIpPort(){
 
 
-            return "http://localhost:8080";
+            return "http://192.168.1.6:8080";
 
     }
 

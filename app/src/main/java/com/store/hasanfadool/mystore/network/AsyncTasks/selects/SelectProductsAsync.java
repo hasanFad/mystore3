@@ -1,5 +1,6 @@
 package com.store.hasanfadool.mystore.network.AsyncTasks.selects;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -23,9 +24,11 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
     public AsyncResponseString delegate = null;
 
-    private GetDomin getDomin = new GetDomin(); // to get the ip and port from/ GetDomin class
-    private String myIp = getDomin.myIpPort();
-    private final String URL = myIp + "/Selects/Selects?WSDL";
+    private GetDomin getDomin = new GetDomin();
+
+
+    String myIp = getDomin.myIpPort();
+    String URLSt = myIp + "/Selects/Selects?WSDL";
 
     private static final String NAMESPACE = "http://it.pro.com/";
     private static final String METHOD_NAME = "getAllProducts";
@@ -50,10 +53,7 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... voids) {
-
-
-        Log.d(TAG, "doInBackground");
-
+        Log.d(TAG, "doInBackground + my URL is: " + URLSt);
 
         try {
 
@@ -62,7 +62,8 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
             envelope.setOutputSoapObject(request);
             envelope.dotNet = false;
 
-            HttpTransportSE ht = new HttpTransportSE(URL);
+            Log.d(TAG, "doInBackground: the URLSt is: " + URLSt);
+            HttpTransportSE ht = new HttpTransportSE(URLSt);
             ht.call(SOAP_ACTION, envelope);
             SoapPrimitive response = (SoapPrimitive) envelope.getResponse();
 
@@ -70,15 +71,35 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
 
 
         }catch (Exception e){
-            e.printStackTrace();
-        }
+            Log.d(TAG, "doInBackground: eror" + e.getMessage());
 
+            e.printStackTrace();
+
+        }
 
         return "error";
+
         }
 
+    private void checkIp(String myIpz) {
+
+       char m = myIpz.charAt(myIpz.length() - 6);
+        int s = Character.getNumericValue(m);
+        Log.d(TAG, "checkIp: s is: " + s);
+
+        for (int i = 1; i < 7; i++){
+             URLSt = myIp.substring(0,17) + i + URLSt.substring(18);
+
+             doInBackground();
+            Log.d(TAG, "myIp2 is : " + myIp);
+        }
+
+    }
 
 
+
+
+    @SuppressLint("WrongThread")
     @Override
     protected void onPostExecute(String jsonString) {
         loader.dismiss();
@@ -86,7 +107,12 @@ public class SelectProductsAsync extends AsyncTask<Void, Void, String> {
         if (jsonString != null && !jsonString.equals("error")){
             delegate.processFinish(jsonString);
         }else {
+            checkIp(myIp);
+
             Toast.makeText(context, context.getString(R.string.connectOurNetWork), Toast.LENGTH_SHORT).show();
+
+
+
         }
 
     }

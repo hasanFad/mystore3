@@ -28,6 +28,7 @@ public class InsertNewUserAsync extends AsyncTask<Void,Void,Integer> {
 
     public User newUser;
 
+    private Context context;
     private GetDomin getDomin = new GetDomin();
     private String myIp = getDomin.myIpPort();
 
@@ -36,7 +37,6 @@ public class InsertNewUserAsync extends AsyncTask<Void,Void,Integer> {
     private static final String METHOD_NAME = "insertUserWS";
     private static final String SOAP_ACTION = "http://it.pro.com/insertUserWS";
 
-    private Context context;
     private Loader loader;
 
 
